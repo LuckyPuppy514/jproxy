@@ -96,7 +96,7 @@ docker run --name jproxy \
 ```
 
 ### Linux
-[下载最新版本（附带jdk1.8）]()
+[下载最新版本（附带jdk1.8）](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.0.0/jproxy-v1.0.0-linux-x64.zip)
 解压后，修改配置文件：application.yml 中的 jackett.url
 ```
 jackett:
@@ -110,7 +110,7 @@ sh startup.sh
 
 ### Windows
 1. 自行安装 jdk1.8
-2. [下载最新版本]()
+2. [下载最新版本](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.0.0/jproxy-v1.0.0-windows64.zip)
 3. 修改配置文件：application.yml 中的 jackett.url
 
 ```
@@ -133,7 +133,10 @@ http://192.168.6.1:9117/api/xxx
 # 修改后
 http://192.168.6.1:8117/api/xxx
 ```
+![1654938215663](https://user-images.githubusercontent.com/53246532/173182502-74cc4e10-e9eb-43a7-8d7d-1fcda01a7d13.jpg)
 
+## 简单演示效果
+![image](https://user-images.githubusercontent.com/53246532/173182830-70802b63-7761-44b4-be8c-0d829a48e70c.png)
 
 ## 徽章
 
@@ -147,6 +150,18 @@ http://192.168.6.1:8117/api/xxx
 
 
 ## 如何贡献
+
+本项目效果十分依赖于：application.yml 中的正则配置  
+本人已对自己常见字幕组添加了对应正则，希望大家多多贡献，毕竟正则越准确，效果越好  
+![image](https://user-images.githubusercontent.com/53246532/173183069-4dec2355-217d-4036-baab-218d817a3fed.png)
+
++ 自己摸索的 Sonarr 较容易识别的标题格式：英文名 S1 10 [1920x1080][简中]
++ 季：格式必须为：S2,S3,S4，不可为S02,S03；位置在英文名和集数之间，第一季可为空
++ 集：格式最好为：空格10空格；紧跟英文名后面，通常间隔一个空格
++ 语言：如果识别为英文，可在标题后面新增：[简中] [繁体] 等标志
+
+示例
+> [桜都字幕组] 社畜小姐想被幽灵幼女治愈。 / Shachiku-san wa Youjo Yuurei ni Iyasaretai. [01][1080p][简体内嵌]
 
 非常欢迎你的加入！[提一个 Issue](https://github.com/LuckyPuppy514/Play-With-MPV/issues/new) 或者提交一个 Pull Request。
 
