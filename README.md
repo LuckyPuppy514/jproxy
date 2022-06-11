@@ -56,19 +56,6 @@ Sonarr 对中文识别不友好，很多动漫资源都会出现以下问题，�
 
 ### Docker（推荐）
 
-如果 jackett 不在同一服务器，或者端口号非 9117，需要手动修改 jackett.url
-```
-# 进入容器
-docker exec -it jproxy /bin/sh
-# 编辑配置文件
-vi /app/application.yml
-```
-修改 jackett.url
-```
-jackett:
-  url: http://127.0.0.1:9117
-```
-
 #### docker-compose
 
 ```
@@ -93,6 +80,20 @@ docker run --name jproxy \
 -p 8117:8117 \
 --restart unless-stopped \
 -d luckypuppy514/jproxy
+```
+
+
+注意：如果 jackett 不在同一服务器，或者端口号非 9117，需要手动修改 jackett.url
+```
+# 进入容器
+docker exec -it jproxy /bin/sh
+# 编辑配置文件
+vi /app/application.yml
+```
+修改 jackett.url
+```
+jackett:
+  url: http://127.0.0.1:9117
 ```
 
 ### Linux
