@@ -1,0 +1,4 @@
+2022-06-11 17:01:58.197 [main] INFO  com.lckp.jproxy.Application -
+				Starting Application v1.0.0 on LuckyPuppy with PID 23880 (D:\workspace\sts\jproxy\release\jproxy.jar started by Lucky in D:\workspace\sts\jproxy\release)
+2022-06-11 17:01:58.201 [main] INFO  com.lckp.jproxy.Application -
+				No active profile set, falling back to default profiles: default
