@@ -1,20 +1,20 @@
-# Jackett 代理
+# Jackett / Prowlarr 代理
 
 支持的运行环境：docker, linux, windows，推荐：dokcer  
 
 本项目包含以下功能：
-> 代理 jackett Torznab 接口，利用正则格式化返回结果中的标题，从而使 sonarr 识别，主要是针对动漫
+> 代理 jackett / prowlarr Torznab 接口，利用正则格式化返回结果中的标题，从而使 sonarr 识别，主要是针对动漫
 
 ```mermaid
 graph LR
-    1[Sonarr] == 请求Jackett Torznab ==> 2(JProxy) == 代理 Sonarr 请求 ==> 3(Jackett) 
-    3(Jackett) == 返回结果 ==> 2(JProxy) == 返回结果 ==> 1(Sonarr)
+    1[Sonarr] == 请求Jackett / Prowlarr Torznab ==> 2(JProxy) == 代理 Sonarr 请求 ==> 3(Jackett / Prowlarr) 
+    3(Jackett / Prowlarr) == 返回结果 ==> 2(JProxy) == 返回结果 ==> 1(Sonarr)
     2(JProxy) == 正则格式化标题 ==> 2(JProxy)
 ```
 
 ## 内容列表
 
-- [Jackett 代理](#jackett-代理)
+- [Jackett / Prowlarr 代理](#jackett--prowlarr-代理)
   - [内容列表](#内容列表)
   - [背景](#背景)
   - [安装](#安装)
@@ -24,6 +24,7 @@ graph LR
     - [Linux](#linux)
     - [Windows](#windows)
   - [使用说明](#使用说明)
+  - [简单演示效果](#简单演示效果)
   - [徽章](#徽章)
   - [相关仓库](#相关仓库)
   - [如何贡献](#如何贡献)
@@ -66,8 +67,7 @@ services:
     container_name: jproxy
     environment:
       - TZ=Asia/Shanghai
-    ports:
-      - 8117:8117
+    network_mode: host
     restart: unless-stopped
 ```
 
@@ -77,31 +77,33 @@ services:
 docker pull luckypuppy514/jproxy:latest
 
 docker run --name jproxy \
--p 8117:8117 \
+--net=host \
 --restart unless-stopped \
 -d luckypuppy514/jproxy
 ```
 
 
-注意：如果 jackett 不在同一服务器，或者端口号非 9117，需要手动修改 jackett.url
+注意：如果 jackett / prowlarr 不在同一服务器，或者端口号非 9117 和 9696，需要手动修改 api.jackett 或 api.prowlarr
 ```
 # 进入容器
 docker exec -it jproxy /bin/sh
 # 编辑配置文件
 vi /app/application.yml
 ```
-修改 jackett.url
+修改 api.jackett 或 api.prowlarr
 ```
-jackett:
-  url: http://127.0.0.1:9117
+api:
+  jackett: http://127.0.0.1:9117
+  prowlarr: http://127.0.0.1:9696
 ```
 
 ### Linux
-[下载最新版本（附带jdk1.8）](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.0.0/jproxy-v1.0.0-linux-x64.zip)
-解压后，修改配置文件：application.yml 中的 jackett.url
+[下载最新版本（附带jdk1.8）](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.1.0/jproxy-v1.1.0-linux-x64.zip)
+解压后，修改配置文件：application.yml 中的 api.jackett 或 api.prowlarr
 ```
-jackett:
-  url: http://127.0.0.1:9117
+api:
+  jackett: http://127.0.0.1:9117
+  prowlarr: http://127.0.0.1:9696
 ```
 
 然后执行以下命令启动：
@@ -111,12 +113,13 @@ sh startup.sh
 
 ### Windows
 1. 自行安装 jdk1.8
-2. [下载最新版本](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.0.0/jproxy-v1.0.0-windows64.zip)
-3. 修改配置文件：application.yml 中的 jackett.url
+2. [下载最新版本](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.1.0/jproxy-v1.1.0-windows64.zip)
+3. 修改配置文件：application.yml 中的 api.jackett 或 api.prowlarr
 
 ```
-jackett:
-  url: http://127.0.0.1:9117
+api:
+  jackett: http://127.0.0.1:9117
+  prowlarr: http://127.0.0.1:9696
 ```
 
 4. 执行以下命令启动
@@ -129,11 +132,15 @@ java "-Dfile.encoding=utf-8" -jar jproxy.jar
 例如：
 ```
 # 修改前
-http://192.168.6.1:9117/api/xxx
+# jackett
+http://192.168.6.9:9117/xxx
+# prowlarr
+http://192.168.6.9:9696/xxx
 
 # 修改后
-http://192.168.6.1:8117/api/xxx
+http://192.168.6.9:8117/xxx
 ```
+
 ![1654938215663](https://user-images.githubusercontent.com/53246532/173182502-74cc4e10-e9eb-43a7-8d7d-1fcda01a7d13.jpg)
 
 ## 简单演示效果
@@ -148,7 +155,7 @@ http://192.168.6.1:8117/api/xxx
 
 - [Sonarr](https://github.com/Sonarr/Sonarr) — Smart PVR for newsgroup and bittorrent users
 - [Jackett](https://github.com/Jackett/Jackett) — API Support for your favorite torrent trackers
-
+- [Prowlarr](https://github.com/Prowlarr/Prowlarr) — Prowlarr is an indexer manager/proxy
 
 ## 如何贡献
 

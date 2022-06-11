@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.lckp.jproxy.interceptor.JackettProxy;
+import com.lckp.jproxy.interceptor.ApiProxy;
 
 /**
 * @ClassName: InterceptorConfiguration
@@ -22,6 +22,6 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 	
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JackettProxy()).addPathPatterns("/**");
+        registry.addInterceptor(new ApiProxy()).addPathPatterns("/**");
     }
 }

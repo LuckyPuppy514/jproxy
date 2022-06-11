@@ -12,8 +12,9 @@ spring:
    freemarker: # 页面不加载缓存，修改即时生效
       cache: false
 
-jackett:
-  url: http://127.0.0.1:9117
+api:
+  jackett: http://127.0.0.1:9117
+  prowlarr: http://127.0.0.1:9696
   format: 
     enable: true
     anime:
