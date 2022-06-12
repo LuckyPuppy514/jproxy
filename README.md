@@ -80,7 +80,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     volumes:
-      - /docker/jproxy:/app/conf
+      - /docker/jproxy:/app/config
     network_mode: host
     restart: unless-stopped
 ```
@@ -91,7 +91,7 @@ services:
 docker pull luckypuppy514/jproxy:latest
 
 docker run --name jproxy \
--v /docker/jproxy:/app/conf \
+-v /docker/jproxy:/app/config \
 --net=host \
 --restart unless-stopped \
 -d luckypuppy514/jproxy
