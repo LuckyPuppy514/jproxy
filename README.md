@@ -21,8 +21,7 @@ graph LR
     - [Docker（推荐）](#docker推荐)
       - [docker-compose](#docker-compose)
       - [docker run](#docker-run)
-    - [Linux](#linux)
-    - [Windows](#windows)
+    - [Linux / Windows](#linux--windows)
   - [使用说明](#使用说明)
   - [简单演示效果](#简单演示效果)
   - [徽章](#徽章)
@@ -57,6 +56,19 @@ Sonarr 对中文识别不友好，很多动漫资源都会出现以下问题，�
 
 ### Docker（推荐）
 
+1. 下载配置文件 application.yml 到将要挂载的目录下，比如：/docker/jproxy
+
+```
+wget https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/release/application.yml -O /docker/jproxy/application.yml
+```
+   
+2. 修改配置文件：application.yml 中的 api.jackett 或 api.prowlarr，同一服务器 ip 可不修改
+```
+api:
+  jackett: http://127.0.0.1:9117
+  prowlarr: http://127.0.0.1:9696
+```
+
 #### docker-compose
 
 ```
@@ -67,6 +79,8 @@ services:
     container_name: jproxy
     environment:
       - TZ=Asia/Shanghai
+    volumes:
+      - /docker/jproxy:/app/conf
     network_mode: host
     restart: unless-stopped
 ```
@@ -77,29 +91,17 @@ services:
 docker pull luckypuppy514/jproxy:latest
 
 docker run --name jproxy \
+-v /docker/jproxy:/app/conf \
 --net=host \
 --restart unless-stopped \
 -d luckypuppy514/jproxy
 ```
 
+### Linux / Windows
 
-注意：如果 jackett / prowlarr 不在同一服务器，或者端口号非 9117 和 9696，需要手动修改 api.jackett 或 api.prowlarr
-```
-# 进入容器
-docker exec -it jproxy /bin/sh
-# 编辑配置文件
-vi /app/application.yml
-```
-修改 api.jackett 或 api.prowlarr
-```
-api:
-  jackett: http://127.0.0.1:9117
-  prowlarr: http://127.0.0.1:9696
-```
-
-### Linux
-[下载最新版本（附带jdk1.8）](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.1.0/jproxy-v1.1.0-linux-x64.zip)  
-解压后，修改配置文件：application.yml 中的 api.jackett 或 api.prowlarr  
+1. 自行安装 jdk1.8
+2. [下载最新版本](https://github.com/LuckyPuppy514/jproxy/releases)
+3. 解压后，修改配置文件：application.yml 中的 api.jackett 或 api.prowlarr  
 ```
 api:
   jackett: http://127.0.0.1:9117
@@ -107,28 +109,17 @@ api:
 ```
 
 然后执行以下命令启动：
-```
-sh startup.sh
-```
-
-### Windows
-1. 自行安装 jdk1.8
-2. [下载最新版本](https://github.com/LuckyPuppy514/jproxy/releases/download/v1.1.0/jproxy-v1.1.0-windows64.zip)
-3. 修改配置文件：application.yml 中的 api.jackett 或 api.prowlarr
 
 ```
-api:
-  jackett: http://127.0.0.1:9117
-  prowlarr: http://127.0.0.1:9696
-```
+# linux
+nohup java -Dfile.encoding=utf-8 -jar jproxy.jar&
 
-4. 执行以下命令启动
-```
+# windows
 java "-Dfile.encoding=utf-8" -jar jproxy.jar
 ```
 
 ## 使用说明
-修改 Sonarr => Settings => Indexers 中的 URL 的 IP 和端口号为 JProxy 的 IP 和端口即可
+只需修改 Sonarr => Settings => Indexers 中的 URL 的 IP 和端口号为 JProxy 的 IP 和端口即可
 例如：
 ```
 # 修改前

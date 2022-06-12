@@ -38,6 +38,10 @@ public class ApiProxy  implements HandlerInterceptor {
 
 		String path = request.getServletPath();
 		LOGGER.info("path: {}", path);
+		if("/".equals(path)) {
+			response.getOutputStream().write("jproxy running".getBytes());
+			return false;
+		}
 		
 		// 获取转发参数
 		Map<String, String[]> paramMap = request.getParameterMap();
@@ -45,7 +49,7 @@ public class ApiProxy  implements HandlerInterceptor {
 		Rule rule = apiConfig.getFormat().getAnime();
 		String type = "anime";
 		for (String key : paramMap.keySet()) {
-			if (key.equals("type") && paramMap.get(key)[0].equals("serial")) {
+			if ("type".equals(key) && "serial".equals(paramMap.get(key)[0])) {
 				rule = apiConfig.getFormat().getSerial();
 				type = "serial";
 				continue;

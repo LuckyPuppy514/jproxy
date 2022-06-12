@@ -22,6 +22,7 @@ public class FormatTest {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {	
 		String[] titles = {	
+				"【喵萌奶茶屋】★04月新番★[阿波连摸不清/测不准的阿波连同学/Aharen-san wa Hakarenai][11][1080p][繁体][招募翻译校对]",
 				"[悠哈璃羽字幕社] [RPG不动产_RPG Fudousan] [06] [x264 1080p] [CHS]",
 				"[悠哈璃羽字幕社] [RPG不动产_RPG Fudousan] [05] [x264 1080p] [CHS]",
 				"【千夏字幕组】【测不准的阿波连同学 / 不会拿捏距离的阿波连同学_Aharen-san wa Hakarenai】[第09话][1080p_AVC][繁体]",
@@ -36,6 +37,7 @@ public class FormatTest {
 		};
 		
 		String[] rules = {
+				"{【喵萌奶茶屋】.*\\[(.*)/([a-zA-Z].*)\\]\\[(\\d+)\\](.*)}:{[喵萌奶茶屋] $1 / $2 $3 $4}",
 				"{\\[悠哈璃羽字幕社\\] \\[(.*)_(.*)\\] \\[(\\d+)\\](.*)}:{[悠哈璃羽字幕社] $2 $3$4}",
 				"{【千夏字幕组】【(.*)_(.*)】\\[第(.*)话\\](.*)}:{[千夏字幕组] $2 $3 $4}",
 				"{\\[(.*)&LoliHouse\\] (.*) / ([\\u4E00-\\u9FA5]+) - (.*) }:{[$1&LoliHouse] $3 / $2 $4}",
