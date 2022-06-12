@@ -65,14 +65,14 @@ public class ApiProxy  implements HandlerInterceptor {
 			String url = apiConfig.getJackett() + path + paramString;
 			ResponseEntity<String> respEntity = restTemplate.getForEntity(url, String.class);
 			xml = respEntity.getBody();
-			LOGGER.info("proxy jackett: {}", apiConfig.getJackett() + path);
+			LOGGER.info("proxy jackett: {}", apiConfig.getJackett());
 			
 		// prowlarr
 		} else {
 			String url = apiConfig.getProwlarr() + path + paramString;
 			ResponseEntity<String> respEntity = restTemplate.getForEntity(url, String.class);
 			xml = new String(respEntity.getBody().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-			LOGGER.info("proxy prowlarr: {}", apiConfig.getProwlarr() + path);
+			LOGGER.info("proxy prowlarr: {}", apiConfig.getProwlarr());
 		}
 
 		// 格式化标题
