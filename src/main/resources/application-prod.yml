@@ -1,3 +1,7 @@
+server:
+  tomcat:
+    connection-timeout: 300000
+
 api:
   format: 
     enable: true

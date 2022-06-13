@@ -42,6 +42,9 @@ public class FormatUtil {
 		Document document = DocumentHelper.parseText(xml);
 		Element root = document.getRootElement();
 		Element channel = root.element("channel");
+		if (null == channel) {
+			return xml;
+		}
 		
 		for (Iterator<Element> items = channel.elementIterator("item"); items.hasNext();) {
 			Element item = items.next();

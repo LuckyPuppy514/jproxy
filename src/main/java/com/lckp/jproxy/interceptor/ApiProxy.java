@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -118,6 +119,9 @@ public class ApiProxy implements HandlerInterceptor {
 	 * @description: 判断是否用标题查询
 	 */
 	private static String getNewSearchKey(String xml, String searchKey) throws DocumentException {
+		if (StringUtils.isBlank(xml)) {
+			return null;
+		}
 		Document document = DocumentHelper.parseText(xml);
 		Element root = document.getRootElement();
 		Element channel = root.element("channel");
@@ -127,7 +131,7 @@ public class ApiProxy implements HandlerInterceptor {
 		 * 查询，只会查询当前季对应集数（比如：02），或季+集数（比如：S2 02） 导致某些采用绝对集数的数据（比如：古见同学 S2
 		 * 02，幻樱字幕组，使用绝对集数：14） 无法被 sonarr 搜索到
 		 */
-		if (channel.element("item") == null) {
+		if (channel != null && channel.element("item") == null) {
 			if (Pattern.matches(".* S\\d+ \\d+$", searchKey)) {
 				searchKey = searchKey.replaceAll(" S\\d+ \\d+$", "");
 				return searchKey;
