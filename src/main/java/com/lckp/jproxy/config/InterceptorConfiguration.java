@@ -22,6 +22,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 	
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new ApiProxy()).addPathPatterns("/**");
+        registry.addInterceptor(new ApiProxy()).addPathPatterns("/**")
+        																.excludePathPatterns("/error")
+        																.excludePathPatterns("/favicon.ico");
     }
 }
