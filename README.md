@@ -150,7 +150,7 @@ http://192.168.6.9:8117/xxx
 
 ## 如何贡献
 
-本项目效果十分依赖于：application.yml 中的正则配置  
+本项目效果十分依赖于：application.yml 中的正则配置（已分离到 application-prod.yml 中）
 本人已对自己常见字幕组添加了对应正则，希望大家多多贡献，毕竟正则越准确，效果越好  
 ![image](https://user-images.githubusercontent.com/53246532/173183069-4dec2355-217d-4036-baab-218d817a3fed.png)
 
