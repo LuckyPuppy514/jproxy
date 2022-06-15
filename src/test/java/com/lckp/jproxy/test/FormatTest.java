@@ -34,12 +34,16 @@ public class FormatTest {
 				"【幻樱字幕组】【4月新番】【间谍过家家 / 间谍家家酒 SPY×FAMILY】【09】【BIG5_MP4】【1280X720】",
 				"【幻櫻字幕組】【4月新番】【古見同學有交流障礙症 Komi-san wa, Komyushou Desu.】【18】【BIG5_MP4】【1280X720】",
 				"[猎户不鸽发布组] 社畜小姐想被幽灵幼女治愈。 Shachiku-san wa Youjo Yuurei ni Iyasaretai [10] [1080p+] [简中] [网盘] [2022年4月番]",
+				"[猎户不鸽发布组] 骸骨骑士大人异世界冒险中 Gaikotsu Kishi-sama, Tadaima Isekai e Odekakechuu [10] [1080p+] [简中] [网盘] [2022年4月番]",
 				"[ANi] RPG Real Estate - RPG 不動產（僅限港澳台地區） - 08 [1080P][Bilibili][WEB-DL][AAC AVC][CHT CHS][MP4]",
 				"[ANi] The Rising of the Shield Hero S2 - 盾之勇者成名录 第二季 - 09 [1080P][Baha][WEB-DL][AAC AVC][CHT][MP4]",
 				"[ANi] Skeleton Knight in Another World - 骸骨騎士大人異世界冒險中[01][1080P][Baha][WEB-DL][AAC AVC][MP4]",
 				"[NC-Raws] 测不准的阿波连同学 / Aharen-san wa Hakarenai - 11 (B-Global 3840x2160 HEVC AAC MKV)",
+				"[NC-Raws] RPG不动产 / RPG Fudousan - 11 (B-Global 1920x1080 HEVC AAC MKV)",
+				"[NC-Raws] 盾之勇者成名录 S2 / Tate no Yuusha no Nariagari S2 - 11 (B-Global 1920x1080 HEVC AAC MKV)",
 				"[猎户随缘发布组] 女忍者椿的心事 Kunoichi Tsubaki no Mune no Uchi [09] [1080p] [简中内封] [2022年4月番]",
-				"[猎户随缘发布组] 约会大作战S4 Date A Live IV [10] [1080p] [简中内封] [2022年4月番]"
+				"[猎户随缘发布组] 约会大作战S4 Date A Live IV [10] [1080p] [简中内封] [2022年4月番]",
+				"[Lilith-Raws] 史上最強大魔王轉生為村民 A / Shijou Saikyou no Daimaou - 11 [Baha][WEB-DL][1080p][AVC AAC][CHT][MP4]"
 		};
 		
 		String[] rules = {
@@ -47,12 +51,13 @@ public class FormatTest {
 				"{【喵萌奶茶屋】.*\\[(.*)/([a-zA-Z].*)\\]\\[(\\d+)\\](.*)}:{[喵萌奶茶屋] $1 / $2 $3 $4}",
 				"{\\[悠哈璃羽字幕社\\] \\[(.*)_(.*)\\] \\[(\\d+)\\](.*)}:{[悠哈璃羽字幕社] $2 $3$4}",
 				"{【(千夏字幕组|千夏字幕組)】【(.*)_(.*)】\\[第(\\d+)(话|話)\\](.*)}:{[$1] $3 $4 $6}",
-				"{\\[(.*)&LoliHouse\\] (.*) / ([\\u4E00-\\u9FA5]+) - (.*) }:{[$1&LoliHouse] $3 / $2 $4}",
+				"{\\[(.*)&LoliHouse\\] (.*) / (.*) - (.*) }:{[$1&LoliHouse] $3 / $2 $4}",
 				"{【(幻樱字幕组|幻櫻字幕組)】【(.*)】【([^a-zA-Z]*)([a-zA-Z].*)】【(\\d+)】【([^【】]*)】【([^【】]*)】.*}:{[$1] $3 / $4 $5 [$6][$7]}",
-				"{\\[猎户不鸽发布组\\]( [\\u4E00-\\u9FA5]+[。|？|！]* )(.*) \\[(\\d+)\\](.*)}:{[猎户不鸽发布组] $1/ $2 $3$4}",
+				"{\\[猎户不鸽发布组\\] ([^ ]*) (.*) \\[(\\d+)\\](.*)}:{[猎户不鸽发布组] $1 / $2 $3$4}",
 				"{\\[ANi\\] (.*) - (.*)\\s*[-|\\[]\\s*(\\d+)[ \\]](.+)}:{$1 $3 $4}",
-				"{\\[NC-Raws\\] ([\\u4E00-\\u9FA5 。？！]+) \\/ (.*) - (\\d+)(.*)}:{[NC-Raws] $1 / $2 $3$4 [简中\\]}",
-				"{\\[猎户随缘发布组\\] ([^ ]*) ([a-zA-Z].*) \\[(\\d+)\\](.*)}:{[猎户随缘发布组] $1 / $2 $3$4}"
+				"{\\[NC-Raws\\] (.*) \\/ (.*) - (\\d+)(.*)}:{[NC-Raws] $1 / $2 $3$4 [简中\\]}",
+				"{\\[猎户随缘发布组\\] ([^ ]*) ([a-zA-Z].*) \\[(\\d+)\\](.*)}:{[猎户随缘发布组] $1 / $2 $3$4}",
+		        "{\\[Lilith-Raws\\](.*)Shijou Saikyou no Daimaou}:{[Lilith-Raws]$1Shijou Saikyou no Daimaou, Murabito A ni Tensei suru}"
 		};
 		
 		List<String> ruleList = new ArrayList(Arrays.asList(rules));
