@@ -22,6 +22,8 @@ public class FormatTest {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {	
 		String[] titles = {	
+				"[Skymoon-Raws][One Piece 海贼王][1021][ViuTV][WEB-DL][1080p][AVC AAC][CHT][MP4+ASS]",
+				"[OPFans枫雪动漫][ONE PIECE 海贼王][第1021话][720p][周日版][MP4][简体] ",
 				"[愛戀&漫貓字幕組][4月新番][不會拿捏距離的阿波連同學][Aharen-san wa Hakarenai][09][1080p][MP4][BIG5][繁中]",
 				"[爱恋&漫猫字幕组][4月新番][测不准的阿波连同学][Aharen-san wa Hakarenai][09][1080p][MP4][GB][简中]",
 				"【喵萌奶茶屋】★04月新番★[阿波连摸不清/测不准的阿波连同学/Aharen-san wa Hakarenai][11][1080p][繁体][招募翻译校对]",
@@ -43,21 +45,26 @@ public class FormatTest {
 				"[NC-Raws] 盾之勇者成名录 S2 / Tate no Yuusha no Nariagari S2 - 11 (B-Global 1920x1080 HEVC AAC MKV)",
 				"[猎户随缘发布组] 女忍者椿的心事 Kunoichi Tsubaki no Mune no Uchi [09] [1080p] [简中内封] [2022年4月番]",
 				"[猎户随缘发布组] 约会大作战S4 Date A Live IV [10] [1080p] [简中内封] [2022年4月番]",
-				"[Lilith-Raws] 史上最強大魔王轉生為村民 A / Shijou Saikyou no Daimaou - 11 [Baha][WEB-DL][1080p][AVC AAC][CHT][MP4]"
+				"[Lilith-Raws] 史上最強大魔王轉生為村民 A / Shijou Saikyou no Daimaou - 11 [Baha][WEB-DL][1080p][AVC AAC][CHT][MP4]",
+				"[银色子弹字幕组][名侦探柯南][第1046集 降下天罚的生日派对（后篇）][繁日双语MP4][1080P]",
+				"[銀色子彈字幕組][名偵探柯南][第1046集 降下天罰的生日派對（後篇）][繁日雙語MP4][1080P]"
 		};
 		
 		String[] rules = {
+				"{\\[Skymoon-Raws\\]\\[(.*) ([^ ]*)\\]\\[(\\d+)](.*)}:{[Skymoon-Raws] $2 / $1 $3 $4}",
+				"{\\[OPFans枫雪动漫\\]\\[(.*) ([^ ]*)]\\[第(\\d+)话\\](.*)}:{[OPFans枫雪动漫] $2 / $1 $3 $4}",
 				"{\\[(爱恋&漫猫字幕组|愛戀&漫貓字幕組)\\](.*)\\[([a-zA-Z].*)\\]\\[(\\d+)\\](.*)}:{[$1]$2 $3 $4 $5}",
 				"{【喵萌奶茶屋】.*\\[(.*)/([a-zA-Z].*)\\]\\[(\\d+)\\](.*)}:{[喵萌奶茶屋] $1 / $2 $3 $4}",
 				"{\\[悠哈璃羽字幕社\\] \\[(.*)_(.*)\\] \\[(\\d+)\\](.*)}:{[悠哈璃羽字幕社] $2 $3$4}",
 				"{【(千夏字幕组|千夏字幕組)】【(.*)_(.*)】\\[第(\\d+)(话|話)\\](.*)}:{[$1] $3 $4 $6}",
-				"{\\[(.*)&LoliHouse\\] (.*) / (.*) - (.*) }:{[$1&LoliHouse] $3 / $2 $4}",
+				"{\\[(.*)&LoliHouse\\] ([a-zA-Z].*) / (.*) - (.*) }:{[$1&LoliHouse] $3 / $2 $4}",
 				"{【(幻樱字幕组|幻櫻字幕組)】【(.*)】【([^a-zA-Z]*)([a-zA-Z].*)】【(\\d+)】【([^【】]*)】【([^【】]*)】.*}:{[$1] $3 / $4 $5 [$6][$7]}",
 				"{\\[猎户不鸽发布组\\] ([^ ]*) (.*) \\[(\\d+)\\](.*)}:{[猎户不鸽发布组] $1 / $2 $3$4}",
 				"{\\[ANi\\] (.*) - (.*)\\s*[-|\\[]\\s*(\\d+)[ \\]](.+)}:{$1 $3 $4[简中]}",
-				"{\\[NC-Raws\\] (.*) \\/ (.*) - (\\d+)(.*)}:{[NC-Raws] $1 / $2 $3$4 [简中\\]}",
 				"{\\[猎户随缘发布组\\] ([^ ]*) ([a-zA-Z].*) \\[(\\d+)\\](.*)}:{[猎户随缘发布组] $1 / $2 $3$4}",
-		        "{\\[Lilith-Raws\\](.*)Shijou Saikyou no Daimaou}:{[Lilith-Raws]$1Shijou Saikyou no Daimaou, Murabito A ni Tensei suru}"
+		        "{\\[Lilith-Raws\\](.*)Shijou Saikyou no Daimaou}:{[Lilith-Raws]$1Shijou Saikyou no Daimaou, Murabito A ni Tensei suru}",
+				"{\\[NC-Raws\\] (.*) \\/ (.*) - (\\d+)(.*)}:{[NC-Raws] $1 / $2 $3$4 [简中\\]}",
+				"{\\[(银色子弹字幕组|銀色子彈字幕組)\\]\\[(名侦探柯南|名偵探柯南)\\]\\[第(\\d+)集([^\\[]*)\\](.*)}:{[$1][$2 $3$4] Detective Conan $3 $5}"
 		};
 		
 		List<String> ruleList = new ArrayList(Arrays.asList(rules));

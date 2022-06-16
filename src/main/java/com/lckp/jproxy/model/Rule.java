@@ -14,6 +14,11 @@ import java.util.List;
  */
 public class Rule {
 	/*
+	 * 查询关键字格式化规则
+	 */
+	private List<String> searchKey;
+	
+	/*
 	 * 精确规则（匹配成功一个，则不进行后续匹配，包括公共规则）
 	 */
 	private List<String> accurate;
@@ -22,6 +27,20 @@ public class Rule {
 	 * 公共规则（匹配所有公共规则）
 	 */
 	private List<String> common;
+
+	/**
+	 * @return the searchKey
+	 */
+	public List<String> getSearchKey() {
+		return searchKey;
+	}
+
+	/**
+	 * @param searchKey the searchKey to set
+	 */
+	public void setSearchKey(List<String> searchKey) {
+		this.searchKey = searchKey;
+	}
 
 	/**
 	 * @return the common
@@ -50,5 +69,4 @@ public class Rule {
 	public void setAccurate(List<String> accurate) {
 		this.accurate = accurate;
 	}
-	
 }

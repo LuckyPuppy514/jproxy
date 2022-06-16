@@ -24,12 +24,12 @@ import com.lckp.jproxy.model.Rule;
  * @author LuckyPuppy514
  */
 public class FormatUtil {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(FormatUtil.class);
 
 	/**
 	 * 
-	 * @param xml: jackett 返回结果
+	 * @param xml:  jackett 返回结果
 	 * @param rule: 替换规则
 	 * @return 根据规则替换后的xml
 	 * @throws DocumentException
@@ -45,24 +45,36 @@ public class FormatUtil {
 		if (null == channel) {
 			return xml;
 		}
-		
+
 		for (Iterator<Element> items = channel.elementIterator("item"); items.hasNext();) {
 			Element item = items.next();
 			Element titleElement = item.element("title");
 			String title = titleElement.getText();
 			LOGGER.debug("title before format: {}", title);
-			
+
 			title = accurateFormat(title, rule.getAccurate());
 			if (title == null) {
 				title = commonFormat(titleElement.getText(), rule.getCommon());
 			}
-			
+
 			LOGGER.debug("title after format: {}", title);
 			titleElement.setText(title);
 		}
 		return document.asXML();
 	}
-	
+
+	/**
+	 * 
+	 * @param searchKey
+	 * @param rule
+	 * @return
+	 * @description: 查询关键字格式化规则
+	 */
+	public static String formatSearchKey(String searchKey, Rule rule) {
+		String key = accurateFormat(searchKey, rule.getSearchKey());
+		return key == null ? searchKey : key;
+	}
+
 	/**
 	 * 
 	 * @param title
@@ -73,14 +85,14 @@ public class FormatUtil {
 	public static String accurateFormat(String title, List<String> rules) {
 		String oldTitle = title;
 		for (String rule : rules) {
-			title =  format(title, rule);
+			title = format(title, rule);
 			if (isFormat(oldTitle, title)) {
 				return title;
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param title
@@ -90,7 +102,7 @@ public class FormatUtil {
 	 */
 	public static String commonFormat(String title, List<String> rules) {
 		for (String rule : rules) {
-			title =  format(title, rule);
+			title = format(title, rule);
 		}
 		return title;
 	}
@@ -106,8 +118,24 @@ public class FormatUtil {
 		String[] ra = rule.split("\\}:\\{");
 		ra[0] = ra[0].substring(1);
 		ra[1] = ra[1].substring(0, ra[1].length() - 1);
+
+		// |$1 -10| 集数偏移
+		/*
+		 * try { int si = ra[1].indexOf("|"); if (si != -1) { int ei =
+		 * ra[1].lastIndexOf("|"); String key = ra[1].substring(si + 1, ei); String[]
+		 * temp = key.split(" "); String index = temp[0]; int offset =
+		 * Integer.parseInt(temp[1]);
+		 * 
+		 * int episode = Integer.parseInt(content.replaceAll(ra[0], index)); episode =
+		 * episode + offset; ra[1] = ra[1].substring(0, si) + String.valueOf(episode) +
+		 * ra[1].substring(ei + 1);
+		 * 
+		 * } } catch (Exception e) { LOGGER.debug("计算偏移失败", e); }
+		 */
+
 		return content.replaceAll(ra[0], ra[1]);
 	}
+
 	/**
 	 * 
 	 * @param oldContent

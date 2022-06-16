@@ -72,7 +72,7 @@ public class ApiProxy implements HandlerInterceptor {
 				continue;
 			}
 			if (SEARCH_KEY.equals(key)) {
-				searchKey = value;
+				searchKey = FormatUtil.formatSearchKey(value, rule);
 				continue;
 			}
 			paramBuilder.append("&" + key + "=" + value);
@@ -139,7 +139,7 @@ public class ApiProxy implements HandlerInterceptor {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * 
 	 * @param url
