@@ -1,0 +1,12 @@
+spring:
+   profiles:
+      active: prod
+
+server:
+   port: 8117
+   servlet:
+      context-path: /
+
+api:
+  jackett: http://127.0.0.1:9117
+  prowlarr: http://127.0.0.1:9696

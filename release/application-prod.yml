@@ -1,0 +1,26 @@
+spring:
+   profiles:
+      include: format, format-custom
+      
+server:
+  tomcat:
+    connection-timeout: 300000
+    
+knife4j:
+  basic:
+    enable: true #控制是否需要账号密码验证
+    username: jproxy  #用户名
+    password: jproxy@2022  #密码
+  production: false  #控制是否是正产环境，true：生产环境，关闭所有接口文档信息
+
+task:
+  update:
+    official:
+      cron: 0 0 3 * * ?
+      filename: "application-format.yml"
+      url: "https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/src/main/resources/application-format.yml"
+      
+path:
+  profiles:
+    official: "/app/application-format.yml"
+    custom: "/app/config/application-format-custom.yml"
