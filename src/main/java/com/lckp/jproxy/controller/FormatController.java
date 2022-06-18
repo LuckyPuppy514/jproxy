@@ -119,6 +119,8 @@ public class FormatController {
 	
 	@PostConstruct
 	public void initFormatRule() {
+		updateOfficialFormatTask.run();
+		
 		LOGGER.info("开始初始化规则");
 		ApiProxy.initFormatRule(formatConfig);
 		LOGGER.info("初始化规则完毕");
