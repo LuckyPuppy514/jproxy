@@ -149,19 +149,20 @@ http://192.168.6.9:8117/xxx
    # 修改后
    /api?seriesType=serial&
    ```
+![1655523972446](https://user-images.githubusercontent.com/53246532/174422229-ecd94ccb-f9fc-46fd-9e8e-41f8ac6ee7b3.jpg)
 
 2. 自定义规则
-  修改配置文件： /app/config/application-format-custom.yml
-  格式参考：[application-format.yml](https://github.com/LuckyPuppy514/jproxy/blob/main/src/main/resources/application-format.yml)
+  修改配置文件： /app/config/application-format-custom.yml  
+  格式参考：[application-format.yml](https://github.com/LuckyPuppy514/jproxy/blob/main/src/main/resources/application-format.yml)  
 
-  > 请勿修改：/app/application-format.yml，定时任务每天凌晨3点自动同步 github 配置，改了也会被覆盖掉
+  > 请勿修改：/app/application-format.yml，定时任务每天凌晨3点自动同步 github 配置，改了也会被覆盖掉  
 
 3. 规则测试
-  利用 knife4j 接口测试
-  地址：http://ip:8117/doc.html
-  默认用户名：jproxy
-  默认密码：jproxy@2022
-  已有接口：精确匹配测试，编辑自定义规则，暂时关闭格式化，同步 github 配置文件
+  利用 knife4j 接口测试  
+  地址：http://ip:8117/doc.html  
+  默认用户名：jproxy   
+  默认密码：jproxy@2022  
+  已有接口：精确匹配测试，编辑自定义规则，暂时关闭格式化，同步 github 配置文件  
 
 ## 简单演示效果
 ![image](https://user-images.githubusercontent.com/53246532/173182830-70802b63-7761-44b4-be8c-0d829a48e70c.png)
