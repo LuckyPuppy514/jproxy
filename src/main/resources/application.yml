@@ -1,6 +1,6 @@
 spring:
    profiles:
-      active: dev
+      active: prod
 
 server:
    port: 8117
