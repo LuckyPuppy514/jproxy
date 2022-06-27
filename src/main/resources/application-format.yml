@@ -27,6 +27,8 @@ format:
           replace: "S"
         - match: "S0(\\d+)"
           replace: "S$1"
+        - match: "\\[r=1-sinθ \\]"
+          replace: ""
           
       accurate:
         - match: "\\[Skymoon-Raws\\]\\[(.*) ([^ ]*)\\]\\[(\\d+)](.*)"
@@ -59,7 +61,7 @@ format:
         - match: "\\[ANi\\] (.*) - (.*)\\s*[-|\\[]\\s*(\\d+)[ \\]](.+)"
           replace: "$1 $3 $4[简中]"
           
-        - match: "\\[猎户随缘发布组\\] ([^ ]*) ([a-zA-Z].*) \\[(\\d+)\\](.*)"
+        - match: "\\[猎户随缘发布组\\] ([^ ]+ S\\d+) ([a-zA-Z].*) \\[(\\d+)\\](.*)"
           replace: "[猎户随缘发布组] $1 / $2 $3$4"
           
         - match: "\\[Lilith-Raws\\](.*)Shijou Saikyou no Daimaou"
