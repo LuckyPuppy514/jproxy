@@ -105,14 +105,11 @@ docker run --name jproxy \
 ```
 
 #### Arm Machine: build docker image by yourself
-1. [Download latest version source code](https://github.com/LuckyPuppy514/jproxy/releases)  
+1. [Download latest version docker-build-version.zip](https://github.com/LuckyPuppy514/jproxy/releases)  
 >
-2. Upload folder below to your server  
-```
-release/docker
-``` 
-
-3. run docker-build  
+1. Upload docker to your server  
+>
+2. run docker-build  
 ```
 sh docker-build.sh
 ```

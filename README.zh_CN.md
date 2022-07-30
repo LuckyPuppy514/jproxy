@@ -105,13 +105,10 @@ docker run --name jproxy \
 ```
 
 #### Arm 机器：可以自行 build docker 镜像
-1. [下载最新版源码](https://github.com/LuckyPuppy514/jproxy/releases)  
+1. [下载最新版本：docker-build-version.zip](https://github.com/LuckyPuppy514/jproxy/releases)  
 >
-2. 上传以下目录到服务器  
-```
-release/docker
-``` 
-
+2. 解压后上传 docker 目录到服务器  
+>
 3. 执行 docker-build 命令  
 ```
 sh docker-build.sh
