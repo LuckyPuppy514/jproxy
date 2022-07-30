@@ -243,10 +243,10 @@ docker run --name jproxy \
 > <font color='red'>warning：when network mode is not host，Jackett / Prowlarr can not use ip: 127.0.0.1, you should use your server ip</font>
 
 ### 2.2. Linux / Windows
-1. [donwload application.yml](https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/src/main/resources/application.yml)
+1. [donwload application.yml](https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/release/jar/config/application.yml)
 
 >
-2. modify server.port, save into the folder where jar was saved and restart
+1. modify server.port, save into the folder: config/, and restart
 ```
 server:
    port: 8117

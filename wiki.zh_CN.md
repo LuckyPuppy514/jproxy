@@ -264,10 +264,10 @@ docker run --name jproxy \
 > <font color='red'>注意：docker 网络非 host 模式，Jackett / Prowlarr 的 IP 就不能使用：127.0.0.1，需要修改为宿主机的具体 IP</font>
 
 ### 2.2. Linux / Windows
-1. [下载配置文件：application.yml](https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/src/main/resources/application.yml)
+1. [下载配置文件：application.yml](https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/release/jar/config/application.yml)
 
 >
-2. 修改端口号，并保存放到 jar 同一级目录，重启即可
+2. 修改端口号，并保存到：config/ 目录，重启即可
 ```
 server:
    port: 8117
