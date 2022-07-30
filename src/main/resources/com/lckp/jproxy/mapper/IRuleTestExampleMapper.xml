@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lckp.mapper.IRuleTestExampleMapper">
+	<select id="query" parameterType="com.lckp.param.RuleTestExampleQueryParam" resultType="com.lckp.resp.RuleTestExampleQueryResp">
+		SELECT A.EXAMPLE_ID, B.RULE_ID, B.RULE_NAME, A.EXAMPLE_CONTENT BEFORE_FORMAT, A.EXAMPLE_CONTENT AFTER_FORMAT, B.REGULAR_TYPE
+		FROM RULE_TEST_EXAMPLE A
+		LEFT JOIN RULE_CONFIG B
+		ON A.RULE_ID = B.RULE_ID
+		<where>
+		<if test='param.exampleContent != null and param.exampleContent!=""'>
+		AND A.EXAMPLE_CONTENT LIKE '%${param.exampleContent}%'
+		</if>
+		<if test='param.ruleName != null and param.ruleName!=""'>
+		AND B.RULE_NAME LIKE '%${param.ruleName}%'
+		</if>
+		</where>
+	</select>
+	
+	<select id="queryNoPage" parameterType="com.lckp.param.RuleTestExampleQueryParam" resultType="com.lckp.resp.RuleTestExampleQueryResp">
+		SELECT A.EXAMPLE_ID, B.RULE_ID, B.RULE_NAME, A.EXAMPLE_CONTENT BEFORE_FORMAT, A.EXAMPLE_CONTENT AFTER_FORMAT, B.REGULAR_TYPE
+		FROM RULE_TEST_EXAMPLE A
+		LEFT JOIN RULE_CONFIG B
+		ON A.RULE_ID = B.RULE_ID
+		<where>
+		<if test='param.exampleContent != null and param.exampleContent!=""'>
+		AND A.EXAMPLE_CONTENT LIKE '%${param.exampleContent}%'
+		</if>
+		<if test='param.ruleName != null and param.ruleName!=""'>
+		AND B.RULE_NAME LIKE '%${param.ruleName}%'
+		</if>
+		</where>
+	</select>
+	
+	<delete id="delete" parameterType="java.util.List">
+		DELETE FROM RULE_TEST_EXAMPLE
+		WHERE EXAMPLE_ID IN
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+	    	#{item.exampleId}
+	    </foreach>
+	</delete>
+	
+	<insert id="add" parameterType="com.lckp.model.RuleTestExample">
+		INSERT INTO RULE_TEST_EXAMPLE
+		(EXAMPLE_CONTENT, RULE_ID)
+		VALUES
+		<foreach collection="contents" item="item" separator=",">
+			<if test='item !=null and item != ""'>
+			(#{item}, #{ruleId})
+			</if>
+	    </foreach>
+	</insert>
+	
+	<delete id="deleteByRuleId" parameterType="java.lang.String">
+		DELETE FROM RULE_TEST_EXAMPLE
+		WHERE RULE_ID = #{ruleId}
+	</delete>
+</mapper>

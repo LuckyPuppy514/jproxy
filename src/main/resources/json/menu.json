@@ -1,0 +1,79 @@
+{
+	"homeInfo": {
+		"title": "API.HOME",
+		"href": "page/home"
+	},
+	"logoInfo": {
+		"title": "JProxy",
+		"image": "images/logo.png",
+		"href": ""
+	},
+	"menuInfo": [
+		{
+			"title": "API.PROXY_CONFIG",
+			"icon": "fa fa-cogs",
+			"href": "",
+			"target": "_self",
+			"child": [
+				{
+					"title": "API.JACKETT",
+					"href": "page/jackett-config",
+					"icon": "fa fa-user-secret",
+					"target": "_self"
+				},
+				{
+					"title": "API.PROWLARR",
+					"href": "page/prowlarr-config",
+					"icon": "fa fa-paypal",
+					"target": "_self"
+				}
+			]
+		},
+		{
+			"title": "API.RULE_MANAGE",
+			"icon": "fa fa-th-list",
+			"href": "",
+			"target": "_self",
+			"child": [
+				{
+					"title": "API.ADD",
+					"href": "page/add-rule",
+					"icon": "fa fa-plus",
+					"target": "_self"
+				},
+				{
+					"title": "API.QUERY",
+					"href": "page/query-rule",
+					"icon": "fa fa-search",
+					"target": "_self"
+				},
+				{
+					"title": "API.MARKET",
+					"href": "page/rule-market",
+					"icon": "fa fa-shopping-cart",
+					"target": "_self"
+				}
+			]
+		},
+		{
+			"title": "API.TEST_EXAMPLE",
+			"icon": "fa fa-wpforms",
+			"href": "",
+			"target": "_self",
+			"child": [
+				{
+					"title": "API.ADD",
+					"href": "page/add-example",
+					"icon": "fa fa-plus",
+					"target": "_self"
+				},
+				{
+					"title": "API.QUERY",
+					"href": "page/query-example",
+					"icon": "fa fa-search",
+					"target": "_self"
+				}
+			]
+		}
+	]
+}

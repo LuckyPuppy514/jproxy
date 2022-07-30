@@ -1,0 +1,11 @@
+version: "3"
+services:
+  jproxy:
+    image: luckypuppy514/jproxy:latest
+    container_name: jproxy
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /docker/jproxy/config:/app/config
+    network_mode: host
+    restart: unless-stopped

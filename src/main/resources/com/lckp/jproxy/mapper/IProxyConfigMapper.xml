@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lckp.mapper.IProxyConfigMapper">
+	<select id="query" parameterType="com.lckp.param.ProxyConfigQueryParam" resultType="com.lckp.model.ProxyConfig">
+		SELECT PROXY_ID, PROXY_TYPE, PROXY_IP, PROXY_PORT, PROXY_PATH, VALIDSTATUS, CREATE_TIME, UPDATE_TIME
+		FROM PROXY_CONFIG
+		WHERE PROXY_TYPE = #{proxyType}
+		AND VALIDSTATUS = 1
+	</select>
+	
+	<update id="modify" parameterType="com.lckp.param.ProxyConfigModifyParam">
+		UPDATE PROXY_CONFIG
+		SET PROXY_IP = #{proxyIp},
+			PROXY_PORT = #{proxyPort},
+			PROXY_PATH = #{proxyPath},
+			UPDATE_TIME = DATETIME()
+		WHERE PROXY_TYPE = #{proxyType}
+		AND VALIDSTATUS = 1
+	</update>
+</mapper>

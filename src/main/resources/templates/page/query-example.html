@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>[[#{PAGE.QUERY_EXAMPLE.TITLE}]]</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+	<link rel="stylesheet" href="../css/public.css" media="all">
+	<link rel="stylesheet" href="../icon/iconfont.css" media="all">
+	<style>
+		.layui-table-cell {
+			height: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="layuimini-container">
+		<div class="layuimini-main">
+			<fieldset class="table-search-fieldset">
+				<legend>[[#{PAGE.SEARCH_INFO}]]</legend>
+				<div style="margin: 10px 10px 10px 10px">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label"
+									style="width: 150px;">[[#{PAGE.RULE_NAME}]]</label>
+								<div class="layui-input-inline" style="width: 200px;">
+									<input type="text" name="ruleName" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label"
+									style="width: 150px;">[[#{PAGE.EXAMPLE_CONTENT}]]</label>
+								<div class="layui-input-inline" style="width: 200px;">
+									<input type="text" name="exampleContent" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label" style="width: 150px;">[[#{PAGE.FORMAT_STATUS}]]</label>
+								<div class="layui-input-inline" style="width: 200px;">
+									<select name="formatStatus">
+										<option value="" selected>[[#{PAGE.ALL}]]</option>
+										<option value=1>[[#{PAGE.FORMAT_STATUS.PASS}]]
+										</option>
+										<option value=0>[[#{PAGE.FORMAT_STATUS.FAIL}]]</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<button type="submit" class="layui-btn layui-btn-normal" lay-submit
+									lay-filter="data-search-btn"><i class="layui-icon"></i>
+									[[#{PAGE.SEARCH}]]</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</fieldset>
+
+			<script type="text/html" id="toolbarDemo">
+				<div class="layui-btn-container">
+					<button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> [[#{PAGE.DELETE}]] </button>
+				</div>
+        	</script>
+			<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+			<script type="text/html" id="currentTableBar">
+			</script>
+
+		</div>
+	</div>
+
+	<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+	<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+
+	<script th:inline="javascript">
+		let beforeFormatTitle = '[[#{PAGE.BEFORE_FORMAT}]]'.replaceAll('"', '');
+		let afterFormatTitle = '[[#{PAGE.AFTER_FORMAT}]]'.replaceAll('"', '');
+		let ruleNameTitle = '[[#{PAGE.RULE_NAME}]]'.replaceAll('"', '');
+
+		let noDataSelected = '[[#{PAGE.NO_DATA_SELECTED}]]'.replaceAll('"', '');
+
+		layui.use(['form', 'table', 'upload', 'requestUtil'], function () {
+			var $ = layui.jquery,
+				form = layui.form,
+				table = layui.table,
+				upload = layui.upload,
+				requestUtil = layui.requestUtil;
+
+			table.render({
+				elem: '#currentTableId',
+				url: '/ruleTestExample/query',
+				toolbar: '#toolbarDemo',
+				defaultToolbar: ['filter']
+				, request: {
+					pageName: 'pageIndex' //页码的参数名称，默认：page
+					, limitName: 'pageSize' //每页数据量的参数名，默认：limit
+				}
+				, parseData: function (res) { //res 即为原始返回的数据
+					return {
+						"code": res.code == 200 ? 0 : res.code,
+						"msg": res.msg,
+						"count": res.data.total,
+						"data": res.data.list,
+					};
+				}
+				, page: true //开启分页
+				, cols: [
+					[ //表头
+						{ type: "checkbox", width: 50 }
+						, {
+							title: '<i class="iconfont icon-ceshi" style="color: #333333; font-weight: bold;"></i>', width: 55,
+							templet: function (res) {
+								if (res.formatStatus == '1') {
+									return '<i class="iconfont icon-tongguo2" style="color: #43BB0D; font-weight: bold;"></i>';
+								} else {
+									return '<i class="iconfont icon-butongguo2" style="color: #D81E06; font-weight: bold;"></i>';
+								}
+							}
+						}
+						, { field: 'ruleName', title: ruleNameTitle, width: 180, sort: true }
+						, { field: 'beforeFormat', title: beforeFormatTitle, width: 450, sort: true }
+						, { field: 'afterFormat', title: afterFormatTitle, width: 700, sort: true }
+					]
+				],
+				limits: [10, 15, 20, 25, 50, 100, 1000],
+				limit: 10,
+				page: true,
+				skin: 'line'
+			});
+
+			// 监听搜索操作
+			form.on('submit(data-search-btn)', function (data) {
+				//执行搜索重载
+				table.reload('currentTableId', {
+					page: {
+						curr: 1
+					}
+					, where: data.field
+				}, 'data');
+
+				return false;
+			});
+
+			/**
+			 * toolbar监听事件
+			 */
+			table.on('toolbar(currentTableFilter)', function (obj) {
+				var checkStatus = table.checkStatus('currentTableId')
+					, data = checkStatus.data;
+				if (undefined == data || data.length == 0) {
+					if (obj.event != 'LAYTABLE_COLS')
+						layer.msg(noDataSelected);
+					return false;
+				}
+
+				if (obj.event === 'delete') {
+					layer.confirm('[[#{PAGE.ARE_YOU_SURE}]]'.replaceAll('"', ''), function (index) {
+						var params = [];
+						var i = 0;
+						data.forEach(element => {
+							params[i] = { "exampleId": element.exampleId };
+							i++;
+						});
+						requestUtil.postJson("/ruleTestExample/delete", JSON.stringify(params), (res) => {
+							layer.msg(res.msg);
+							table.reload('currentTableId', {
+								page: {
+									curr: 1
+								}
+								, where: data.field
+							}, 'data');
+						});
+						layer.close(index);
+					});
+				}
+			});
+
+			//监听表格复选框选择
+			table.on('checkbox(currentTableFilter)', function (obj) {
+			});
+		});
+	</script>
+
+</body>
+
+</html>

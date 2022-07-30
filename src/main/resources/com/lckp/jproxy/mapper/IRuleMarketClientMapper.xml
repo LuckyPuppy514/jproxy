@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lckp.mapper.IRuleMarketClientMapper">
+	<select id="queryRuleNeedShare" parameterType="java.util.List" resultType="com.lckp.param.RuleConfigAddParam">
+		SELECT RULE_ID, RULE_NAME, RULE_TYPE, RULE_LANGUAGE, REGULAR_TYPE, REGULAR_MATCH, REGULAR_REPLACE, EXECUTE_RULE, EXECUTE_PRIORITY, REMARK, VALIDSTATUS,
+		(SELECT GROUP_CONCAT(EXAMPLE_CONTENT, '\n') FROM RULE_TEST_EXAMPLE WHERE RULE_ID = A.RULE_ID) EXAMPLE_CONTENT
+		FROM RULE_CONFIG A
+		WHERE RULE_ID IN
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+	    	#{item.ruleId}
+	    </foreach>
+	    AND VALIDSTATUS = 1
+	    AND SHARE_KEY IS NULL
+	</select>
+	
+	<update id="updateShare" parameterType="com.lckp.resp.RuleMarketServerShareResp">
+		UPDATE RULE_CONFIG
+		SET SHARE_KEY = #{shareKey}
+		WHERE RULE_ID = #{ruleId}
+	</update>
+	
+	<select id="queryDownloadStatus" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT CASE WHEN LENGTH(SHARE_KEY) = 32 THEN 2 ELSE 1 END
+		FROM RULE_CONFIG
+		WHERE RULE_ID = #{ruleId}
+		LIMIT 1
+	</select>
+</mapper>

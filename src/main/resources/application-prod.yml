@@ -1,0 +1,39 @@
+spring:
+   thymeleaf:
+      prefix: classpath:/templates/
+      suffix: .html
+      encoding: UTF-8
+      mode: HTML
+      cache: true
+   messages:
+      basename: i18n/messages
+
+   type: com.zaxxer.hikari.HikariDataSource
+   hikari:
+      min-idle: 10                          
+      max-pool-size: 30                     
+      idle-timeout: 600000                  
+      max-lifetime: 1800000                 
+      connection-timeout: 30000             
+      connection-test-query: SELECT 1       
+   sql:
+      init: classpath:db/init.sql
+   datasource:
+      url: '@spring.datasource.url@'
+      username:
+      password:
+      driver-class-name: org.sqlite.JDBC
+
+knife4j:
+  enable: true
+  basic:
+    enable: true
+    username: jproxy
+    password: jproxy@2022
+  production: true
+
+notice:
+  location: https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/src/main/resources/json/notice.json
+
+api:
+  rule-market: '@api.rule-market@'
