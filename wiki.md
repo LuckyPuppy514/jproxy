@@ -246,7 +246,7 @@ docker run --name jproxy \
 1. [donwload application.yml](https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/release/jar/config/application.yml)
 
 >
-1. modify server.port, save into the folder: config/, and restart
+2. modify server.port, save into the folder: config/, and restart
 ```
 server:
    port: 8117
