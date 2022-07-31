@@ -18,7 +18,6 @@
   - [🐳 Docker (Recommend)](#-docker-recommend)
     - [docker-compose](#docker-compose)
     - [docker run](#docker-run)
-    - [Arm Machine: build docker image by yourself](#arm-machine-build-docker-image-by-yourself)
   - [🪟 Linux / Windows](#-linux--windows)
 - [☃️ Usage](#️-usage)
   - [1. Login](#1-login)
@@ -82,6 +81,7 @@ services:
     container_name: jproxy
     environment:
       - TZ=Asia/Shanghai
+      - "JAVA_OPTS=-Xms256m -Xmx256m"
     volumes:
       - /docker/jproxy/config:/app/config
     network_mode: host
@@ -97,28 +97,21 @@ docker pull luckypuppy514/jproxy:latest
 ```bash
 docker run --name jproxy \
 -v /docker/jproxy/config:/app/config \
---net=host \
 -e TZ=Asia/Shanghai \
+-e "JAVA_OPTS=-Xms256m -Xmx256m" \
+--net=host \
 --restart unless-stopped \
--d luckypuppy514/jproxy
+-d luckypuppy514/jproxy:latest
 ```
 
-#### Arm Machine: build docker image by yourself
-
-1. [Download latest version docker-build-version.zip](https://github.com/LuckyPuppy514/jproxy/releases)
-   >
-2. Upload docker to your server  
-   >
-3. run docker-build  
-
-```bash
-sh docker-build.sh
-```
+> 🔥arm64v8: luckypuppy514/jproxy:arm64v8-latest
 
 ### 🪟 Linux / Windows
 
 1. Install jdk1.8
-2. [Download latest version](https://github.com/LuckyPuppy514/jproxy/releases)
+   >
+2. Download latest version: [linux.windows-version.zip](https://github.com/LuckyPuppy514/jproxy/releases)
+   >
 3. Run startup script
 
 Linux

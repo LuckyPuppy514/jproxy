@@ -11,7 +11,7 @@
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
 	<packaging>jar</packaging>
-	<version>v2.5.0</version>
+	<version>2.5.1</version>
 	<name>JProxy</name>
 	<url>http://maven.apache.org</url>
 
@@ -67,10 +67,10 @@
 		</dependency>
 
 		<!-- 导入Mysql数据库链接依赖包 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<!-- fastjson -->
 		<dependency>
@@ -88,6 +88,7 @@
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.39.2-SNAPSHOT</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<!-- 组件依赖包 -->
@@ -159,6 +160,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<fork>true</fork>
+					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 			</plugin>
 			<!-- eclipse pom.xml报错：org.apache.maven.archiver.MavenArchiver.getManifest，请放开一下plugin -->

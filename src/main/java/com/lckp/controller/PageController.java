@@ -68,7 +68,7 @@ public class PageController {
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-		model.addAttribute("PROJECT_VERSION", version);
+		model.addAttribute("PROJECT_VERSION", "v" + version);
 		return Page.HOME;
 	}
 	

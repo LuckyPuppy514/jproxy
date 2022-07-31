@@ -228,6 +228,7 @@ services:
     container_name: jproxy
     environment:
       - TZ=Asia/Shanghai
+      - "JAVA_OPTS=-Xms256m -Xmx256m"
     volumes:
       - /docker/jproxy/config:/app/config
     ports:
@@ -244,10 +245,11 @@ docker pull luckypuppy514/jproxy:latest
 ```text
 docker run --name jproxy \
 -v /docker/jproxy/config:/app/config \
--p port you want:8117 \
 -e TZ=Asia/Shanghai \
+-e "JAVA_OPTS=-Xms256m -Xmx256m" \
+-p port you want:8117 \
 --restart unless-stopped \
--d luckypuppy514/jproxy
+-d luckypuppy514/jproxy:latest
 ```
 
 > 🔥warning🔥：when network mode is not host，Jackett / Prowlarr can not use ip: 127.0.0.1, you should use your server ip

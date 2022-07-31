@@ -70,6 +70,7 @@ public class SyncTask {
 			}
 			RuleConfigEditParam param = new RuleConfigEditParam();
 			param.setRuleId(ruleConfig.getRuleId());
+			param.setRuleName(ruleConfig.getRuleName());
 			param.setRuleLanguage(ruleConfig.getRuleLanguage());
 			param.setRuleType(ruleConfig.getRuleType());
 			param.setRegularType(ruleConfig.getRegularType());

@@ -67,7 +67,7 @@ public class ProxyInterceptor implements HandlerInterceptor {
 			LOGGER.debug("Proxy Prowlarr");
 			proxyParam.setProxyType(ProxyType.Prowlarr);
 			proxyParam.setSearchKeyField(Field.PROWLARR_SEARCH_KEY);
-			preProxy(JProxy.jackett, proxyParam, request, response);
+			preProxy(JProxy.prowlarr, proxyParam, request, response);
 			return false;
 		}
 

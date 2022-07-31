@@ -39,7 +39,7 @@ public class SqliteInitializer {
             LOGGER.info("数据库初始化成功");
             return initializer;
         } catch (Exception e) {
-        	LOGGER.info("数据库初始化失败：", e);
+        	LOGGER.error("数据库初始化失败：", e);
         }
         return null;
     }

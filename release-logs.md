@@ -3,6 +3,13 @@
 
 # Release Logs
 
+## v2.5.1 2022-07-30
+
+1. Update README.md
+2. Fixed docker build error at aarch64 by changing sqlite-jdbc version to: 3.39.2-SNAPSHOT
+3. Fixed sync error
+4. Fixed prowlarr error
+
 ## v2.5.0 2022-07-30
 
 1. Web UI: Chinese or English

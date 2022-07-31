@@ -24,6 +24,8 @@ call mvn clean package -Dmaven.test.skip=true -P server
 del /f /s /q "release\server\config\*"
 del /f /s /q "release\server\jproxy.jar"
 
+xcopy "target\classes\application.yml" "release\server\config\"
 xcopy "target\classes\logback-spring.xml" "release\server\config\"
 xcopy "target\classes\db\sqlite.db" "release\server\config\"
 xcopy "target\jproxy.jar" "release\server\"
+

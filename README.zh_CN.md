@@ -18,7 +18,6 @@
   - [🐳 Docker（推荐）](#-docker推荐)
     - [docker-compose](#docker-compose)
     - [docker run](#docker-run)
-    - [Arm 机器：可以自行 build docker 镜像](#arm-机器可以自行-build-docker-镜像)
   - [🪟 Linux / Windows](#-linux--windows)
 - [☃️ 使用](#️-使用)
   - [1. 登录](#1-登录)
@@ -82,6 +81,7 @@ services:
     container_name: jproxy
     environment:
       - TZ=Asia/Shanghai
+      - "JAVA_OPTS=-Xms256m -Xmx256m"
     volumes:
       - /docker/jproxy/config:/app/config
     network_mode: host
@@ -97,28 +97,21 @@ docker pull luckypuppy514/jproxy:latest
 ```bash
 docker run --name jproxy \
 -v /docker/jproxy/config:/app/config \
---net=host \
 -e TZ=Asia/Shanghai \
+-e "JAVA_OPTS=-Xms256m -Xmx256m" \
+--net=host \
 --restart unless-stopped \
--d luckypuppy514/jproxy
+-d luckypuppy514/jproxy:latest
 ```
 
-#### Arm 机器：可以自行 build docker 镜像
-
-1. [下载最新版本：docker-build-version.zip](https://github.com/LuckyPuppy514/jproxy/releases)
-   >
-2. 解压后上传 docker 目录到服务器
-   >
-3. 执行 docker-build 命令  
-
-```bash
-sh docker-build.sh
-```
+> 🔥arm64v8: luckypuppy514/jproxy:arm64v8-latest
 
 ### 🪟 Linux / Windows
 
 1. 自行安装 jdk1.8
-2. [下载最新版本](https://github.com/LuckyPuppy514/jproxy/releases)
+   >
+2. 下载最新版本：[linux.windows-version.zip](https://github.com/LuckyPuppy514/jproxy/releases)
+   >
 3. 执行启动命令
 
 Linux

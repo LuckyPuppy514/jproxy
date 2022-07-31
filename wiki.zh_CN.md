@@ -245,10 +245,11 @@ services:
     container_name: jproxy
     environment:
       - TZ=Asia/Shanghai
+      - "JAVA_OPTS=-Xms256m -Xmx256m"
     volumes:
       - /docker/jproxy/config:/app/config
     ports:
-      - 你要想的端口号:8117
+      - port you want:8117
     restart: unless-stopped
 ```
 
@@ -261,10 +262,11 @@ docker pull luckypuppy514/jproxy:latest
 ```text
 docker run --name jproxy \
 -v /docker/jproxy/config:/app/config \
--p 你想要的端口:8117 \
 -e TZ=Asia/Shanghai \
+-e "JAVA_OPTS=-Xms256m -Xmx256m" \
+-p port you want:8117 \
 --restart unless-stopped \
--d luckypuppy514/jproxy
+-d luckypuppy514/jproxy:latest
 ```
 
 > 🔥注意🔥：docker 网络非 host 模式，Jackett / Prowlarr 的 IP 就不能使用：127.0.0.1，需要修改为宿主机的具体 IP
