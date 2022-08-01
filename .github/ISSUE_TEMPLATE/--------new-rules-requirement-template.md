@@ -16,7 +16,7 @@ assignees: ''
 
 请输入你的选择 - please choose a number: 
 
-# 请提供三个以上标题例子
+# 请提供三个以上标题例子 - please provide 3 or more example title
 1. 
 2. 
 3.
