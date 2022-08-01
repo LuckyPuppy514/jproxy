@@ -3,7 +3,7 @@
 
 # Release Logs
 
-## v2.5.1 2022-08-01
+## v2.5.2 2022-08-01
 
 1. New Function: Reachalbe test first when save proxy config
 
