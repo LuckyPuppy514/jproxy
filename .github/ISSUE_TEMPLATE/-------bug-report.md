@@ -1,6 +1,6 @@
 ---
 name: 报告问题 - Bug report
-about: 报告问题 - Bug report
+about: "......"
 title: ''
 labels: ''
 assignees: ''

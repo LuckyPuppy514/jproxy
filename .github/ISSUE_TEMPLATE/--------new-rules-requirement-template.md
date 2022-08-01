@@ -1,6 +1,6 @@
 ---
 name: 新规则需求 - New Rules Requirement template
-about: 新规则需求 - New Rules Requirement template
+about: "......"
 title: ''
 labels: ''
 assignees: ''

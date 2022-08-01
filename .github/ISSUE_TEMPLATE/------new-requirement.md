@@ -1,6 +1,6 @@
 ---
 name: 新需求 - New Requirement
-about: 新需求 - New Requirement
+about: "......"
 title: ''
 labels: ''
 assignees: ''
