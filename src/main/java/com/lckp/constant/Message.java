@@ -58,4 +58,9 @@ public class Message {
 	public static final String DOWNLOAD_SUCCESS = "API.DOWNLOAD_SUCCESS";
 	// 分享失败
 	public static final String DOWNLOAD_FAIL = "API.DOWNLOAD_FAIL";
+	
+	// 可达
+	public static final String TIPS_REACHABLE = "API.TIPS.REACHABLE";
+	// 不可达
+	public static final String TIPS_UNREACHABLE = "API.TIPS.UNREACHABLE";
 }

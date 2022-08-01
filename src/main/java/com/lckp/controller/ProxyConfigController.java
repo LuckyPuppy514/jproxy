@@ -1,5 +1,8 @@
 package com.lckp.controller;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -23,6 +26,7 @@ import com.lckp.service.facade.IProxyConfigService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
@@ -43,6 +47,34 @@ public class ProxyConfigController {
 	@Autowired
 	private MessageSource messageSource;
 	
+	@ApiOperation("测试")
+	@GetMapping("/test")
+	public ResVo<String> test(ProxyConfigModifyParam param, @ApiIgnore Locale locale) {
+		LOGGER.info("代理配置 - 测试：{}", JSON.toJSONString(param));
+		boolean reachable = false;
+		Socket socket = new Socket();
+        try {
+            socket.connect(new InetSocketAddress(param.getProxyIp(), Integer.parseInt(param.getProxyPort())));
+            reachable = true;
+            
+        } catch (Exception e) {
+            LOGGER.error("代理配置 - 测试：{}", e);
+            
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+            	LOGGER.error("代理配置 - 关闭 Socket：{}", e);
+            }
+        }
+        
+        if (reachable) {
+    		return ResVo.success(Message.TIPS_REACHABLE, messageSource, locale);
+		}
+        
+		return ResVo.fail(Message.TIPS_UNREACHABLE, messageSource, locale);
+	}
+	
 	@ApiOperation("查询")
 	@GetMapping("/query")
 	public ResVo<ProxyConfig> query(ProxyConfigQueryParam param) {
@@ -52,7 +84,7 @@ public class ProxyConfigController {
 	
 	@ApiOperation("修改")
 	@PostMapping("/modify")
-	public ResVo<String> modify(ProxyConfigModifyParam param, Locale locale) {
+	public ResVo<String> modify(ProxyConfigModifyParam param, @ApiIgnore Locale locale) {
 		LOGGER.info("代理配置 - 修改：{}", JSON.toJSONString(param));
 		
 		if (proxyConfigService.modify(param) > 0) {
@@ -72,4 +104,21 @@ public class ProxyConfigController {
 		
 		return ResVo.fail(Message.MODIFY_FAIL, messageSource, locale);
 	}
+	
+	public static boolean isHostConnectable(String host, int port) {
+        Socket socket = new Socket();
+        try {
+            socket.connect(new InetSocketAddress(host, port));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
 }

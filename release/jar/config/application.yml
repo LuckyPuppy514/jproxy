@@ -5,7 +5,7 @@ spring:
 project:
    code: 'jproxy'
    name: 'JProxy'
-   version: '2.5.1'
+   version: '2.5.2'
 
 server:
    port: 8117

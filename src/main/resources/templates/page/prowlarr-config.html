@@ -15,6 +15,10 @@
             padding-right: 10px;
             line-height: 38px;
         }
+        .common-tip {
+			color: red;
+			font-size: 10px;
+		}
     </style>
 </head>
 
@@ -60,6 +64,7 @@
                                             th:lay-reqtext="#{PAGE.PROXY_PATH_CAN_NOT_BE_NULL}"
                                             th:placeholder="#{PAGE.PLEASE_INPUT_PROXY_PATH}" value=""
                                             class="layui-input">
+                                        <tip class="common-tip">[[#{PAGE.TIPS.EDIT_PROXY_PATH_WARNING}]]</tip>
                                     </div>
                                 </div>
 
@@ -90,8 +95,15 @@
             });
 
             form.on('submit(setting)', function (data) {
-                requestUtil.postForm("/proxyConfig/modify", data.field, (data) => {
-                    layer.msg(data.msg);
+                let loadingIndex = layer.load(0, { time: 10 * 1000 });
+                requestUtil.get("/proxyConfig/test", data.field, (res) => {
+                    layer.close(loadingIndex);
+                    layer.confirm(res.msg, function (index) {
+                        requestUtil.postForm("/proxyConfig/modify", data.field, (data) => {
+                            layer.msg(data.msg);
+                        });
+                        layer.close(index);
+                    });
                 });
                 return false;
             });

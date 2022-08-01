@@ -119,13 +119,17 @@ public class PageController {
 	public Object notice(Model model, Locale locale) throws IOException {
 		LOGGER.info("noticeLocation: {}", noticeLocation);
 		if (!noticeLocation.startsWith("classpath")) {
-			WebClient webClient = WebClient.create();
-			Mono<ClientResponse> mono = webClient.get().uri(noticeLocation).exchange();
-			ClientResponse response = mono.block();
-			if (HttpStatus.OK == response.statusCode()) {
-				return response.bodyToMono(String.class).block();
+			try {
+				WebClient webClient = WebClient.create();
+				Mono<ClientResponse> mono = webClient.get().uri(noticeLocation).exchange();
+				ClientResponse response = mono.block();
+				if (HttpStatus.OK == response.statusCode()) {
+					return response.bodyToMono(String.class).block();
+				}
+				LOGGER.error("notice request fail: ", JSON.toJSONString(response));
+			} catch (Exception e) {
+				LOGGER.error("notice request fail: ", e);
 			}
-			LOGGER.error("notice request fail: ", JSON.toJSONString(response));
 		}
 		
 		Resource resource = resourceLoader.getResource("classpath:json/notice.json");

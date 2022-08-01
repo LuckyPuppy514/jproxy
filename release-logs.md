@@ -3,7 +3,11 @@
 
 # Release Logs
 
-## v2.5.1 2022-07-30
+## v2.5.1 2022-08-01
+
+1. New Function: Reachalbe test first when save proxy config
+
+## v2.5.1 2022-07-31
 
 1. Update README.md
 2. Fixed docker build error at aarch64 by changing sqlite-jdbc version to: 3.39.2-SNAPSHOT

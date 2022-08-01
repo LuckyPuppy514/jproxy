@@ -85,6 +85,7 @@ public class ProxyInterceptor implements HandlerInterceptor {
 	public void preProxy(ProxyConfig proxyConfig, ProxyParam proxyParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		proxyParam = getRequestUrl(proxyConfig, proxyParam);
 		proxyParam = getRequestParam(proxyParam, request);
+		LOGGER.info("url: {}{}, searchkey: {}", proxyParam.getProxyUrl(), proxyParam.getProxyPath(), proxyParam.getSearchKeyValue());
 		
 		// 格式化请求参数
 		String searchKey = FormatUtil.search(proxyParam.getSearchKeyValue(), JProxy.searchRuleList);
