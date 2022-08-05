@@ -183,6 +183,9 @@ Url Base: /qbittorrent
 
 ![20220804222930](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222930.png)
 
+🔥 千万别忘记修改 Remote Path Mappings 的 Host 为 JProxy 的 IP
+![20220805192340](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805192340.png)
+
 [详细使用说明见 Wiki](https://github.com/LuckyPuppy514/jproxy/wiki)
 
 ## 👏 相关仓库

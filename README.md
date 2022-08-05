@@ -183,6 +183,9 @@ Url Base: /qbittorrent
 
 ![20220804222930](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222930.png)
 
+🔥 don't forget change the Host of Remote Path Mappings
+![20220805192340](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805192340.png)
+
 [See Wiki For Detail](https://github.com/LuckyPuppy514/jproxy/wiki)
 
 ## 👏 Related Efforts
