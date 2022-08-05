@@ -9,9 +9,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.lckp.constant.Page;
+import com.lckp.interceptor.JackettInterceptor;
 import com.lckp.interceptor.LoginInterceptor;
 import com.lckp.interceptor.MarketServerInterceptor;
-import com.lckp.interceptor.ProxyInterceptor;
+import com.lckp.interceptor.ProwlarrInterceptor;
 
 /**
  * @ClassName: InterceptorConfiguration
@@ -22,34 +23,40 @@ import com.lckp.interceptor.ProxyInterceptor;
  */
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer {
-
+	
+	private final static String ALL_PATH = "/**";
+	private final static String[] LOGIN_PATH = {"/" + Page.LOGIN, "/adminUser/login", "/adminUser/captcha"};
+	private final static String[] STATIC_PATH = {"/lib/**", "/js/**"};
+	private final static String[] KNIFE4J_PATH = {"/swagger-resources", "/v2/**", "/webjars/**", "/doc.html", "/error"};
+	private final static String[] RULEMARKET_SERVER_PATH = {"/ruleMarket/server/**"};
+	
+	private final static String[] JACKETT_PROXY_PATH = {"/jackett/**"};
+	private final static String[] PROWLARR_PROXY_PATH = {"/prowlarr/**"};
+	private final static String[] QBITTORRENT_PROXY_PATH = {"/qbittorrent/**"};
+			
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 代理拦截器
-		registry.addInterceptor(new ProxyInterceptor())
-			// 拦截所有
-			.addPathPatterns("/**")
-			// 排除登录相关
-			.excludePathPatterns("/" + Page.LOGIN, "/adminUser/login", "/adminUser/captcha")
-			// 排除静态文件
-			.excludePathPatterns("/lib/**", "/js/**")
-			// 排除 knife4j
-			.excludePathPatterns("/swagger-resources", "/v2/**", "/webjars/**", "/doc.html")
-			.excludePathPatterns("/ruleTestExample/**", "/ruleConfig/**", "/proxyConfig/**", "/page/**", "/adminUser/**", "/ruleMarket/**");
-		
 		// 登录拦截器
 		registry.addInterceptor(new LoginInterceptor())
-			// 拦截所有
-			.addPathPatterns("/**")
+			.addPathPatterns(ALL_PATH)
 			// 排除登录相关
-			.excludePathPatterns("/" + Page.LOGIN, "/adminUser/login", "/adminUser/captcha")
-			// 排除静态文件
-			.excludePathPatterns("/lib/**", "/js/**")
+			.excludePathPatterns(LOGIN_PATH)
+			// 排除静态资源
+			.excludePathPatterns(STATIC_PATH)
 			// 排除 knife4j
-			.excludePathPatterns("/swagger-resources", "/v2/**", "/webjars/**", "/doc.html")
-			.excludePathPatterns("/ruleMarket/server/**");
+			.excludePathPatterns(KNIFE4J_PATH)
+			// 排除规则市场服务端
+			.excludePathPatterns(RULEMARKET_SERVER_PATH)
+			// 排除代理
+			.excludePathPatterns(JACKETT_PROXY_PATH)
+			.excludePathPatterns(PROWLARR_PROXY_PATH)
+			.excludePathPatterns(QBITTORRENT_PROXY_PATH);
+		
+		// 代理拦截器
+		registry.addInterceptor(new JackettInterceptor()).addPathPatterns(JACKETT_PROXY_PATH);
+		registry.addInterceptor(new ProwlarrInterceptor()).addPathPatterns(PROWLARR_PROXY_PATH);
 		
 		// 规则市场拦截器
-		registry.addInterceptor(new MarketServerInterceptor()).addPathPatterns("/ruleMarket/server/**");
+		registry.addInterceptor(new MarketServerInterceptor()).addPathPatterns(RULEMARKET_SERVER_PATH);
 	}
 }

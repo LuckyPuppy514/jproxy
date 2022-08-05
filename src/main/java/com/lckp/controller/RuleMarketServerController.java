@@ -2,8 +2,11 @@ package com.lckp.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +60,10 @@ public class RuleMarketServerController {
 	private IRuleTestExampleService ruleTestExampleService;
 	@Autowired
 	private MessageSource messageSource;
+	
+	private static Map<Integer, List<List<RuleConfigBatchParam>>> waitAddCountMap = new HashMap<>();
+	private static Integer thisMinute;
+	private static Integer lastMinute;
 	
 	@ApiOperation("分享")
 	@PostMapping("/share")
@@ -119,7 +127,7 @@ public class RuleMarketServerController {
 		for (RuleConfigAddParam ruleConfig : ruleConfigList) {
 			ruleConfig.setShareKey(null);
 		}
-		ruleConfigService.addDownloadCount(paramList);
+		addToWaitAddCountList(paramList);
 		return ResVo.success(ruleConfigList);
 	}
 	
@@ -150,5 +158,49 @@ public class RuleMarketServerController {
 		}
 
 		return ResVo.fail(Message.EDIT_FAIL, messageSource, locale);
+	}
+	
+	/**
+	 * 
+	 * @param paramList
+	 * @description: 把下载次数存进 list
+	 */
+	private void addToWaitAddCountList(List<RuleConfigBatchParam> paramList) {
+		if(thisMinute == null) {
+			thisMinute = Calendar.getInstance().get(Calendar.MINUTE);
+		}
+		List<List<RuleConfigBatchParam>> list = waitAddCountMap.get(thisMinute);
+		if(list == null) {
+			list = new ArrayList<List<RuleConfigBatchParam>>();
+		}
+		list.add(paramList);
+		waitAddCountMap.put(thisMinute, list);
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @description: 定时把上一分钟的下载次数入库
+	 */
+	@Scheduled(cron="0 0/1 * * * ?")
+	private void addCountTask() {
+		lastMinute = thisMinute;
+		thisMinute = Calendar.getInstance().get(Calendar.MINUTE);
+		LOGGER.debug("thisMinute: {}, lastMinute: {}", thisMinute, lastMinute);
+		if(lastMinute == null) {
+			return;
+		}
+		
+		List<List<RuleConfigBatchParam>> list = waitAddCountMap.get(lastMinute);
+		if (list == null || list.size() == 0) {
+			LOGGER.debug("lastMinute List: 0");
+			return;
+		}
+		
+		LOGGER.debug("lastMinute List: {}", list.size());
+		for (List<RuleConfigBatchParam> param : list) {
+			ruleConfigService.addDownloadCount(param);
+		}
+		waitAddCountMap.remove(lastMinute);
 	}
 }

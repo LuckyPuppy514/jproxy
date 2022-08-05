@@ -35,6 +35,9 @@
 		    	#{item}
 		    	</foreach>
 			</if>
+			<if test='param.remark != null and param.remark != ""'>
+			AND REMARK like '%${param.remark}%'
+			</if>
 		</where>
 		ORDER BY UPDATE_TIME DESC
 	</select>

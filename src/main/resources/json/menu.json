@@ -17,14 +17,20 @@
 			"child": [
 				{
 					"title": "API.JACKETT",
-					"href": "page/jackett-config",
+					"href": "page/Jackett-config",
 					"icon": "fa fa-user-secret",
 					"target": "_self"
 				},
 				{
 					"title": "API.PROWLARR",
-					"href": "page/prowlarr-config",
+					"href": "page/Prowlarr-config",
 					"icon": "fa fa-paypal",
+					"target": "_self"
+				},
+				{
+					"title": "API.QBITTORRENT",
+					"href": "page/qBittorrent-config",
+					"icon": "fa fa-cloud-download",
 					"target": "_self"
 				}
 			]

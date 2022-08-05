@@ -141,7 +141,35 @@
 			}
 			if (!window.location.search.includes("lang=")) {
 				window.location.href = "/?lang=" + localStorage.lang;
-			} 
+			}
+			
+			var READ_ID = '20220804';
+			var content = '[[#{PAGE.SYSTEM_NOTICE.CONTENT}]]';
+			if(localStorage.READ_ID != READ_ID){
+				var html = '<div style="padding:15px 20px; text-align:justify; line-height: 22px;background-color: #2f4056;color: #ffffff">\n' +
+                '<div style="font-size: 12px">' + content + '</div>\n' +
+                '</div>\n';
+
+				layer.open({
+					type: 1,
+					title: '[[#{PAGE.SYSTEM_NOTICE}]]'+'<span style="float: right;right: 1px;font-size: 12px;color: #b1b3b9;margin-top: 1px"></span>',
+					area: '300px;',
+					shade: 0.8,
+					id: 'layuimini-notice',
+					btn: ['[[#{PAGE.VIEW}]]'],
+					btnAlign: 'c',
+					moveType: 1,
+					content:html,
+					success: function (layero) {
+						var btn = layero.find('.layui-layer-btn');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'https://github.com/LuckyPuppy514/jproxy/blob/main/README.zh_CN.md#4-sonarr-%E9%85%8D%E7%BD%AE',
+							target: '_blank'
+						});
+						localStorage.READ_ID = READ_ID;
+					}
+				});
+			}
 		};
 
 		layui.use(['layer', 'miniAdmin', 'miniTongji', 'requestUtil'], function () {

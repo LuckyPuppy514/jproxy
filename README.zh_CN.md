@@ -146,15 +146,42 @@ startup.bat
 
 ### 3. 下载规则
 
-从市场下载规则或者自行新增规则
+从市场下载规则，推荐先下载我的规则【备注：@LuckyPuppy514】，其他规则按需下载
 
-![20220730111439](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730111439.png)
+![20220805162325](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805162325.png)
 
 ### 4. Sonarr 配置
 
-修改 Indexer 的 IP 和端口号为 JProxy 的 IP 和端口号
+修改 Indexer 的 IP 和端口号为 JProxy 的 IP，端口号以及路径
 
-![20220730111650](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730111650.png)
+```text
+# 原来的
+http://192.168.6.9:9117/api/v2.0/...
+http://192.168.6.9:9696/...
+
+# jackett
+http://192.168.6.9:8117/jackett/api/v2.0/...
+# prowlarr
+http://192.168.6.9:8117/prowlarr/...
+```
+
+![20220804222217](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222217.png)
+
+修改 qBittorrent 的 IP 和端口号为 JProxy 的 IP，端口号以及路径
+
+```text
+# 原来的
+Host: 192.168.6.9
+Port: 8080
+Url Base: 
+
+# jproxy
+Host: 192.168.6.9
+Port: 8117
+Url Base: /qbittorrent
+```
+
+![20220804222930](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222930.png)
 
 [详细使用说明见 Wiki](https://github.com/LuckyPuppy514/jproxy/wiki)
 

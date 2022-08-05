@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lckp.config.JProxy;
+import com.lckp.config.JProxyConfiguration;
 import com.lckp.mapper.IRuleConfigMapper;
 import com.lckp.model.RuleConfig;
 import com.lckp.param.RuleConfigAddParam;
@@ -33,7 +33,7 @@ public class RuleConfigServiceImpl implements IRuleConfigService {
 	@Autowired
 	private IRuleConfigMapper ruleConfigMapper;
 	@Autowired
-	private JProxy jproxy;
+	private JProxyConfiguration jproxyConfiguration;
 
 	/**
 	 * 新增规则配置
@@ -41,7 +41,7 @@ public class RuleConfigServiceImpl implements IRuleConfigService {
 	@Override
 	public int add(RuleConfigAddParam param) {
 		int result = ruleConfigMapper.add(param);
-		jproxy.initRuleConfig();
+		jproxyConfiguration.initRuleConfig();
 		return result;
 	}
 
@@ -79,7 +79,7 @@ public class RuleConfigServiceImpl implements IRuleConfigService {
 	@Override
 	public int changeValidstatus(List<RuleConfigBatchParam> paramList, String validstatus) {
 		int result = ruleConfigMapper.changeValidstatus(paramList, validstatus);
-		jproxy.initRuleConfig();
+		jproxyConfiguration.initRuleConfig();
 		return result;
 	}
 	
@@ -99,7 +99,7 @@ public class RuleConfigServiceImpl implements IRuleConfigService {
 		int sum = ruleConfigList.size();
         int success = ruleConfigMapper.importRuleConfig(ruleConfigList);
         LOGGER.info("共：{} 条数据，成功导入：{} 条数据", sum, success);
-        jproxy.initRuleConfig();
+        jproxyConfiguration.initRuleConfig();
 		return success;
 	}
 
@@ -125,7 +125,7 @@ public class RuleConfigServiceImpl implements IRuleConfigService {
 	@Override
 	public int editRuleConfig(RuleConfigEditParam param) {
 		int result = ruleConfigMapper.editRuleConfig(param);
-		jproxy.initRuleConfig();
+		jproxyConfiguration.initRuleConfig();
 		return result;
 	}
 

@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.1.RELEASE</version>
+		<version>2.3.4.RELEASE</version>
 	</parent>
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
 	<packaging>jar</packaging>
-	<version>2.5.2</version>
+	<version>2.6.0</version>
 	<name>JProxy</name>
 	<url>http://maven.apache.org</url>
 
@@ -23,6 +23,9 @@
 		<fastjson-version>2.0.8</fastjson-version>
 		<pig4cloud-captcha-version>2.2.2</pig4cloud-captcha-version>
 		<dom4j-version>2.1.1</dom4j-version>
+		<sqlite-jdbc-version>3.39.2.0</sqlite-jdbc-version>
+		<smiley-http-proxy-servlet-version>1.12.1</smiley-http-proxy-servlet-version>
+		<flyway-core-version>6.5.7</flyway-core-version>
 	</properties>
 
 	<dependencies>
@@ -88,7 +91,7 @@
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
-			<version>3.39.2-SNAPSHOT</version><!--$NO-MVN-MAN-VER$-->
+			<version>${sqlite-jdbc-version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<!-- 组件依赖包 -->
@@ -148,6 +151,15 @@
 			<groupId>org.dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>${dom4j-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.mitre.dsmiley.httpproxy</groupId>
+		    <artifactId>smiley-http-proxy-servlet</artifactId>
+		    <version>${smiley-http-proxy-servlet-version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
 		</dependency>
 	</dependencies>
 

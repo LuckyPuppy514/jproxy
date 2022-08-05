@@ -46,6 +46,9 @@ public class RuleConfigQueryParam {
 	
 	@ApiModelProperty(value = "已下载的规则配置 ID列表", hidden = true)
 	private List<String> ruleIdList;
+	
+	@ApiModelProperty(value = "备注", example = "@LuckyPuppy514")
+	private String remark;
 
 	/**
 	 * @return the pageIndex
@@ -185,6 +188,20 @@ public class RuleConfigQueryParam {
 	 */
 	public void setRuleIdList(List<String> ruleIdList) {
 		this.ruleIdList = ruleIdList;
+	}
+
+	/**
+	 * @return the remark
+	 */
+	public String getRemark() {
+		return remark;
+	}
+
+	/**
+	 * @param remark the remark to set
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 }

@@ -3,6 +3,11 @@
 
 # Release Logs
 
+## v2.6.0 2022-08-05
+1. New Function: qBittorrent Proxy
+2. New Function: add search condition: remark
+3. Fixed: import wrong season while sonarr unrecognize the title of torrent
+
 ## v2.5.2 2022-08-01
 
 1. New Function: Reachalbe test first when save proxy config
@@ -10,9 +15,9 @@
 ## v2.5.1 2022-07-31
 
 1. Update README.md
-2. Fixed docker build error at aarch64 by changing sqlite-jdbc version to: 3.39.2-SNAPSHOT
-3. Fixed sync error
-4. Fixed prowlarr error
+2. Fixed: docker build error at aarch64 by changing sqlite-jdbc version to: 3.39.2-SNAPSHOT
+3. Fixed: sync error
+4. Fixed: prowlarr error
 
 ## v2.5.0 2022-07-30
 

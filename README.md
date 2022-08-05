@@ -152,9 +152,36 @@ Download rules from market or add new rule by yourself
 
 ### 4. Sonarr Setting
 
-Modify indexer's ip and port to JProxy's ip and port
+Modify indexer's ip and port to JProxy's ip, port and add path
 
-![20220730111650](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730111650.png)
+```text
+# original
+http://192.168.6.9:9117/api/v2.0/...
+http://192.168.6.9:9696/...
+
+# jackett
+http://192.168.6.9:8117/jackett/api/v2.0/...
+# prowlarr
+http://192.168.6.9:8117/prowlarr/...
+```
+
+![20220804222217](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222217.png)
+
+Modify qBittorrent's ip and port to JProxy's ip, port and add path
+
+```text
+# original
+Host: 192.168.6.9
+Port: 8080
+Url Base: 
+
+# jproxy
+Host: 192.168.6.9
+Port: 8117
+Url Base: /qbittorrent
+```
+
+![20220804222930](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222930.png)
 
 [See Wiki For Detail](https://github.com/LuckyPuppy514/jproxy/wiki)
 

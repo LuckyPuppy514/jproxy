@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>[[${PROXY_CONFIG_TITLE}]]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        .layui-form-item .layui-input-company {
+            width: auto;
+            padding-right: 10px;
+            line-height: 38px;
+        }
+        .common-tip {
+			color: red;
+			font-size: 13px;
+		}
+		.readonly-background {
+			background:#F2F2F2
+		}
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container" style="background-color: #F2F2F2;">
+        <div class="layuimini-main">
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-md-offset3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">[[${PROXY_CONFIG_TITLE}]]</div>
+                        <div class="layui-card-body">
+                            <div class="layui-form layuimini-form" lay-filter="jackettForm">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label required">[[#{PAGE.PROXY_TYPE}]]</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" name="proxyType" value="Jackett" class="layui-input readonly-background"
+                                            readonly=true>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label required">[[#{PAGE.PROXY_IP}]]</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" name="proxyIp" lay-verify="required"
+                                            th:lay-reqtext="#{PAGE.PROXY_IP_CAN_NOT_BE_NULL}"
+                                            th:placeholder="#{PAGE.PLEASE_INPUT_PROXY_IP}" value="" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label required">[[#{PAGE.PROXY_PORT}]]</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" name="proxyPort" lay-verify="required"
+                                            th:lay-reqtext="#{PAGE.PROXY_PORT_CAN_NOT_BE_NULL}"
+                                            th:placeholder="#{PAGE.PLEASE_INPUT_PROXY_PORT}" value=""
+                                            class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label required">[[#{PAGE.PROXY_PATH}]]</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" name="proxyPath" lay-verify="required"
+                                            th:lay-reqtext="#{PAGE.PROXY_PATH_CAN_NOT_BE_NULL}"
+                                            th:placeholder="#{PAGE.PLEASE_INPUT_PROXY_PATH}" value=""
+                                            class="layui-input readonly-background" readonly=true>
+                                        <tip><a class="common-tip" th:href="${TIPS_HREF}" target="_blank">[[#{PAGE.TIPS.EDIT_PROXY_PATH_WARNING}]]</a></tip>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item" style="margin-left: 23%; margin-top: 5%;">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn layui-btn-normal" lay-submit
+                                            lay-filter="setting">[[#{PAGE.SAVE_CONFIRM}]]</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+
+    <script>
+    	var proxyType = '[[${PROXY_CONFIG_TITLE}]]';
+    	
+        layui.use(['form', 'layer', 'requestUtil'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                requestUtil = layui.requestUtil;
+
+            requestUtil.get("/proxyConfig/query", "proxyType=" + proxyType, (res) => {
+                form.val('jackettForm', res.data);
+            });
+
+            form.on('submit(setting)', function (data) {
+                let loadingIndex = layer.load(0, { time: 10 * 1000 });
+                requestUtil.get("/proxyConfig/test", data.field, (res) => {
+                    layer.close(loadingIndex);
+                    layer.confirm(res.msg, function (index) {
+                        requestUtil.postForm("/proxyConfig/modify", data.field, (data) => {
+                            layer.msg(data.msg);
+                        });
+                        layer.close(index);
+                    });
+                });
+
+                return false;
+            });
+
+        });
+    </script>
+</body>
+
+</html>

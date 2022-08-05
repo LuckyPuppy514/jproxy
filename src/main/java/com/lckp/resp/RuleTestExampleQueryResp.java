@@ -4,7 +4,7 @@
  */
 package com.lckp.resp;
 
-import com.lckp.config.JProxy;
+import com.lckp.config.JProxyConfiguration;
 import com.lckp.constant.RegularType;
 import com.lckp.util.FormatUtil;
 
@@ -102,9 +102,9 @@ public class RuleTestExampleQueryResp {
 	public String getAfterFormat() {
 		if (formatStatus == null) {
 			if (regularType != null && regularType.equals(RegularType.Search.toString())) {
-				afterFormat = FormatUtil.format(afterFormat, JProxy.searchRuleList);
+				afterFormat = FormatUtil.format(afterFormat, JProxyConfiguration.searchRuleList);
 			} else {
-				afterFormat = FormatUtil.format(afterFormat, JProxy.resultRuleList);
+				afterFormat = FormatUtil.format(afterFormat, JProxyConfiguration.resultRuleList);
 			}
 			
 			if (!afterFormat.equals(beforeFormat)) {

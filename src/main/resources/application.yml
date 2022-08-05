@@ -1,7 +1,9 @@
 spring:
    profiles:
       active: '@spring.profiles.active@'
-
+   liquibase:
+      changeLog: classpath:/db/master.xml
+      
 project:
    code: '@project.artifactId@'
    name: '@project.name@'

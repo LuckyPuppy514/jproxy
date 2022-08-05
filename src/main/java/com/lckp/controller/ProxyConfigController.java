@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.lckp.config.JProxy;
+import com.lckp.config.JProxyConfiguration;
 import com.lckp.constant.Message;
 import com.lckp.constant.ProxyType;
 import com.lckp.model.ProxyConfig;
@@ -89,14 +89,19 @@ public class ProxyConfigController {
 		
 		if (proxyConfigService.modify(param) > 0) {
 			if (param.getProxyType().equals(ProxyType.Jackett.toString())) {
-				JProxy.jackett.setProxyIp(param.getProxyIp());
-				JProxy.jackett.setProxyPort(param.getProxyPort());
-				JProxy.jackett.setProxyPath(param.getProxyPath());
+				JProxyConfiguration.jackett.setProxyIp(param.getProxyIp());
+				JProxyConfiguration.jackett.setProxyPort(param.getProxyPort());
+				JProxyConfiguration.jackett.setProxyPath(param.getProxyPath());
 				
 			} else if(param.getProxyType().equals(ProxyType.Prowlarr.toString())) {
-				JProxy.prowlarr.setProxyIp(param.getProxyIp());
-				JProxy.prowlarr.setProxyPort(param.getProxyPort());
-				JProxy.prowlarr.setProxyPath(param.getProxyPath());
+				JProxyConfiguration.prowlarr.setProxyIp(param.getProxyIp());
+				JProxyConfiguration.prowlarr.setProxyPort(param.getProxyPort());
+				JProxyConfiguration.prowlarr.setProxyPath(param.getProxyPath());
+				
+			} else if(param.getProxyType().equals(ProxyType.qBittorrent.toString())) {
+				JProxyConfiguration.qBittorrent.setProxyIp(param.getProxyIp());
+				JProxyConfiguration.qBittorrent.setProxyPort(param.getProxyPort());
+				JProxyConfiguration.qBittorrent.setProxyPath(param.getProxyPath());
 			}
 			
 			return ResVo.success(Message.MODIFY_SUCCESS, messageSource, locale);

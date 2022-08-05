@@ -72,10 +72,23 @@ public class PageController {
 		return Page.HOME;
 	}
 	
+	@GetMapping("/{proxyType}-config")
+	public String proxyConfig(@PathVariable(value="proxyType") String proxyType, Model model, Locale locale) {
+		model.addAttribute("PROXY_CONFIG_TITLE", proxyType);
+		model.addAttribute("PROXY_TYPE", proxyType);
+		if ("en_US".equals(locale.toString())) {
+			model.addAttribute("TIPS_HREF", "https://github.com/LuckyPuppy514/jproxy/blob/main/README.md#4-sonarr-setting");
+		} else {
+			model.addAttribute("TIPS_HREF", "https://github.com/LuckyPuppy514/jproxy/blob/main/README.zh_CN.md#4-sonarr-%E9%85%8D%E7%BD%AE");
+		}
+		
+		return "page/proxy-config";
+	}
+	
 	@GetMapping("/{pageName}")
 	public String pageName(@PathVariable(value="pageName") String pageName) {
 		return "page/" + pageName;
-	}	
+	}
 	
 	@GetMapping("/menu")
 	@ResponseBody

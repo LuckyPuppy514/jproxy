@@ -77,7 +77,7 @@
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">[[#{PAGE.EXECUTE_RULE}]]</label>
                                             <div class="layui-input-block">
-                                                <select lay-verify="required" name="executeRule" id="executeRule">
+                                                <select lay-verify="required" name="executeRule" id="executeRule" lay-filter="executeRule">
                                                     <option value="Once" selected>[[#{PAGE.EXECUTE_RULE.ONCE}]]
                                                     </option>
                                                     <option value="Always">[[#{PAGE.EXECUTE_RULE.ALWAYS}]]
@@ -90,10 +90,10 @@
                                             <label
                                                 class="layui-form-label required">[[#{PAGE.EXECUTE_PRIORITY}]]</label>
                                             <div class="layui-input-block">
-                                                <input name="executePriority" type="number"
+                                                <input name="executePriority" id="executePriority" type="number"
                                                     th:placeholder="#{PAGE.PLEASE_INPUT_EXECUTE_PRIORITY}"
                                                     class="layui-input" lay-verify="required|number" required
-                                                    value="800" />
+                                                    value="2000" />
                                                 <tip class="common-tip">[[#{PAGE.TIPS.EXECUTE_PRIORITY}]]</tip>
                                             </div>
                                         </div>
@@ -234,6 +234,14 @@
                 disabledExcuteRule(data.value);
                 return false;
             });
+            form.on('select(executeRule)', function (data) {
+                if(data.value == 'Once'){
+					$('#executePriority').val('2000');
+				} else {
+					$('#executePriority').val('4000');
+				}
+                return false;
+            });
 
             form.on('submit(formStep1)', function (data) {
                 localStorage.setItem("add-rule", JSON.stringify(data.field));
@@ -258,7 +266,7 @@
                         formStep2.removeAttribute('disabled'); 
                     } else {
                         layer.msg(res.msg);
-                    }                    
+                    }
                 });
                 return false;
             });

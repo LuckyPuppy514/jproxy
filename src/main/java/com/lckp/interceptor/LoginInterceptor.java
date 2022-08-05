@@ -13,10 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.lckp.config.JProxy;
+import com.lckp.config.JProxyConfiguration;
 import com.lckp.constant.Field;
 import com.lckp.constant.Page;
-import com.lckp.param.ProxyParam;
 
 /**
  * @className: LoginInterceptor
@@ -34,14 +33,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String path = request.getServletPath();
 		LOGGER.debug("登录拦截器：{}", path);
 
+		if (!JProxyConfiguration.isInit()) {
+			response.getOutputStream().write("Loading ... Please wait a minute.".getBytes());
+			return false;
+		}
+		
 		// 登录状态校验
 		if (!checkLogin(request)) {
-			ProxyParam proxyParam = new ProxyParam();
-			proxyParam.setProxyPath(path);
-			if (null != JProxy.jackett 
-					&& (path.matches(JProxy.jackett.getProxyPath()) || path.matches(JProxy.prowlarr.getProxyPath()))) {
-				return true;
-			}
 			response.sendRedirect("/" + Page.LOGIN);
 			return false;
 		}

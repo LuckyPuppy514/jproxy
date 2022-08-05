@@ -1,23 +1,22 @@
 [中文](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.zh_CN.md) | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.md)
 
 - [🐳 Advanced Usage](#-advanced-usage)
-  - [1. Proxy Path Setting](#1-proxy-path-setting)
-  - [2. Add Rule](#2-add-rule)
-    - [2.1. Basic Attributes](#21-basic-attributes)
-    - [2.2. Match Regular](#22-match-regular)
-    - [2.3. Regular Expressions](#23-regular-expressions)
-  - [3. Rule Manage](#3-rule-manage)
+  - [1. Add Rule](#1-add-rule)
+    - [1.1. Basic Attributes](#11-basic-attributes)
+    - [1.2. Match Regular](#12-match-regular)
+    - [1.3. Regular Expressions](#13-regular-expressions)
+  - [2. Rule Manage](#2-rule-manage)
+    - [2.1. Search](#21-search)
+    - [2.2. Enable, Disable, Delete](#22-enable-disable-delete)
+    - [2.3. Share](#23-share)
+    - [2.4. Import, Export](#24-import-export)
+    - [2.5. Edit](#25-edit)
+  - [3. Rule Market](#3-rule-market)
     - [3.1. Search](#31-search)
-    - [3.2. Enable, Disable, Delete](#32-enable-disable-delete)
-    - [3.3. Share](#33-share)
-    - [3.4. Import, Export](#34-import-export)
-    - [3.5. Edit](#35-edit)
-  - [4. Rule Market](#4-rule-market)
-    - [4.1. Search](#41-search)
-    - [4.2. Dowanload](#42-dowanload)
-  - [5. Test Example](#5-test-example)
-    - [5.1. Add](#51-add)
-    - [5.2. Search](#52-search)
+    - [3.2. Dowanload](#32-dowanload)
+  - [4. Test Example](#4-test-example)
+    - [4.1. Add](#41-add)
+    - [4.2. Search](#42-search)
 - [😰 Common Problem](#-common-problem)
   - [1. Captcha Error](#1-captcha-error)
   - [2. Modify Running Port](#2-modify-running-port)
@@ -26,27 +25,9 @@
 
 # 🐳 Advanced Usage
 
-## 1. Proxy Path Setting
+## 1. Add Rule
 
-If Jackett / Prowlarr have setted a special base path，like：/jackett, and api path like:
-
-```text
-http://127.0.0.1:9117/jackett/api/...
-```
-
-and then proxy path should be like:
-
-```text
-/jackett/api/.*
-```
-
-> 🔥warning🔥: proxy path match with regular expressions
-
-![20220730145817](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730145817.png)
-
-## 2. Add Rule
-
-### 2.1. Basic Attributes
+### 1.1. Basic Attributes
 
 | Attribute | Required | Affect the execution effect | explanation |
 | :---: | :---: | :------: | :------: |
@@ -63,7 +44,7 @@ and then proxy path should be like:
 
 ![20220730151458](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730151458.png)
 
-### 2.2. Match Regular
+### 1.2. Match Regular
 
 | Attribute | Required | Affect the execution effect | explanation |
 | :---: | :---: | :------: | :------: |
@@ -75,7 +56,7 @@ and then proxy path should be like:
 
 ![20220730151642](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730151642.png)
 
-### 2.3. Regular Expressions
+### 1.3. Regular Expressions
 
 Sonarr Anime Title Format Suggestion
 
@@ -131,9 +112,9 @@ format result:
 [发布组][所有字符B] 所有字符A 1个或多个数字 所有字符C
 ```
 
-## 3. Rule Manage
+## 2. Rule Manage
 
-### 3.1. Search
+### 2.1. Search
 
 - RuleName：Fuzzy
 
@@ -141,57 +122,57 @@ format result:
 
 ![20220730153625](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730153625.png)
 
-### 3.2. Enable, Disable, Delete
+### 2.2. Enable, Disable, Delete
 
 choose and click the button
 > 🔥warning🔥: only disable rule can be deleted
 
 ![20220730153808](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730153808.png)
 
-### 3.3. Share
+### 2.3. Share
 
 choose and click share button at top right
 
-> 🔥warning🔥: only local rule can be shared (local rule: -), rules shared will sync edit by author, but validstatus will not sync
+> 🔥warning🔥: only local rule can be shared (local rule: -), rules shared will sync edit by author, but delete or validstatus will not sync
 
 ![20220730154233](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730154233.png)
 
-### 3.4. Import, Export
+### 2.4. Import, Export
 
 ![20220730154320](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730154320.png)
 
-### 3.5. Edit
+### 2.5. Edit
 
 > 🔥warning🔥: rule from market will sync author edit every hour, so it is suggested that if you want to edit it, please add it by yourself
 
 ![20220730154639](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730154639.png)
 
-## 4. Rule Market
+## 3. Rule Market
 
-### 4.1. Search
+### 3.1. Search
 
 - RuleName：Fuzzy
 - Others：Exact
 
 ![20220730154717](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730154717.png)
 
-### 4.2. Dowanload
+### 3.2. Dowanload
 
 search and choose, click download button at top right
 
 ![20220730154147](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730154147.png)
 
-## 5. Test Example
+## 4. Test Example
 
 > test rule more easily
 
-### 5.1. Add
+### 4.1. Add
 
 choose rule, and input title you want to test, one for per line
 
 ![20220730154947](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730154947.png)
 
-### 5.2. Search
+### 4.2. Search
 
 > 🔥warning🔥: pass only mean that match success, sonarr will not accept it 100 percent
 

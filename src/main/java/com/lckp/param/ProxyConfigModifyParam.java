@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel("修改代理配置入参")
 public class ProxyConfigModifyParam {
-	@ApiModelProperty(value = "代理类型（Jackett/Prowlarr）", example = "Jackett", required = true)
+	@ApiModelProperty(value = "代理类型（Jackett/Prowlarr/qBittorrent）", example = "Jackett", required = true)
 	private String proxyType;
 	
 	@ApiModelProperty(value = "代理地址", example = "127.0.0.1", required = true)

@@ -1,11 +1,13 @@
 spring:
    profiles:
       active: 'prod'
-
+   liquibase:
+      changeLog: classpath:/db/master.xml
+      
 project:
    code: 'jproxy'
    name: 'JProxy'
-   version: '2.5.2'
+   version: '2.6.0'
 
 server:
    port: 8117

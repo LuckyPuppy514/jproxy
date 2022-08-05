@@ -11,5 +11,5 @@ package com.lckp.constant;
  * @author LuckyPuppy514
  */
 public enum ProxyType {
-	Jackett, Prowlarr
+	Jackett, Prowlarr, qBittorrent
 }

@@ -21,7 +21,7 @@ public class MarketServerInterceptor implements HandlerInterceptor {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MarketServerInterceptor.class);
 	
-	private static final long expire = 1000 * 60 * 60 * 24;
+	private static final long EXPIRE = 1000 * 60 * 60 * 24;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -29,7 +29,7 @@ public class MarketServerInterceptor implements HandlerInterceptor {
 		String timestamp = request.getHeader("timestamp");
 		LOGGER.info("时间戳：{}", timestamp);
 		// 简单校验时间戳
-		if (timestamp == null || Math.abs(Long.parseLong(timestamp) - System.currentTimeMillis()) > expire) {
+		if (timestamp == null || Math.abs(Long.parseLong(timestamp) - System.currentTimeMillis()) > EXPIRE) {
 			return false;
 		}
 		

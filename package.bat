@@ -1,4 +1,6 @@
-@echo off 
+@echo off
+del /f /s /q "target\*"
+
 call mvn clean package -Dmaven.test.skip=true -P jar
 del /f /s /q "release\jar\config\*"
 del /f /s /q "release\jar\jproxy.jar"
