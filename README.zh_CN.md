@@ -140,9 +140,9 @@ startup.bat
 
 ### 2. 配置
 
-配置 Jackett / Prowlarr 的 IP 和端口号
+配置 Jackett / Prowlarr 以及 qBittorrent 的 IP 和端口号
 
-![20220730111040](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730111040.png)
+![20220805165953](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805165953.png)
 
 ### 3. 下载规则
 

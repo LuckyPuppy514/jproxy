@@ -140,9 +140,9 @@ PASSWORD: jproxy@2022
 
 ### 2. Setting
 
-Setting Jackett / Prowlarr ip and port
+Setting Jackett / Prowlarr and qBittorrent ip and port
 
-![20220730112857](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220730112857.png)
+![20220805170054](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805170054.png)
 
 ### 3. Download Rules
 
