@@ -165,7 +165,7 @@ http://192.168.6.9:8117/jackett/api/v2.0/...
 http://192.168.6.9:8117/prowlarr/...
 ```
 
-![20220804222217](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222217.png)
+![20220805174036](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805174036.png)
 
 Modify qBittorrent's ip and port to JProxy's ip, port and add path
 
