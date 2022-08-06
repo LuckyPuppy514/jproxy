@@ -3,6 +3,9 @@
 
 # Release Logs
 
+## v2.6.1 2022-08-07
+1. Fixed: part of BT/PT indexers can not download while use qBittorrent proxy
+
 ## v2.6.0 2022-08-05
 1. New Function: qBittorrent Proxy
 2. New Function: add search condition: remark

@@ -32,8 +32,8 @@ public class ProwlarrInterceptor extends IndexerProxy implements HandlerIntercep
 		String path = request.getServletPath().substring(9);
 		LOGGER.debug("Prowlarr Proxy: {}", path);
 		
-		if (null == JProxyConfiguration.prowlarr) {
-			LOGGER.error("JProxyConfiguration.prowlarr is null");
+		if(!JProxyConfiguration.isInit()) {
+			LOGGER.error("数据未初始化，请稍后再试");
 			return false;
 		}
 		

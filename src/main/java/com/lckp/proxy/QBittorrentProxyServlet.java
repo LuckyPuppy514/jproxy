@@ -34,7 +34,7 @@ public class QBittorrentProxyServlet extends ProxyServlet {
 	@Override
     protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
 		if(!JProxyConfiguration.isInit()) {
-			LOGGER.error("数据未初始化");
+			LOGGER.error("数据未初始化，请稍后再试");
 			return;
 		}
 		StringBuffer buffer = new StringBuffer();

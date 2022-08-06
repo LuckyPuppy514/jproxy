@@ -118,10 +118,21 @@ public class JProxyConfiguration {
 	 * @description: 检查数据是否已经初始化
 	 */
 	public static boolean isInit() {
-		if(jackett == null || prowlarr == null || qBittorrent == null || searchRuleList == null || resultRuleList == null) {
-			LOGGER.info("数据未初始化，请稍等");
+		int count = 0;
+		while (count < 3 && (jackett == null || prowlarr == null || qBittorrent == null || searchRuleList == null || resultRuleList == null)) {
+			LOGGER.info("等待数据初始化...");
+			try {
+				Thread.sleep(2000);
+			} catch (Exception e) {
+				LOGGER.error("等待数据初始化出错", e);
+			}
+			count++;
+		}
+		
+		if (jackett == null || prowlarr == null || qBittorrent == null || searchRuleList == null || resultRuleList == null) {
 			return false;
 		}
+		
 		return true;
 	}
 }

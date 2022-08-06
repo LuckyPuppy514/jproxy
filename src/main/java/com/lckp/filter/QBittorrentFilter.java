@@ -5,7 +5,6 @@
 package com.lckp.filter;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,12 +13,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.lckp.proxy.QBittorrentProxy;
 
 /**
  * @className: QBittorrentFilter
@@ -28,17 +24,24 @@ import com.lckp.proxy.QBittorrentProxy;
  * @author LuckyPuppy514
  */
 @WebFilter(filterName = "qBittorrentFilter", urlPatterns = "/qbittorrent/api/v2/torrents/add")
-public class QBittorrentFilter extends QBittorrentProxy implements Filter {
+public class QBittorrentFilter implements Filter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QBittorrentFilter.class);
-	
+
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-			throws IOException, ServletException {		
+			throws IOException, ServletException {
+		HttpServletRequest qBittorrentRequestWrapper = null;
 		try {
-			addTorrentAndRename((HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse);
-			return;
-		} catch (URISyntaxException | IOException e) {
+			qBittorrentRequestWrapper = new QBittorrentRequestWrapper((HttpServletRequest) servletRequest);
+		} catch (Exception e) {
 			LOGGER.error("添加种子并重命名出错：{}", e);
+		}
+
+		if (qBittorrentRequestWrapper != null) {
+			filterChain.doFilter(qBittorrentRequestWrapper, servletResponse);
+
+		} else {
+			filterChain.doFilter(servletRequest, servletResponse);
 		}
 	}
 }

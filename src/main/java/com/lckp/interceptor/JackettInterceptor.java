@@ -32,8 +32,8 @@ public class JackettInterceptor extends IndexerProxy implements HandlerIntercept
 		String path = request.getServletPath().substring(8);
 		LOGGER.debug("Jackett Proxy: {}", path);
 		
-		if (null == JProxyConfiguration.jackett) {
-			LOGGER.error("JProxyConfiguration.jackett is null");
+		if(!JProxyConfiguration.isInit()) {
+			LOGGER.error("数据未初始化，请稍后再试");
 			return false;
 		}
 		
