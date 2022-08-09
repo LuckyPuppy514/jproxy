@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.lckp.config.JProxyConfiguration;
-import com.lckp.constant.Field;
 import com.lckp.constant.ProxyType;
 import com.lckp.param.ProxyParam;
 import com.lckp.proxy.IndexerProxy;
@@ -38,9 +37,7 @@ public class JackettInterceptor extends IndexerProxy implements HandlerIntercept
 		}
 		
 		ProxyParam proxyParam = new ProxyParam();
-		proxyParam.setProxyPath(path);
 		proxyParam.setProxyType(ProxyType.Jackett);
-		proxyParam.setSearchKeyField(Field.JACKETT_SEARCH_KEY);
 		proxyParam.setProxyPath(path);
 		preProxy(JProxyConfiguration.jackett, proxyParam, request, response);
 		return false;

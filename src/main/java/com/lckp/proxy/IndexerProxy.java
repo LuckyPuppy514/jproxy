@@ -6,17 +6,13 @@ package com.lckp.proxy;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import com.lckp.config.JProxyConfiguration;
 import com.lckp.constant.Field;
 import com.lckp.constant.ProxyType;
+import com.lckp.constant.SearchType;
 import com.lckp.model.ProxyConfig;
 import com.lckp.param.ProxyParam;
 import com.lckp.util.FormatUtil;
@@ -50,12 +47,9 @@ public class IndexerProxy {
 	public void preProxy(ProxyConfig proxyConfig, ProxyParam proxyParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		proxyParam = getRequestUrl(proxyConfig, proxyParam);
 		proxyParam = getRequestParam(proxyParam, request);
-		LOGGER.info("url: {}{}, searchkey: {}", proxyParam.getProxyUrl(), proxyParam.getProxyPath(), proxyParam.getSearchKeyValue());
-		
-		// 格式化请求参数
-		String searchKey = FormatUtil.search(proxyParam.getSearchKeyValue(), JProxyConfiguration.searchRuleList);
-		proxyParam.setSearchKeyValue(searchKey);
-		
+		LOGGER.info("url: {}{}", proxyParam.getProxyUrl(), proxyParam.getProxyPath());
+		LOGGER.info("searchKey: {}", proxyParam.getSearchKey());
+		LOGGER.info("paramString: {}", proxyParam.getParamString().replaceAll("apikey=[a-zA-Z0-9]+&", "apikey=******&"));
 		proxy(proxyParam, response);
 		
 	}
@@ -69,8 +63,6 @@ public class IndexerProxy {
 	 */
 	public void proxy(ProxyParam proxyParam, HttpServletResponse response) throws Exception {
 		String resultXml = get(proxyParam);
-		// 有水友的 Sonarr 会根据绝对集数搜索，所以先注释掉
-		// resultXml = trySearchWithoutSeasonAndEpisode(resultXml, proxyParam);
 		afterProxy(resultXml, response);
 	}
 	
@@ -113,22 +105,42 @@ public class IndexerProxy {
 	 * @description: 获取所有请求参数
 	 */
 	public ProxyParam getRequestParam(ProxyParam proxyParam, HttpServletRequest request) {		
-		Map<String, String[]> paramMap = request.getParameterMap();
-		StringBuffer buffer = new StringBuffer();
-		String searchKeyValue = null;
-		
-		for (String key : paramMap.keySet()) {
-			String value = paramMap.get(key)[0];
-			if (proxyParam.getSearchKeyField().equals(key)) {	
-				searchKeyValue = value;
-				continue;
+		Map<String, String[]> paramMap = new HashMap<>(request.getParameterMap());
+
+		// 获取查询关键字
+		String[] values = paramMap.get(Field.SEARCH_KEY);
+		if (null != values) {
+			proxyParam.setSearchKey(values[0]);
+			paramMap.remove(Field.SEARCH_KEY);
+		}
+		// 获取查询类型
+		values = paramMap.get(Field.SEARCH_TYPE);
+		if (null != values) {
+			String searchType = values[0];
+			proxyParam.setSearchType(searchType);
+			if(SearchType.tvsearch.toString().equals(searchType)) {
+				// 获取季
+				values = paramMap.get(Field.SEASON);
+				if (null != values) {
+					proxyParam.setSeason(values[0]);
+					paramMap.remove(Field.SEASON);
+				}
+				// 获取集
+				values = paramMap.get(Field.EP);
+				if (null != values) {
+					proxyParam.setEp(values[0]);
+					paramMap.remove(Field.EP);
+				}
 			}
-			buffer.append("&" + key + "=" + value);
+		}
+		
+		// 其他字段
+		StringBuffer buffer = new StringBuffer();
+		for (String key : paramMap.keySet()) {
+			buffer.append("&" + key + "=" + paramMap.get(key)[0]);
 		}
 		String paramString = buffer.replace(0, 1, "?").toString();
-		
 		proxyParam.setParamString(paramString);
-		proxyParam.setSearchKeyValue(searchKeyValue);
 		return proxyParam;
 	}
 	
@@ -140,17 +152,6 @@ public class IndexerProxy {
 	 */
 	public String get(ProxyParam proxyParam) {
 		StringBuffer buffer = new StringBuffer();
-		if (StringUtils.isNotBlank(proxyParam.getSearchKeyValue())) {
-			buffer.append(proxyParam.getParamString());
-			buffer.append("&" + proxyParam.getSearchKeyField() + "=" + proxyParam.getSearchKeyValue());
-			proxyParam.setParamString(buffer.toString());
-		}
-		
-		LOGGER.debug("Proxy Url: {}", proxyParam.getProxyUrl());
-		LOGGER.debug("Proxy Path: {}", proxyParam.getProxyPath());
-		LOGGER.debug("Proxy Param: {}", proxyParam.getParamString().replaceAll("apikey=[a-zA-Z0-9]+&", "apikey=******&"));
-		
-		buffer = new StringBuffer();
 		buffer.append(proxyParam.getProxyUrl());
 		buffer.append(proxyParam.getProxyPath());
 		buffer.append(proxyParam.getParamString());
@@ -167,35 +168,5 @@ public class IndexerProxy {
 		}
 		LOGGER.debug("Proxy Result: {}", xml);
 		return xml;
-	}
-	
-	/**
-	 * 
-	 * @param xml
-	 * @return
-	 * @throws DocumentException
-	 * @description: 尝试去除季集信息，只用标题查询
-	 */
-	public String trySearchWithoutSeasonAndEpisode(String resultXml, ProxyParam proxyParam) throws Exception {
-		if (StringUtils.isBlank(resultXml)) {
-			return null;
-		}
-		Document document = DocumentHelper.parseText(resultXml);
-		Element root = document.getRootElement();
-		Element channel = root.element(Field.RESP_CHANNEL);
-
-		/*
-		 * 如果查询结果为空，且非第一季，尝试只用标题查询
-		 * 原因：Sonarr 没有使用绝对集数查询，会导致只含绝对集数的结果不能被查询到
-		 */
-		if (channel != null && channel.element(Field.RESP_ITEM) == null) {
-			String searchKeyValue = proxyParam.getSearchKeyValue();
-			if (Pattern.matches(".* S\\d+ \\d+$", searchKeyValue)) {
-				searchKeyValue = searchKeyValue.replaceAll(" S\\d+ \\d+$", "");
-				proxyParam.setSearchKeyValue(searchKeyValue);
-				return get(proxyParam);
-			}
-		}
-		return resultXml;
 	}
 }

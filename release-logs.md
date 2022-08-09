@@ -3,6 +3,9 @@
 
 # Release Logs
 
+## v2.6.2 2022-08-10
+1. Fixed: can not format season and ep or date in search key while series type is Standard or Daily
+
 ## v2.6.1 2022-08-07
 1. Fixed: part of BT/PT indexers can not download while use qBittorrent proxy
 

@@ -16,10 +16,14 @@ public class Field {
 	// 标题
 	public static final String TITLE = "title";
 
-	// Jackett接口查询关键字字段
-	public static final String JACKETT_SEARCH_KEY = "q";
-	// Prowlarr接口查询关键字字段
-	public static final String PROWLARR_SEARCH_KEY = "q";
+	// Jackett / Prowlarr 接口查询关键字字段
+	public static final String SEARCH_KEY = "q";
+	// Jackett / Prowlarr 接口查询类型字段
+	public static final String SEARCH_TYPE = "t";
+	// Jackett / Prowlarr 接口季字段
+	public static final String SEASON = "season";
+	// Jackett / Prowlarr 接口集字段
+	public static final String EP = "ep";
 	
 	// Jackett/Prowlarr返回结果相关字段
 	public static final String RESP_CHANNEL = "channel";

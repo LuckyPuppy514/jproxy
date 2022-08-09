@@ -11,7 +11,7 @@
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
 	<packaging>jar</packaging>
-	<version>2.6.1</version>
+	<version>2.6.2</version>
 	<name>JProxy</name>
 	<url>http://maven.apache.org</url>
 
@@ -189,6 +189,7 @@
                 <spring.profiles.active>dev</spring.profiles.active>
                 <spring.datasource.url>jdbc:sqlite::resource:db/sqlite.db</spring.datasource.url>
                 <api.rule-market>https://jproxy.lckp.top</api.rule-market>
+                <cron.add-count>-</cron.add-count>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -200,6 +201,7 @@
                 <spring.profiles.active>prod</spring.profiles.active>
                 <spring.datasource.url>jdbc:sqlite:./config/sqlite.db</spring.datasource.url>
                 <api.rule-market>https://jproxy.lckp.top</api.rule-market>
+                <cron.add-count>-</cron.add-count>
             </properties>
         </profile>
         <profile>
@@ -208,6 +210,7 @@
                 <spring.profiles.active>prod</spring.profiles.active>
                 <spring.datasource.url>jdbc:sqlite:/app/config/sqlite.db</spring.datasource.url>
                 <api.rule-market>https://jproxy.lckp.top</api.rule-market>
+                <cron.add-count>-</cron.add-count>
             </properties>
         </profile>
         <profile>
@@ -216,6 +219,7 @@
                 <spring.profiles.active>prod</spring.profiles.active>
                 <spring.datasource.url>jdbc:sqlite:./config/sqlite.db</spring.datasource.url>
                 <api.rule-market>http://127.0.0.1:8117</api.rule-market>
+                <cron.add-count>0 0/1 * * * ?</cron.add-count>
             </properties>
         </profile>
     </profiles>

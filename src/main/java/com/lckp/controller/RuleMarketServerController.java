@@ -182,22 +182,22 @@ public class RuleMarketServerController {
 	 * 
 	 * @description: 定时把上一分钟的下载次数入库
 	 */
-	@Scheduled(cron="0 0/1 * * * ?")
+	@Scheduled(cron="${cron.add-count}")
 	private void addCountTask() {
 		lastMinute = thisMinute;
 		thisMinute = Calendar.getInstance().get(Calendar.MINUTE);
-		LOGGER.debug("thisMinute: {}, lastMinute: {}", thisMinute, lastMinute);
+		LOGGER.info("thisMinute: {}, lastMinute: {}", thisMinute, lastMinute);
 		if(lastMinute == null) {
 			return;
 		}
 		
 		List<List<RuleConfigBatchParam>> list = waitAddCountMap.get(lastMinute);
 		if (list == null || list.size() == 0) {
-			LOGGER.debug("lastMinute List: 0");
+			LOGGER.info("lastMinute List: 0");
 			return;
 		}
 		
-		LOGGER.debug("lastMinute List: {}", list.size());
+		LOGGER.info("lastMinute List: {}", list.size());
 		for (List<RuleConfigBatchParam> param : list) {
 			ruleConfigService.addDownloadCount(param);
 		}

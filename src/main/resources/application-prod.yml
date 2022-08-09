@@ -37,3 +37,6 @@ notice:
 
 api:
   rule-market: '@api.rule-market@'
+
+cron:
+  add-count: '@cron.add-count@'
