@@ -16,14 +16,14 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -33,7 +33,6 @@ import com.lckp.constant.Page;
 import com.lckp.interceptor.LoginInterceptor;
 
 import io.swagger.annotations.Api;
-import reactor.core.publisher.Mono;
 
 /**
  * @ClassName: PageController
@@ -133,11 +132,10 @@ public class PageController {
 		LOGGER.info("noticeLocation: {}", noticeLocation);
 		if (!noticeLocation.startsWith("classpath")) {
 			try {
-				WebClient webClient = WebClient.create();
-				Mono<ClientResponse> mono = webClient.get().uri(noticeLocation).exchange();
-				ClientResponse response = mono.block();
-				if (HttpStatus.OK == response.statusCode()) {
-					return response.bodyToMono(String.class).block();
+				RestTemplate restTemplate = new RestTemplate();
+				ResponseEntity<String> response = restTemplate.getForEntity(noticeLocation, String.class);
+				if (response.getStatusCode() == HttpStatus.OK) {
+					return response.getBody();
 				}
 				LOGGER.error("notice request fail: ", JSON.toJSONString(response));
 			} catch (Exception e) {

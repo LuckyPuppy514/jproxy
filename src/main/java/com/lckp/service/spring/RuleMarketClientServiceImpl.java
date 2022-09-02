@@ -11,11 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
 import com.lckp.mapper.IRuleMarketClientMapper;
@@ -23,8 +25,6 @@ import com.lckp.param.RuleConfigAddParam;
 import com.lckp.param.RuleConfigBatchParam;
 import com.lckp.resp.RuleMarketServerShareResp;
 import com.lckp.service.facade.IRuleMarketClientService;
-
-import reactor.core.publisher.Mono;
 
 /**
 * @ClassName: RuleMarketClientServiceImpl
@@ -79,15 +79,13 @@ public class RuleMarketClientServiceImpl implements IRuleMarketClientService {
 	public String post(String path, Object param) {
 		path = clientToServer(path);
 		LOGGER.debug("post: {}, {}", path, JSON.toJSONString(param));
-		WebClient webClient = WebClient.create();
-		Mono<ClientResponse> mono = webClient
-				.post()
-				.uri(ruleMarketApi + path)
-				.header("timestamp", String.valueOf(System.currentTimeMillis()))
-				.contentType(MediaType.APPLICATION_JSON)
-				.bodyValue(param)
-				.exchange();
-		String responseBody = mono.block().bodyToMono(String.class).block();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("timestamp", String.valueOf(System.currentTimeMillis()));
+		HttpEntity<Object> entity = new HttpEntity<Object>(param, headers);
+		ResponseEntity<String> response = restTemplate.postForEntity(ruleMarketApi + path, entity, String.class);
+		String responseBody = response.getBody();
 		LOGGER.debug("responseBody: {}", responseBody);
 		return responseBody;
 	}
@@ -111,11 +109,14 @@ public class RuleMarketClientServiceImpl implements IRuleMarketClientService {
 		}
 		
 		LOGGER.debug("get: {}, {}", path, paramString);
-		WebClient webClient = WebClient.create();
-		Mono<ClientResponse> mono = webClient.get().uri(ruleMarketApi + path + paramString).header("timestamp", String.valueOf(System.currentTimeMillis())).exchange();
-		ClientResponse response = mono.block();
-		if (HttpStatus.OK == response.statusCode()) {
-			String responseBody = response.bodyToMono(String.class).block();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("timestamp", String.valueOf(System.currentTimeMillis()));
+		HttpEntity<Object> entity = new HttpEntity<Object>(null, headers);
+		ResponseEntity<String> response = restTemplate.postForEntity(ruleMarketApi + path + paramString, entity, String.class);
+		
+		if (HttpStatus.OK == response.getStatusCode()) {
+			String responseBody = response.getBody();
 			LOGGER.debug("responseBody: {}", responseBody);
 			return responseBody;
 		}

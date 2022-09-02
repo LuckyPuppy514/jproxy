@@ -3,6 +3,9 @@
 
 # Release Logs
 
+## v2.6.3 2022-09-02
+1. Fixed: replace WebClient with RestTemplate to solve request error sometime
+
 ## v2.6.2 2022-08-10
 1. Fixed: can not format season and ep or date in search key while series type is Standard or Daily
 

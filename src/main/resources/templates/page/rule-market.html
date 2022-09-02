@@ -250,7 +250,6 @@
 				}
 
 				if (obj.event === 'download') {
-					let loadingIndex = layer.load(0, { time: 10 * 1000 });
 					let params = [];
 					let i = 0;
 					try {
@@ -268,6 +267,7 @@
 						layer.msg(error.message);
 						return false;
 					}
+					let loadingIndex = layer.load(0, { time: 10 * 1000 });
 					requestUtil.postJson("/ruleMarket/client/download", JSON.stringify(params), (res) => {
 						layer.close(loadingIndex);
 						layer.msg(res.msg);
