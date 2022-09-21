@@ -11,8 +11,10 @@
 	
 	<update id="changePassword" parameterType="com.lckp.param.AdminUserChangePasswordParam">
 		UPDATE ADMIN_USER
-		SET PASSWORD = #{newPassword}
-		WHERE USERNAME = #{username}
+		SET PASSWORD = #{newPassword},
+		USERNAME = #{newUsername}
+		WHERE USERNAME = #{oldUsername}
+		AND PASSWORD = #{oldPassword}
 		AND VALIDSTATUS = 1
 	</update>
 </mapper>

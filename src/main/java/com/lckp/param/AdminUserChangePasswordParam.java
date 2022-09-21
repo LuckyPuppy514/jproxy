@@ -15,8 +15,11 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel("后台用户变更密码入参")
 public class AdminUserChangePasswordParam {
-	@ApiModelProperty(value = "用户名", required = true, example = "jproxy", hidden = true)
-	private String username;
+	@ApiModelProperty(value = "新用户名", required = true, example = "jproxy")
+	private String newUsername;
+	
+	@ApiModelProperty(value = "旧用户名", required = true, example = "jproxy", hidden = true)
+	private String oldUsername;
 	
 	@ApiModelProperty(value = "旧密码", required = true, example = "jproxy@2022")
 	private String oldPassword;
@@ -25,17 +28,31 @@ public class AdminUserChangePasswordParam {
 	private String newPassword;
 
 	/**
-	 * @return the username
+	 * @return the newUsername
 	 */
-	public String getUsername() {
-		return username;
+	public String getNewUsername() {
+		return newUsername;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param newUsername the newUsername to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setNewUsername(String newUsername) {
+		this.newUsername = newUsername;
+	}
+
+	/**
+	 * @return the oldUsername
+	 */
+	public String getOldUsername() {
+		return oldUsername;
+	}
+
+	/**
+	 * @param oldUsername the oldUsername to set
+	 */
+	public void setOldUsername(String oldUsername) {
+		this.oldUsername = oldUsername;
 	}
 
 	/**

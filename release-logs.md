@@ -3,6 +3,10 @@
 
 # Release Logs
 
+## v2.6.4 2022-09-21
+1. Fixed: Market-Search, sort bug of download count
+2. New Function: enable modify username while change password
+
 ## v2.6.3 2022-09-02
 1. Fixed: replace WebClient with RestTemplate to solve request error sometime
 

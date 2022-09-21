@@ -81,12 +81,9 @@ public class AdminUserController {
 	@ApiOperation("变更密码")
 	@PostMapping("/changePassword")
 	public ResVo<String> changePassword(AdminUserChangePasswordParam param,@ApiIgnore Locale locale, HttpServletRequest request) throws Exception{
-		param.setUsername((String)request.getSession().getAttribute(Field.USERNAME));
+		param.setOldUsername((String)request.getSession().getAttribute(Field.USERNAME));
 		LOGGER.debug("后台用户 - 变更密码：{}", JSON.toJSONString(param));
-		AdminUserLoginParam loginParam = new AdminUserLoginParam();
-		loginParam.setPassword(param.getOldPassword());
-		loginParam.setUsername(param.getUsername());
-		if (adminUserService.login(loginParam) > 0 && adminUserService.changePassword(param) > 0) {
+		if (adminUserService.changePassword(param) > 0) {
 			return ResVo.success();
 		}
 		return ResVo.fail(Message.USERNAME_OR_PASSWORD_IS_WRONG, messageSource, locale);

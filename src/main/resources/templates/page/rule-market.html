@@ -184,26 +184,7 @@
 								}
 							}
 						}
-						, {
-							title: '<i class="iconfont icon-leijicishu" style="font-size: 22px; "></i>', width: 70, align: 'center', sort: true,
-							templet: function (res) {
-								if (res.downloadCount < 999) {
-									return res.downloadCount;
-									
-								} else if (res.downloadStatus < 10000) {
-									return '999<font style="font-size: 10px">+</font>';
-
-								} else if (res.downloadStatus < 100000) {
-									return '10k<font style="font-size: 10px">+</font>';
-
-								} else if (res.downloadStatus < 1000000) {
-									return '100k<font style="font-size: 10px">+</font>';
-
-								} else {
-									return '1m<font style="font-size: 10px">+</font>';
-								}
-							}
-						}
+						, { field: 'downloadCount', title: '<i class="iconfont icon-leijicishu" style="font-size: 22px; "></i>', width: 70, align: 'center', sort: true }
 						, { field: 'ruleName', title: ruleNameTitle, width: 150, sort: true }
 						, { field: 'ruleLanguage', title: ruleLanguageTitle, width: 125, align: 'center' }
 						, { field: 'ruleType', title: ruleTypeTitle, width: 125, align: 'center' }
