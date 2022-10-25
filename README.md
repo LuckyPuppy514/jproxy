@@ -104,7 +104,7 @@ docker run --name jproxy \
 -d luckypuppy514/jproxy:latest
 ```
 
-> 🔥arm64v8: luckypuppy514/jproxy:arm64v8-latest
+> 🔥 arm64v8: luckypuppy514/jproxy:arm64v8-latest
 
 ### 🪟 Linux / Windows
 
@@ -152,38 +152,29 @@ Download rules from market or add new rule by yourself
 
 ### 4. Sonarr Setting
 
-Modify indexer's ip and port to JProxy's ip, port and add path
+Modify indexer's ip and port to JProxy's ip and port and add path (Jackett: /jackett, Prowlarr: /prowlarr)
 
-```text
-# original
-http://192.168.6.9:9117/api/v2.0/...
-http://192.168.6.9:9696/...
-
-# jackett
-http://192.168.6.9:8117/jackett/api/v2.0/...
-# prowlarr
-http://192.168.6.9:8117/prowlarr/...
-```
+| system | old | new |
+| :---: | :---: | :---: |
+| Jackett | `http://192.168.6.9:9117/api/v2.0/...` | `http://192.168.6.9:8117/jackett/api/v2.0/...` |
+| Prowlarr | `http://192.168.6.9:9696/...` | `http://192.168.6.9:8117/prowlarr/...` |
 
 ![20220805174036](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805174036.png)
 
-Modify qBittorrent's ip and port to JProxy's ip, port and add path
+Modify qBittorrent's ip and port to JProxy's ip and port and add path: /qbittorrent
 
-```text
-# original
-Host: 192.168.6.9
-Port: 8080
-Url Base: 
+| subject | old | new |
+| :---: | :---: | :---: |
+| Host | 192.168.6.9 | 192.168.6.9 |
+| Port | 8080 | 8117 |
+| Url Base | | /qbittorrent |
 
-# jproxy
-Host: 192.168.6.9
-Port: 8117
-Url Base: /qbittorrent
-```
+🔥 click Show Advanced at left top if you can not find Url Base
 
 ![20220804222930](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222930.png)
 
 🔥 don't forget change the Host of Remote Path Mappings
+
 ![20220805192340](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805192340.png)
 
 [See Wiki For Detail](https://github.com/LuckyPuppy514/jproxy/wiki)

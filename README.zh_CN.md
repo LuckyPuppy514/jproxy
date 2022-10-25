@@ -104,7 +104,7 @@ docker run --name jproxy \
 -d luckypuppy514/jproxy:latest
 ```
 
-> 🔥arm64v8: luckypuppy514/jproxy:arm64v8-latest
+> 🔥 arm64v8: luckypuppy514/jproxy:arm64v8-latest
 
 ### 🪟 Linux / Windows
 
@@ -152,34 +152,24 @@ startup.bat
 
 ### 4. Sonarr 配置
 
-修改 Indexer 的 IP 和端口号为 JProxy 的 IP，端口号以及路径
+修改 Indexer 的 IP 和端口号为 JProxy 的 IP 和端口号，并添加相应的路径 (Jackett: /jackett, Prowlarr: /prowlarr)
 
-```text
-# 原来的
-http://192.168.6.9:9117/api/v2.0/...
-http://192.168.6.9:9696/...
-
-# jackett
-http://192.168.6.9:8117/jackett/api/v2.0/...
-# prowlarr
-http://192.168.6.9:8117/prowlarr/...
-```
+| 系统 | 旧值 | 新值 |
+| :---: | :---: | :---: |
+| Jackett | `http://192.168.6.9:9117/api/v2.0/...` | `http://192.168.6.9:8117/jackett/api/v2.0/...` |
+| Prowlarr | `http://192.168.6.9:9696/...` | `http://192.168.6.9:8117/prowlarr/...` |
 
 ![20220805174036](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220805174036.png)
 
-修改 qBittorrent 的 IP 和端口号为 JProxy 的 IP，端口号以及路径
+修改 qBittorrent 的 IP 和端口号为 JProxy 的 IP 和端口号，并添加路径：/qbittorrent
 
-```text
-# 原来的
-Host: 192.168.6.9
-Port: 8080
-Url Base: 
+| 项目 | 旧值 | 新值 |
+| :---: | :---: | :---: |
+| Host | 192.168.6.9 | 192.168.6.9 |
+| Port | 8080 | 8117 |
+| Url Base | | /qbittorrent |
 
-# jproxy
-Host: 192.168.6.9
-Port: 8117
-Url Base: /qbittorrent
-```
+🔥 注意：必须点击左上角的 Show Advanced 开启高级设置，才能看到 Url Base
 
 ![20220804222930](https://raw.githubusercontent.com/LuckyPuppy514/pic-bed/main/common/20220804222930.png)
 
