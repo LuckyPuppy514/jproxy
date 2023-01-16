@@ -4,6 +4,7 @@
  */
 package com.lckp.config;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import com.alibaba.fastjson.JSON;
 import com.lckp.constant.ProxyType;
 import com.lckp.constant.RegularType;
+import com.lckp.filter.QBittorrentFilter;
 import com.lckp.model.ProxyConfig;
 import com.lckp.model.RuleConfig;
 import com.lckp.param.ProxyConfigQueryParam;
@@ -106,6 +108,7 @@ public class JProxyConfiguration {
 	public void initRuleConfig() {
 		searchRuleList = ruleConfigService.query(RegularType.Search.toString());
 		resultRuleList = ruleConfigService.query(RegularType.Result.toString());
+		QBittorrentFilter.torrentNameMap = new HashMap<String, String>();
 		
 		LOGGER.info("加载规则成功，搜索：{}，结果：{}", searchRuleList.size(), resultRuleList.size());
 		LOGGER.debug("搜索规则：{}", JSON.toJSONString(searchRuleList));

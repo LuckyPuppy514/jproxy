@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.lckp.config.JProxyConfiguration;
 import com.lckp.param.RuleConfigAddParam;
 import com.lckp.param.RuleConfigBatchParam;
 import com.lckp.param.RuleConfigEditParam;
@@ -42,8 +43,10 @@ public class SyncTask {
 	private IRuleTestExampleService ruleTestExampleService;
 	@Autowired
 	private IRuleMarketClientService ruleMarketClientService;
+	@Autowired
+	private JProxyConfiguration jproxyConfiguration;
 	
-	@Scheduled(cron="0 0 0/1 * * ?")
+	@Scheduled(cron="0 0 0/3 * * ?")
 	public void syncRuleMarketChange() {
 		LOGGER.info("开始同步规则市场变化");
 		List<String> ruleIdList = ruleConfigService.queryAllDownloadRuleId();
@@ -79,9 +82,9 @@ public class SyncTask {
 			param.setRemark(ruleConfig.getRemark());
 			param.setRegularMatch(ruleConfig.getRegularMatch());
 			param.setRegularReplace(ruleConfig.getRegularReplace());
-			ruleConfigService.editRuleConfig(param);
-		}		
-		
+			ruleConfigService.editRuleConfig(param, false);
+		}
+		jproxyConfiguration.initRuleConfig();
 		LOGGER.info("同步规则市场变化完毕");
 	}
 }

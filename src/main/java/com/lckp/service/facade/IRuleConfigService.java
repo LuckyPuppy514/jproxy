@@ -38,6 +38,8 @@ public interface IRuleConfigService {
 	RuleConfigEditParam queryByRuleId(String ruleId);
 	// 编辑规则配置
 	int editRuleConfig(RuleConfigEditParam param);
+	// 编辑规则配置
+	int editRuleConfig(RuleConfigEditParam param, boolean reload);
 	// 增加下载次数
 	int addDownloadCount(List<RuleConfigBatchParam> paramList);
 	

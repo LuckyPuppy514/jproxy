@@ -3,6 +3,9 @@
 
 # Release Logs
 
+## v2.6.5 2023-01-17
+1. Improve: torrent name format(reduce import error)
+
 ## v2.6.4 2022-09-21
 1. Fixed: Market-Search, sort bug of download count
 2. New Function: enable modify username while change password

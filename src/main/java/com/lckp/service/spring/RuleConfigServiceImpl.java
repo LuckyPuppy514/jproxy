@@ -124,8 +124,15 @@ public class RuleConfigServiceImpl implements IRuleConfigService {
 	 */
 	@Override
 	public int editRuleConfig(RuleConfigEditParam param) {
+		return editRuleConfig(param, true);
+	}
+	
+	@Override
+	public int editRuleConfig(RuleConfigEditParam param, boolean reload) {
 		int result = ruleConfigMapper.editRuleConfig(param);
-		jproxyConfiguration.initRuleConfig();
+		if(reload) {
+			jproxyConfiguration.initRuleConfig();
+		}
 		return result;
 	}
 
