@@ -1,1 +1,1 @@
-git add src lib pom.xml package.bat git-add.bat README.md README.zh_CN.md wiki.md wiki.zh_CN.md release-logs.md release-logs.zh_CN.md
+git add src lib release/docker pom.xml package.bat git-add.bat README.md README.zh_CN.md wiki.md wiki.zh_CN.md release-logs.md release-logs.zh_CN.md
