@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="[basePackageName].[mapperPath].[interfacePrefix][name]Mapper">
-	<select id="selectTest2" parameterType="[basePackageName].param.TestPostParam" resultType="[basePackageName].resp.TestPostResp">
-		select #{param.userName} userName, #{param.userCode} userCode from dual
-	</select>
-</mapper>
