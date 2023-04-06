@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -9,7 +11,7 @@
 	<!-- 项目信息 -->
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
-	<version>3.0.0</version>
+	<version>3.0.1</version>
 	<name>JProxy</name>
 	<description>介于 Sonarr/Radarr 和 Jackett/Prowlarr 之间的代理，主要用于优化查询和提升识别率</description>
 	<!-- 依赖版本 -->
@@ -202,7 +204,7 @@
 						</pluginExtension>
 					</pluginExtensions>
 					<from>
-						<image>bellsoft/liberica-openjdk-alpine:17.0.6</image>
+						<image>eclipse-temurin:17-jre-jammy</image>
 						<platforms>
 							<platform>
 								<os>linux</os>
@@ -211,6 +213,10 @@
 							<platform>
 								<os>linux</os>
 								<architecture>arm64</architecture>
+							</platform>
+							<platform>
+								<os>linux</os>
+								<architecture>arm</architecture>
 							</platform>
 						</platforms>
 					</from>
@@ -239,7 +245,7 @@
 					<container>
 						<appRoot>/app</appRoot>
 						<entrypoint>
-							<arg>/bin/sh</arg>
+							<arg>/bin/bash</arg>
 							<arg>/app/entrypoint.sh</arg>
 						</entrypoint>
 						<ports>

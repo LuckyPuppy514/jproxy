@@ -3,8 +3,9 @@ logging:
       root: INFO
       com.lckp.jproxy: INFO
 
-rules:
+rule:
    location: https://raw.githubusercontent.com/LuckyPuppy514/jproxy/main/src/main/resources/rule
+   location-backup: https://github.rn.lckp.top/LuckyPuppy514/jproxy/main/src/main/resources/rule
 
 time:
    cache-expires: 10080

@@ -3,6 +3,11 @@
 
 # Change Logs
 
+## v3.0.1 2023-04-07
+
+1. Add a backup address for the rule to avoid the inability to synchronize the rules due to the inability to access github
+2. Docker basic image changes to support ARM architecture
+
 ## v3.0.0 2023-04-06
 
 🚨 Code refactoring, not compatible with v2 version

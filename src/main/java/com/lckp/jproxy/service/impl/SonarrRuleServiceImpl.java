@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -48,9 +47,6 @@ public class SonarrRuleServiceImpl extends ServiceImpl<SonarrRuleMapper, SonarrR
 	private final ISystemConfigService systemConfigService;
 
 	private final RestTemplate restTemplate;
-
-	@Value("${rules.location}")
-	private String rulesLocation;
 
 	private final ISonarrRuleService proxy() {
 		return (ISonarrRuleService) AopContext.currentProxy();
@@ -100,7 +96,7 @@ public class SonarrRuleServiceImpl extends ServiceImpl<SonarrRuleMapper, SonarrR
 			log.debug("规则同步作者为空 {}", ruleSyncAuthors);
 			return true;
 		} else if (Common.RULE_SYNC_AUTHORS_ALL.equals(ruleSyncAuthors)) {
-			String authorUrl = Generator.generateAuthorUrl(rulesLocation);
+			String authorUrl = Generator.generateAuthorUrl();
 			String body = restTemplate.getForEntity(authorUrl, String.class).getBody();
 			authors = JSON.parseArray(body).toArray(new String[1]);
 		} else {
@@ -109,8 +105,7 @@ public class SonarrRuleServiceImpl extends ServiceImpl<SonarrRuleMapper, SonarrR
 		log.debug("Authors: {}", JSON.toJSONString(authors));
 		for (String author : authors) {
 			try {
-				String body = restTemplate
-						.getForEntity(Generator.generateSonarrRuleUrl(rulesLocation, author), String.class)
+				String body = restTemplate.getForEntity(Generator.generateSonarrRuleUrl(author), String.class)
 						.getBody();
 				log.debug("Sonarr Rules: {}", body);
 				List<SonarrRule> sonarrRuleList = JSON.parseArray(body, SonarrRule.class);

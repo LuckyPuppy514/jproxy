@@ -3,8 +3,9 @@ logging:
       root: INFO
       com.lckp.jproxy.aspect: DEBUG
 
-rules:
+rule:
    location: http://127.0.0.1:8117
+   location-backup: http://127.0.0.1:8117
 
 time:
    cache-expires: 10080

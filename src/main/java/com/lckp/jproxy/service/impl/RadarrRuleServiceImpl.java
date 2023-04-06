@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -48,9 +47,6 @@ public class RadarrRuleServiceImpl extends ServiceImpl<RadarrRuleMapper, RadarrR
 	private final ISystemConfigService systemConfigService;
 
 	private final RestTemplate restTemplate;
-
-	@Value("${rules.location}")
-	private String rulesLocation;
 
 	private final IRadarrRuleService proxy() {
 		return (IRadarrRuleService) AopContext.currentProxy();
@@ -101,7 +97,7 @@ public class RadarrRuleServiceImpl extends ServiceImpl<RadarrRuleMapper, RadarrR
 			log.debug("规则同步作者为空 {}", ruleSyncAuthors);
 			return true;
 		} else if (Common.RULE_SYNC_AUTHORS_ALL.equals(ruleSyncAuthors)) {
-			String authorUrl = Generator.generateAuthorUrl(rulesLocation);
+			String authorUrl = Generator.generateAuthorUrl();
 			String body = restTemplate.getForEntity(authorUrl, String.class).getBody();
 			authors = JSON.parseArray(body).toArray(new String[1]);
 		} else {
@@ -110,8 +106,7 @@ public class RadarrRuleServiceImpl extends ServiceImpl<RadarrRuleMapper, RadarrR
 		log.debug("Authors: {}", JSON.toJSONString(authors));
 		for (String author : authors) {
 			try {
-				String body = restTemplate
-						.getForEntity(Generator.generateRadarrRuleUrl(rulesLocation, author), String.class)
+				String body = restTemplate.getForEntity(Generator.generateRadarrRuleUrl(author), String.class)
 						.getBody();
 				log.debug("Radarr Rules: {}", body);
 				List<RadarrRule> radarrRuleList = JSON.parseArray(body, RadarrRule.class);

@@ -14,6 +14,18 @@ public class Generator {
 	Generator() {
 	}
 
+	private static String ruleLocation = "http://127.0.0.1:8117";
+
+	/**
+	 * 
+	 * 设置规则地址
+	 *
+	 * @param location void
+	 */
+	public static void setRuleLocation(String location) {
+		ruleLocation = location;
+	}
+
 	/**
 	 * 
 	 * 生成 UUID
@@ -28,34 +40,33 @@ public class Generator {
 	 * 
 	 * 生成规则作者地址
 	 *
-	 * @param baseUrl
 	 * @return String
 	 */
-	public static String generateAuthorUrl(String baseUrl) {
-		return new StringBuilder(baseUrl).append("/author.json").toString();
+	public static String generateAuthorUrl() {
+		return new StringBuilder(ruleLocation).append("/author.json").toString();
 	}
 
 	/**
 	 * 
 	 * 生成 Sonarr 规则地址
 	 *
-	 * @param baseUrl
 	 * @param author
 	 * @return String
 	 */
-	public static String generateSonarrRuleUrl(String baseUrl, String author) {
-		return new StringBuilder(baseUrl).append("/sonarr@").append(author.trim()).append(".json").toString();
+	public static String generateSonarrRuleUrl(String author) {
+		return new StringBuilder(ruleLocation).append("/sonarr@").append(author.trim()).append(".json")
+				.toString();
 	}
 
 	/**
 	 * 
 	 * 生成 Radarr 规则地址
 	 *
-	 * @param baseUrl
 	 * @param author
 	 * @return String
 	 */
-	public static String generateRadarrRuleUrl(String baseUrl, String author) {
-		return new StringBuilder(baseUrl).append("/radarr@").append(author.trim()).append(".json").toString();
+	public static String generateRadarrRuleUrl(String author) {
+		return new StringBuilder(ruleLocation).append("/radarr@").append(author.trim()).append(".json")
+				.toString();
 	}
 }

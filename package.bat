@@ -28,7 +28,7 @@ else if %number% == 3 (
   echo docker pull localhost:5000/luckypuppy514/jproxy:latest
 ) ^
 else if %number% == 4 ( 
-  mvn clean compile jib:build -Dmaven.test.skip=true -P prod -Djib.skip=false
+  mvn clean compile jib:build -Dmaven.test.skip=true -P prod -Djib.to.image=docker.io/luckypuppy514/jproxy
   echo.
   echo docker pull luckypuppy514/jproxy:latest
 ) ^

@@ -47,8 +47,11 @@ public class SystemConfigController implements CommandLineRunner {
 
 	private final RestTemplate restTemplate;
 
-	@Value("${rules.location}")
-	private String rulesLocation;
+	@Value("${rule.location}")
+	private String ruleLocation;
+
+	@Value("${rule.location-backup}")
+	private String ruleLocationBackup;
 
 	@Operation(summary = "查询")
 	@GetMapping("/query")
@@ -70,7 +73,7 @@ public class SystemConfigController implements CommandLineRunner {
 	@Operation(summary = "查询作者列表")
 	@GetMapping("/author/list")
 	public ResponseEntity<String[]> listAuthor() {
-		String authorUrl = Generator.generateAuthorUrl(rulesLocation);
+		String authorUrl = Generator.generateAuthorUrl();
 		String[] authorList = { "LuckyPuppy514" };
 		try {
 			authorList = restTemplate.getForEntity(authorUrl, String[].class).getBody();
@@ -88,5 +91,13 @@ public class SystemConfigController implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		charonConfig.updateAllServerUrl();
+		try {
+			Generator.setRuleLocation(ruleLocation);
+			restTemplate.getForEntity(Generator.generateAuthorUrl(), String[].class).getBody();
+		} catch (Exception e) {
+			log.info("无法访问规则地址：{} - {}", ruleLocation, e.getMessage());
+			Generator.setRuleLocation(ruleLocationBackup);
+			log.info("已切换到备用地址：{}", ruleLocationBackup);
+		}
 	}
 }

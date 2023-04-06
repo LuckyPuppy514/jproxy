@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# 设置时区
-if [ "${TZ}" != "$(cat /app/TIME_ZONE)" ]; then
-  apk add --no-cache alpine-conf && /sbin/setup-timezone -z ${TZ} && apk del alpine-conf
-  echo ${TZ} > /app/TIME_ZONE && echo "Time zone has changed: TZ=${TZ}"
-fi
-
 # 初始化持久化目录
 CONFIG_PATH=/app/config
 DATABASE_PATH=/app/database
@@ -27,5 +21,5 @@ umask ${UMASK}
 
 # 启动应用
 cd /app
-apk add --update --no-cache -q su-exec || true
-exec su-exec ${PUID}:${PGID} java ${JAVA_OPTS} -Dfile.encoding=utf-8 -Dspring.config.location=${CONFIG_PATH}/ -cp $( cat /app/jib-classpath-file ) $( cat /app/jib-main-class-file )
+dpkg -s gosu >/dev/null 2>&1 || (apt update && apt-get -y install gosu)
+gosu ${PUID}:${PGID} java ${JAVA_OPTS} -Dfile.encoding=utf-8 -Dspring.config.location=${CONFIG_PATH}/ -cp $( cat /app/jib-classpath-file ) $( cat /app/jib-main-class-file )
