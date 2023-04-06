@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- 日志级别优先级排序: ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF -->
+<!-- status：log4j2 自身日志级别，monitorInterval：监控配置文件间隔秒数 -->
+<Configuration status="WARN" monitorInterval="1800">
+	<!-- 变量配置 -->
+	<Properties>
+		<!-- 应用名称 -->
+		<property name="APP_NAME">jproxy</property>
+		<!-- 日志存放路径 -->
+		<property name="LOG_PATH">./logs/</property>
+		<!-- 日志备份路径 -->
+		<property name="LOG_BACKUP_PATH">${LOG_PATH}/backup</property>
+		<!-- 控制台输出格式 -->
+		<property name="PATTERN_CONSOLE">%d{HH:mm:ss.SSS} %highlight{%-5p} [%yellow{%5.5t}] %cyan{%-80.80l} : %msg%n</property>
+		<!-- 文件输出格式 -->
+		<property name="PATTERN_FILE">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${sys:PID} [%5.5t] %-80.80l : %msg%n</property>
+	</Properties>
+	<!-- 定义日志输出目的地，内容和格式等 -->
+	<Appenders>
+		<!-- 控制台 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!-- 输出格式：
+			     1. 默认格式：%m%n
+                 2. 开启彩色：disableAnsi="false" noConsoleNoAnsi="false"
+            -->
+			<PatternLayout pattern="${PATTERN_CONSOLE}" disableAnsi="false" noConsoleNoAnsi="false" />
+			<!-- 对于 level 级别，匹配时：输出，不匹配时：不输出 -->
+			<ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
+		</Console>
+		<!-- 归档文件：
+             1. fileName: 日志存储路径
+             2. filePattern: 历史日志封存路径。其中 %d{yyyy-MM-dd} 表示了日志的时间单位是天,log4j2 自动识别 zip 等后缀，表示历史日志需要压缩     
+        -->
+		<RollingFile name="RollingFile" fileName="${LOG_PATH}/${APP_NAME}.log" filePattern="${LOG_BACKUP_PATH}/$${date:yyyy-MM}/${APP_NAME}-%d{yyyy-MM-dd}_%i.log.zip">
+			<PatternLayout pattern="${PATTERN_FILE}" />
+			<ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
+			<!-- 归档设置 -->
+			<Policies>
+				<!-- 按时间间隔归档:
+                     1. interval：时间间隔, 单位由 filePattern 的%d日期格式指定, 此处配置代表每一天归档一次
+                     2. modulate="true" 表示对 interval 取模，决定了下一次触发的时间点
+                -->
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<!-- 按照日志文件的大小: size 表示当前日志文件的最大 size，支持单位：KB/MB/GB -->
+				<SizeBasedTriggeringPolicy size="50MB" />
+			</Policies>
+			<!-- 历史日志配置: 该属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖 -->
+			<DefaultRolloverStrategy max="30" />
+		</RollingFile>
+		<!-- 错误日志单独归档 -->
+		<RollingFile name="RollingFileError" fileName="${LOG_PATH}/${APP_NAME}-error.log" filePattern="${LOG_BACKUP_PATH}/$${date:yyyy-MM}/${APP_NAME}-error-%d{yyyy-MM-dd}_%i.log.zip">
+			<PatternLayout pattern="${PATTERN_FILE}" />
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50MB" />
+			</Policies>
+		</RollingFile>
+		<!-- 异步写入文件 -->
+		<Async name="AsyncRollingFile">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="RollingFileError" />
+		</Async>
+	</Appenders>
+	<!-- Loggers 配置 -->
+	<Loggers>
+		<!-- 相关说明
+             1. logger：单独指定类或包的日志格式
+                name：类或包路径
+                additivity：="true"：LogEvent 处理后传递给父 Logger 打印；="false"：LogEvent 处理后不再向上传递给父 Logger(解决日志重复输出问题)
+                AppenderRef：关联的 Appender，仅当定义了 logger 并引入 Appender，Appender 才会生效
+                注意：logger 配置的 level 必须高于或等于 Appenders 中 ThresholdFilter 配置的过滤 level, 否则会造成信息丢失
+             2. root：配置日志的根节点
+        -->
+		<root level="DEBUG">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="RollingFileError" />
+		</root>
+	</Loggers>
+</Configuration>

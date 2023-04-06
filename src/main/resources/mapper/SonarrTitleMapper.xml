@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lckp.jproxy.mapper.SonarrTitleMapper">
+	<select id="selectNeedSyncTmdbTitle" resultType="java.lang.Integer">
+		SELECT st.tvdb_id
+		FROM sonarr_title st LEFT JOIN tmdb_title tt ON st.tvdb_id = tt.tvdb_id
+		WHERE st.sno = 0 AND tt.tvdb_id IS NULL 
+	</select>
+	<select id="selectSonarrTitleAndTmdbTitle" resultType="com.lckp.jproxy.entity.SonarrTitle">
+		SELECT main_title, title, clean_title, season_number
+		FROM
+		(
+			SELECT st.main_title, st.title, st.clean_title, st.season_number, st.monitored 
+			FROM sonarr_title st 
+			GROUP BY st.clean_title 
+			UNION
+			SELECT st.main_title, tt.title, NULL clean_title, -1 season_number, st.monitored 
+			FROM sonarr_title st LEFT JOIN tmdb_title tt ON st.tvdb_id = tt.tvdb_id
+			WHERE st.sno = 0
+			GROUP BY tt.title
+		)
+		WHERE title IS NOT NULL
+		ORDER BY monitored DESC, title DESC
+	</select>
+</mapper>

@@ -1,0 +1,24 @@
+version: '3.0'
+services:
+   jproxy:
+      image: luckypuppy514/jproxy:latest
+      container_name: jproxy
+      restart: unless-stopped
+      environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+      - REDIS_HOST=jproxy-redis
+      - REDIS_PORT=6379
+      - JAVA_OPTS=-Xms512m -Xmx512m
+      links:
+      - jproxy-redis
+      ports:
+      - 8117:8117
+      volumes:
+      - /docker/jproxy/database:/app/database
+
+   jproxy-redis:
+      image: redis:latest
+      container_name: jproxy-redis
+      restart: unless-stopped

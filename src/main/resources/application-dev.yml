@@ -1,0 +1,60 @@
+logging:
+   level:
+      root: INFO
+      com.lckp.jproxy.aspect: DEBUG
+
+rules:
+   location: http://127.0.0.1:8117
+
+time:
+   cache-expires: 10080
+   token-expires: 10080
+   sync-interval: 5
+   sync-sonarr-title: 0 0 0/1 * * ?
+   sync-sonarr-rule: 0 15 0 * * ?
+   sync-radarr-title: 0 30 0/1 * * ?
+   sync-radarr-rule: 0 45 1 * * ?
+
+spring:
+   devtools:
+      restart:
+         enabled: true
+         additional-paths: src/main/java
+         additional-exclude: META-INF/additional-spring-configuration-metadata.json
+   type: com.zaxxer.hikari.HikariDataSource
+   hikari:
+      minimum-idle: 10
+      maximum-pool-size: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+   datasource:
+      url: jdbc:sqlite::resource:database/jproxy.db
+      driver-class-name: org.sqlite.JDBC
+   data:
+      redis:
+         host: 127.0.0.1
+         port: 6379
+         database: 0
+         lettuce:
+            pool:
+               max-active: 8
+               max-wait: -1
+               max-idle: 8
+               min-idle: 0
+springdoc:
+   swagger-ui:
+      path: /swagger-ui.html
+      tags-sorter: alpha
+      operations-sorter: alpha
+   api-docs:
+      path: /v3/api-docs
+   group-configs:
+   -  group: default
+      paths-to-match: /api/**
+knife4j:
+   enable: true
+   setting:
+      language: zh_cn
+      swagger-model-name: 实体类列表

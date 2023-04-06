@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.5</version>
+	</parent>
+	<!-- 项目信息 -->
+	<groupId>com.lckp</groupId>
+	<artifactId>jproxy</artifactId>
+	<version>3.0.0</version>
+	<name>JProxy</name>
+	<description>介于 Sonarr/Radarr 和 Jackett/Prowlarr 之间的代理，主要用于优化查询和提升识别率</description>
+	<!-- 依赖版本 -->
+	<properties>
+		<java.version>17</java.version>
+		<java-jwt.version>4.3.0</java-jwt.version>
+		<knife4j.version>4.0.0</knife4j.version>
+		<fastjson2.version>2.0.24</fastjson2.version>
+		<mybatis-plus.version>3.5.3</mybatis-plus.version>
+		<mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
+		<charon-spring-webmvc.version>5.1.0</charon-spring-webmvc.version>
+		<dom4j.version>2.1.4</dom4j.version>
+		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
+	</properties>
+	<!-- 依赖 -->
+	<dependencies>
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<!-- 参数校验 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<!-- 日志 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<!-- token -->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${java-jwt.version}</version>
+		</dependency>
+		<!-- 接口文档 -->
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+			<version>${knife4j.version}</version>
+		</dependency>
+		<!-- fastjson2 -->
+		<dependency>
+			<groupId>com.alibaba.fastjson2</groupId>
+			<artifactId>fastjson2</artifactId>
+			<version>${fastjson2.version}</version>
+		</dependency>
+		<!-- mybatis-plus -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+		<!-- 代码生成器 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-generator</artifactId>
+			<version>${mybatis-plus-generator.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<!-- sqlite 数据库驱动 -->
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+		</dependency>
+		<!-- 数据库版本控制 -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<!-- redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!-- charon 反向代理 -->
+		<dependency>
+			<groupId>com.github.mkopylec</groupId>
+			<artifactId>charon-spring-webmvc</artifactId>
+			<version>${charon-spring-webmvc.version}</version>
+		</dependency>
+		<!-- xml 处理 -->
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>${dom4j.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<!-- 打包文件名 -->
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
+					<!-- 去除生产不需要的依赖 -->
+					<excludeDevtools>true</excludeDevtools>
+					<excludes>
+						<exclude>
+							<groupId>com.github.xiaoymin</groupId>
+							<artifactId>knife4j-openapi3-ui</artifactId>
+						</exclude>
+						<exclude>
+							<groupId>org.webjars</groupId>
+							<artifactId>swagger-ui</artifactId>
+						</exclude>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+						<exclude>
+							<groupId>com.baomidou</groupId>
+							<artifactId>mybatis-plus-generator</artifactId>
+						</exclude>
+						<exclude>
+							<groupId>org.freemarker</groupId>
+							<artifactId>freemarker</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<!-- 打包 Docker 镜像 -->
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib-maven-plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-layer-filter-extension-maven</artifactId>
+						<version>0.3.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<pluginExtensions>
+						<pluginExtension>
+							<implementation>com.google.cloud.tools.jib.maven.extension.layerfilter.JibLayerFilterExtension</implementation>
+							<configuration implementation="com.google.cloud.tools.jib.maven.extension.layerfilter.Configuration">
+								<!-- 去除生产不需要的依赖 -->
+								<filters>
+									<filter>
+										<glob>**/knife4j-*.jar</glob>
+									</filter>
+									<filter>
+										<glob>**/swagger-ui-*.jar</glob>
+									</filter>
+									<filter>
+										<glob>**/lombok-*.jar</glob>
+									</filter>
+									<filter>
+										<glob>**/mybatis-plus-generator-*.jar</glob>
+									</filter>
+									<filter>
+										<glob>**/freemarker-*.jar</glob>
+									</filter>
+								</filters>
+							</configuration>
+						</pluginExtension>
+					</pluginExtensions>
+					<from>
+						<image>bellsoft/liberica-openjdk-alpine:17.0.6</image>
+						<platforms>
+							<platform>
+								<os>linux</os>
+								<architecture>amd64</architecture>
+							</platform>
+							<platform>
+								<os>linux</os>
+								<architecture>arm64</architecture>
+							</platform>
+						</platforms>
+					</from>
+					<to>
+						<image>luckypuppy514/jproxy</image>
+						<tags>
+							<tag>latest</tag>
+							<tag>v${project.version}</tag>
+						</tags>
+					</to>
+					<extraDirectories>
+						<paths>
+							<path>
+								<from>docker</from>
+								<into>/app</into>
+								<includes>entrypoint.sh</includes>
+							</path>
+						</paths>
+						<permissions>
+							<permission>
+								<file>/app/entrypoint.sh</file>
+								<mode>755</mode>
+							</permission>
+						</permissions>
+					</extraDirectories>
+					<container>
+						<appRoot>/app</appRoot>
+						<entrypoint>
+							<arg>/bin/sh</arg>
+							<arg>/app/entrypoint.sh</arg>
+						</entrypoint>
+						<ports>
+							<port>8117</port>
+						</ports>
+						<environment>
+							<PUID>0</PUID>
+							<PGID>0</PGID>
+							<UMASK>022</UMASK>
+							<TZ>Asia/Shanghai</TZ>
+						</environment>
+						<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+						<mainClass>com.lckp.jproxy.Application</mainClass>
+					</container>
+					<allowInsecureRegistries>true</allowInsecureRegistries>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- 配置 -->
+	<profiles>
+		<!-- 开发环境 -->
+		<profile>
+			<id>dev</id>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<!-- 生产环境 -->
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+</project>
