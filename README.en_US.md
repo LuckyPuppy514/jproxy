@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/LuckyPuppy514/jproxy">
-    <img alt="JProxy Logo" width="200" src="https://image.lckp.top/LuckyPuppy514/image/raw/main/2023/2023-04-02/logo.png">
+    <img alt="JProxy Logo" width="200" src="https://raw.githubusercontent.com/LuckyPuppy514/image/main/2023/2023-04-02/logo.png">
   </a>
 </p>
 <p align="center">
