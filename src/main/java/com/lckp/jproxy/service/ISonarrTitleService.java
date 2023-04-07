@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lckp.jproxy.entity.SonarrRule;
 import com.lckp.jproxy.entity.SonarrTitle;
-import com.lckp.jproxy.model.FormatResult;
 import com.lckp.jproxy.model.request.SonarrTitleQueryRequest;
 
 /**
@@ -61,9 +60,9 @@ public interface ISonarrTitleService extends IService<SonarrTitle> {
 	 * @param cleanTitleRegex
 	 * @param sonarrRuleList
 	 * @param sonarrTitleList
-	 * @return FormatResult
+	 * @return String
 	 */
-	public FormatResult formatTitle(String text, String format, String cleanTitleRegex,
+	public String formatTitle(String text, String format, String cleanTitleRegex,
 			List<SonarrRule> sonarrRuleList, List<SonarrTitle> sonarrTitleList);
 
 	/**

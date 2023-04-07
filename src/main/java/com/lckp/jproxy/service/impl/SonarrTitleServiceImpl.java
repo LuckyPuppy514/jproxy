@@ -33,7 +33,6 @@ import com.lckp.jproxy.constant.Token;
 import com.lckp.jproxy.entity.SonarrRule;
 import com.lckp.jproxy.entity.SonarrTitle;
 import com.lckp.jproxy.mapper.SonarrTitleMapper;
-import com.lckp.jproxy.model.FormatResult;
 import com.lckp.jproxy.model.request.SonarrTitleQueryRequest;
 import com.lckp.jproxy.service.ISonarrTitleService;
 import com.lckp.jproxy.service.ISystemConfigService;
@@ -206,10 +205,8 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 	 *      java.lang.String, java.lang.String, java.util.List, java.util.List)
 	 */
 	@Override
-	public FormatResult formatTitle(String text, String format, String cleanTitleRegex,
+	public String formatTitle(String text, String format, String cleanTitleRegex,
 			List<SonarrRule> sonarrRuleList, List<SonarrTitle> sonarrTitleList) {
-		FormatResult result = new FormatResult();
-		result.setRestText(text);
 		for (SonarrRule sonarrRule : sonarrRuleList) {
 			if (sonarrRule.getRegex().contains("{" + Token.CLEAN_TITLE + "}")) {
 				for (SonarrTitle sonarrTitle : sonarrTitleList) {
@@ -218,8 +215,6 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 					String cleanText = FormatUtil.cleanTitle(text, cleanTitleRegex);
 					String regex = sonarrRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}", cleanTitle);
 					if (cleanText.matches(regex)) {
-						result.setRestText(text.replaceAll(
-								"((?i)" + cleanTitle.replaceAll(FormatUtil.PLACEHOLDER, ".{0,3}") + ")", ""));
 						format = FormatUtil.replaceToken(Token.TITLE, sonarrTitle.getMainTitle(), format);
 						Integer seasonNumber = sonarrTitle.getSeasonNumber();
 						if (!Integer.valueOf(-1).equals(seasonNumber)
@@ -242,8 +237,7 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 				}
 			}
 		}
-		result.setFormatText(format.trim());
-		return result;
+		return format.trim();
 	}
 
 	/**

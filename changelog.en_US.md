@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.0.3 2023-04-07
+
+1. Optimize title matching logic
+
 ## v3.0.2 2023-04-07
 
 1. Optimize Radarr title matching logic

@@ -25,7 +25,6 @@ import com.lckp.jproxy.entity.SonarrExample;
 import com.lckp.jproxy.entity.SonarrRule;
 import com.lckp.jproxy.entity.SonarrTitle;
 import com.lckp.jproxy.mapper.SonarrExampleMapper;
-import com.lckp.jproxy.model.FormatResult;
 import com.lckp.jproxy.model.request.SonarrExampleQueryRequest;
 import com.lckp.jproxy.service.ISonarrExampleService;
 import com.lckp.jproxy.service.ISonarrRuleService;
@@ -93,15 +92,15 @@ public class SonarrExampleServiceImpl extends ServiceImpl<SonarrExampleMapper, S
 			for (SonarrExample sonarrExample : resultList) {
 				sonarrExample.setFormatText(sonarrExample.getOriginalText());
 				sonarrExample.setValidStatus(ValidStatus.INVALID.getCode());
-				FormatResult formatResult = sonarrTitleService.formatTitle(sonarrExample.getOriginalText(),
-						format, cleanTitleRegex, tokenRuleMap.get(Token.TITLE), sonarrTitleList);
-				String formatText = formatResult.getFormatText();
+				String formatText = sonarrTitleService.formatTitle(sonarrExample.getOriginalText(), format,
+						cleanTitleRegex, tokenRuleMap.get(Token.TITLE), sonarrTitleList);
 				if (formatText.contains("{" + Token.TITLE + "}")) {
 					formatText = FormatUtil.replaceToken(Token.TITLE,
 							messageSource.getMessage(Messages.EXAMPLE_MATCH_TITLE_FAIL, null, locale),
 							formatText);
 				}
-				formatText = sonarrTitleService.format(formatResult.getRestText(), formatText, tokenRuleMap);
+				formatText = sonarrTitleService.format(sonarrExample.getOriginalText(), formatText,
+						tokenRuleMap);
 				sonarrExample.setFormatText(formatText);
 				if (!sonarrExample.getOriginalText().equals(sonarrExample.getFormatText())) {
 					sonarrExample.setValidStatus(ValidStatus.VALID.getCode());
