@@ -24,6 +24,7 @@ import com.lckp.jproxy.constant.Token;
 import com.lckp.jproxy.entity.SonarrRule;
 import com.lckp.jproxy.entity.SonarrTitle;
 import com.lckp.jproxy.entity.TmdbTitle;
+import com.lckp.jproxy.model.FormatResult;
 import com.lckp.jproxy.service.ISonarrIndexerService;
 import com.lckp.jproxy.service.ISonarrRuleService;
 import com.lckp.jproxy.service.ISonarrTitleService;
@@ -110,15 +111,16 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 				Element item = items.next();
 				Element titleElement = item.element(ApiField.INDEXER_TITLE);
 				String text = titleElement.getText();
-				String newText = sonarrTitleService.formatTitle(text, format, cleanTitleRegex,
+				FormatResult formatResult = sonarrTitleService.formatTitle(text, format, cleanTitleRegex,
 						tokenRuleMap.get(Token.TITLE), sonarrTitleList);
-				if (newText.contains("{" + Token.TITLE + "}")) {
+				String formatText = formatResult.getFormatText();
+				if (formatText.contains("{" + Token.TITLE + "}")) {
 					log.debug("索引器格式化失败：{} ==> 未匹配到标题", text);
 					continue;
 				}
-				newText = sonarrTitleService.format(text, newText, tokenRuleMap);
-				titleElement.setText(newText);
-				log.debug("索引器格式化：{} ==> {}", text, newText);
+				formatText = sonarrTitleService.format(formatResult.getRestText(), formatText, tokenRuleMap);
+				titleElement.setText(formatText);
+				log.debug("索引器格式化：{} ==> {}", text, formatText);
 			}
 			return document.asXML();
 		} catch (DocumentException e) {
