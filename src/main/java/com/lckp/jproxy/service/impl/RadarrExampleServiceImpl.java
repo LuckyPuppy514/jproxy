@@ -54,7 +54,7 @@ public class RadarrExampleServiceImpl extends ServiceImpl<RadarrExampleMapper, R
 	private final IRadarrTitleService radarrTitleService;
 
 	private final MessageSource messageSource;
-	
+
 	private final IRadarrExampleService proxy() {
 		return (IRadarrExampleService) AopContext.currentProxy();
 	}
@@ -93,7 +93,7 @@ public class RadarrExampleServiceImpl extends ServiceImpl<RadarrExampleMapper, R
 				radarrExample.setFormatText(radarrExample.getOriginalText());
 				radarrExample.setValidStatus(ValidStatus.INVALID.getCode());
 				String formatText = radarrTitleService.formatTitle(radarrExample.getOriginalText(), format,
-						cleanTitleRegex, tokenRuleMap.get(Token.TITLE), radarrTitleList);
+						cleanTitleRegex, tokenRuleMap, radarrTitleList);
 				if (formatText.contains("{" + Token.TITLE + "}")) {
 					formatText = FormatUtil.replaceToken(Token.TITLE,
 							messageSource.getMessage(Messages.EXAMPLE_MATCH_TITLE_FAIL, null, locale),

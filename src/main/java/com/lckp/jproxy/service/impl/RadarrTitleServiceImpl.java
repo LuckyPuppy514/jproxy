@@ -204,30 +204,47 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 	 */
 	@Override
 	public String formatTitle(String text, String format, String cleanTitleRegex,
-			List<RadarrRule> radarrRuleList, List<RadarrTitle> radarrTitleList) {
-		for (RadarrRule radarrRule : radarrRuleList) {
-			if (radarrRule.getRegex().contains("{" + Token.CLEAN_TITLE + "}")) {
+			Map<String, List<RadarrRule>> tokenRuleMap, List<RadarrTitle> radarrTitleList) {
+		List<RadarrRule> titleRuleList = tokenRuleMap.get(Token.TITLE);
+		List<RadarrRule> yearRuleList = tokenRuleMap.get(Token.YEAR);
+		for (RadarrRule titleRule : titleRuleList) {
+			if (titleRule.getRegex().contains("{" + Token.CLEAN_TITLE + "}")) {
 				for (RadarrTitle radarrTitle : radarrTitleList) {
 					String cleanTitle = radarrTitle.getCleanTitle() != null ? radarrTitle.getCleanTitle()
 							: FormatUtil.cleanTitle(radarrTitle.getTitle(), cleanTitleRegex);
 					String cleanText = FormatUtil.cleanTitle(text, cleanTitleRegex);
-					String regex = radarrRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}", cleanTitle);
+					String regex = titleRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}", cleanTitle);
 					if (cleanText.matches(regex)) {
+						String titleYear = String.valueOf(radarrTitle.getYear());
+						boolean yearMatch = true;
+						for (RadarrRule yearRule : yearRuleList) {
+							Matcher tokenMatcher = Pattern.compile(yearRule.getRegex()).matcher(text);
+							if (tokenMatcher.find()) {
+								String textYear = tokenMatcher.replaceAll(yearRule.getReplacement());
+								if (!titleYear.equals(textYear)) {
+									log.debug("年份不匹配：{} - {}", titleYear, textYear);
+									yearMatch = false;
+								}
+								break;
+							}
+						}
+						if (!yearMatch) {
+							continue;
+						}
 						format = FormatUtil.replaceToken(Token.TITLE, radarrTitle.getMainTitle(), format);
-						Integer year = radarrTitle.getYear();
-						format = FormatUtil.replaceToken(Token.YEAR, String.valueOf(year), format);
+						format = FormatUtil.replaceToken(Token.YEAR, titleYear, format);
 						break;
 					}
 				}
 			} else {
-				Matcher matcher = Pattern.compile(radarrRule.getRegex()).matcher(text);
+				Matcher matcher = Pattern.compile(titleRule.getRegex()).matcher(text);
 				if (matcher.find()) {
 					try {
-						String value = matcher.replaceAll(radarrRule.getReplacement());
+						String value = matcher.replaceAll(titleRule.getReplacement());
 						format = FormatUtil.replaceToken(Token.TITLE, value, format);
 						break;
 					} catch (Exception e) {
-						log.error("replaceAll 出错：{}\n{}", e.getMessage(), JSON.toJSONString(radarrRule));
+						log.error("replaceAll 出错：{}\n{}", e.getMessage(), JSON.toJSONString(titleRule));
 					}
 				}
 			}

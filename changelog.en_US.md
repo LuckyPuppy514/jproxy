@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.0.2 2023-04-07
+
+1. Optimize Radarr title matching logic
+
 ## v3.0.1 2023-04-07
 
 1. Add a backup address for the rule to avoid the inability to synchronize the rules due to the inability to access github

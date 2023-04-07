@@ -41,12 +41,12 @@ public interface IRadarrTitleService extends IService<RadarrTitle> {
 	 * @param text
 	 * @param format
 	 * @param cleanTitleRegex
-	 * @param radarrRuleList
+	 * @param tokenRuleMap
 	 * @param radarrTitleList
 	 * @return String
 	 */
 	public String formatTitle(String text, String format, String cleanTitleRegex,
-			List<RadarrRule> radarrRuleList, List<RadarrTitle> radarrTitleList);
+			Map<String, List<RadarrRule>> tokenRuleMap, List<RadarrTitle> radarrTitleList);
 
 	/**
 	 * 

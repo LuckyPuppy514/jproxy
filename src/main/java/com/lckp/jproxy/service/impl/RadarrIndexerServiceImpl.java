@@ -126,8 +126,8 @@ public class RadarrIndexerServiceImpl extends IndexerServiceImpl implements IRad
 				Element item = items.next();
 				Element titleElement = item.element(ApiField.INDEXER_TITLE);
 				String text = titleElement.getText();
-				String newText = radarrTitleService.formatTitle(text, format, cleanTitleRegex,
-						tokenRuleMap.get(Token.TITLE), radarrTitleList);
+				String newText = radarrTitleService.formatTitle(text, format, cleanTitleRegex, tokenRuleMap,
+						radarrTitleList);
 				if (newText.contains("{" + Token.TITLE + "}")) {
 					log.debug("索引器格式化失败：{} ==> 未匹配到标题", text);
 					continue;
