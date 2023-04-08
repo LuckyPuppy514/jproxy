@@ -11,6 +11,7 @@ import com.lckp.jproxy.constant.SystemConfigKey;
 import com.lckp.jproxy.service.ISonarrJackettService;
 import com.lckp.jproxy.service.ISonarrRuleService;
 import com.lckp.jproxy.service.ISonarrTitleService;
+import com.lckp.jproxy.service.ISystemCacheService;
 import com.lckp.jproxy.service.ISystemConfigService;
 import com.lckp.jproxy.service.ITmdbTitleService;
 
@@ -30,11 +31,13 @@ public class SonarrJackettServiceImpl extends SonarrIndexerServiceImpl implement
 	 * @param sonarrRuleService
 	 * @param tmdbTitleService
 	 * @param systemConfigService
+	 * @param systemCacheService
 	 */
 	public SonarrJackettServiceImpl(ISonarrTitleService sonarrTitleService,
 			ISonarrRuleService sonarrRuleService, ITmdbTitleService tmdbTitleService,
-			ISystemConfigService systemConfigService) {
-		super(sonarrTitleService, sonarrRuleService, tmdbTitleService, systemConfigService);
+			ISystemConfigService systemConfigService, ISystemCacheService systemCacheService) {
+		super(sonarrTitleService, sonarrRuleService, tmdbTitleService, systemConfigService,
+				systemCacheService);
 	}
 
 	/**

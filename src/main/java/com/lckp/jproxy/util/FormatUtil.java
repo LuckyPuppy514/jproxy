@@ -39,7 +39,7 @@ public class FormatUtil {
 			cleanTitle = title;
 		}
 		cleanTitle = cleanTitle.replaceAll(PLACEHOLDERS, PLACEHOLDER);
-		return cleanTitle.toLowerCase();
+		return cleanTitle.toLowerCase().trim();
 	}
 
 	/**

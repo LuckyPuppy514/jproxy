@@ -10,7 +10,7 @@ rule:
 time:
    cache-expires: 10080
    token-expires: 10080
-   sync-interval: 5
+   sync-interval: 3
    sync-sonarr-title: 0 0 0/1 * * ?
    sync-sonarr-rule: 0 15 0 * * ?
    sync-radarr-title: 0 30 0/1 * * ?

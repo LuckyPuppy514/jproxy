@@ -27,6 +27,7 @@ import com.lckp.jproxy.entity.TmdbTitle;
 import com.lckp.jproxy.service.ISonarrIndexerService;
 import com.lckp.jproxy.service.ISonarrRuleService;
 import com.lckp.jproxy.service.ISonarrTitleService;
+import com.lckp.jproxy.service.ISystemCacheService;
 import com.lckp.jproxy.service.ISystemConfigService;
 import com.lckp.jproxy.service.ITmdbTitleService;
 
@@ -53,6 +54,8 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 	protected final ITmdbTitleService tmdbTitleService;
 
 	protected final ISystemConfigService systemConfigService;
+
+	protected final ISystemCacheService systemCacheService;
 
 	/**
 	 * 
@@ -138,13 +141,13 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 		SonarrTitle sonarrTitle = sonarrTitleService.queryByTitle(title);
 		if (sonarrTitle == null) {
 			sonarrTitleService.sync();
+			systemCacheService.clear(CacheName.TMDB_TITLE_SYNC_INTERVAL);
+			tmdbTitleService.sync(sonarrTitleService.queryNeedSyncTmdbTitle());
 			sonarrTitle = sonarrTitleService.queryByTitle(title);
 			if (sonarrTitle == null) {
 				log.error("找不到匹配的标题：{}", title);
 				sonarrTitle = new SonarrTitle();
 				sonarrTitle.setTitle(title);
-			} else {
-				tmdbTitleService.sync(sonarrTitleService.queryNeedSyncTmdbTitle());
 			}
 		}
 		return sonarrTitle;
