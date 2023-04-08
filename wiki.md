@@ -13,6 +13,7 @@
   - [规则分享](#规则分享)
   - [剧集范例](#剧集范例)
   - [电影范例](#电影范例)
+  - [Docker环境变量](#Docker环境变量)
 
 # 进阶配置
 
@@ -151,3 +152,16 @@
 用于批量测试（请注意 ✅ 并不代表匹配准确性，只代表进行了格式化）
 
 ![20230405115146](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405115146.webp)
+
+# Docker环境变量
+| 参数名            | 默认值               | 备注                        |
+|----------------|-------------------|---------------------------|
+| PUID           | 1000              |                           |
+| PGID           | 1000              |                           |
+| REDIS_HOST     | jproxy-redis      | redis地址                   |
+| REDIS_PORT     | 6379              | redis端口号                  |
+| JAVA_OPTS      | -Xms512m -Xmx512m |                           |
+| REDIS_PASSWORD |                   | redis密码,如果你有自己的redis才需要修改 |
+| REDIS_DATABASE |                   | 同上,如果你有自己的redis才有需要修改     |
+
+
