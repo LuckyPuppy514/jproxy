@@ -71,20 +71,30 @@ services:
 
 If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/LuckyPuppy514/jproxy/blob/main/docker/docker-run.sh)
 
+|   Parameter    |  Default  |              Description              |
+| :------------: | :-------: | :-----------------------------------: |
+|      PUID      |     0     |                User ID                |
+|      PGID      |     0     |               Group ID                |
+|   REDIS_HOST   | 127.0.0.1 |              Redis host               |
+|   REDIS_PORT   |   6379    |              Redis port               |
+|   JAVA_OPTS    |     -     | Suggested values: ​​-Xms512m -Xmx512m |
+| REDIS_PASSWORD |     -     |            Redis password             |
+| REDIS_DATABASE |     0     |            Redis database             |
+
 ### Windows
 
 1. [Download jdk17](https://kutt.lckp.top/yrnerc), install and configure environment variables
 2. [Download windows.zip](https://github.com/LuckyPuppy514/jproxy/releases) ，unzip to the installation directory
 
-| Filename | Explanation | Remark |
-| :-: | :-: | :-: |
-| startup.bat | starup script | - |
-| shutdown.bat | shutdown script | - |
-| startup.vbs | startup background script | hidden window running in the background |
-| database | database | keep it while upgrade |
-| config | configuration files | - |
-| jproxy.jar | Runnable jar package | - |
-| redis | redis database | - |
+|   Filename   |        Explanation        |                 Remark                  |
+| :----------: | :-----------------------: | :-------------------------------------: |
+| startup.bat  |       starup script       |                    -                    |
+| shutdown.bat |      shutdown script      |                    -                    |
+| startup.vbs  | startup background script | hidden window running in the background |
+|   database   |         database          |          keep it while upgrade          |
+|    config    |    configuration files    |                    -                    |
+|  jproxy.jar  |   Runnable jar package    |                    -                    |
+|    redis     |      redis database       |                    -                    |
 
 ## ☃️ Basic Configuration
 

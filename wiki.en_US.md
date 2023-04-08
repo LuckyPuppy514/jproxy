@@ -40,7 +40,7 @@
 
 ### TMDB
 
-> 🌟 Synchronize the TMDB title, which can be used to add the title of the primary language and the secondary language when searching, and can also be used to match the title of the result to improve the recognition rate
+> 🌟 Synchronize the TMDB title, which can be used to add the title of the primary language and the secondary language when searching, and can also be used to match the title of the result to improve the recognition rate, and supports modification for users to manually calibrate
 
 ① If you do not have a TMDB account, please [register an account](https://www.themoviedb.org/signup) first, then [obtain an API key](https://www.themoviedb.org/settings/api), after saving, it should normally be as shown in the picture ✅, otherwise please check the input and network connectivity
 

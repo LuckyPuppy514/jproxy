@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.0.6 2023-04-08
+
+1. Added the function to modify the TMDB title
+
 ## v3.0.5 2023-04-08
 
 1. Fix the downloaded bug

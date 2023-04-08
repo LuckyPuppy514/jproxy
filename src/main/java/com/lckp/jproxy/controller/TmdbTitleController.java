@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,6 +85,15 @@ public class TmdbTitleController {
 	@PostMapping("/remove")
 	public ResponseEntity<Void> remove(@RequestBody List<Integer> idList) {
 		tmdbTitleService.removeBatchByIds(idList);
+		return ResponseEntity.ok().build();
+	}
+
+	@Operation(summary = "保存")
+	@PostMapping("/save")
+	@CacheEvict(cacheNames = { CacheName.SONARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
+			CacheName.SONARR_RESULT_TITLE }, allEntries = true)
+	public ResponseEntity<Void> save(@RequestBody TmdbTitle tmdbTitle) {
+		tmdbTitleService.updateById(tmdbTitle);
 		return ResponseEntity.ok().build();
 	}
 }

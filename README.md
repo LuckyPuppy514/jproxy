@@ -71,20 +71,30 @@ services:
 
 如需使用 `docker run` 进行部署，请参考 [docker-run.sh](https://github.com/LuckyPuppy514/jproxy/blob/main/docker/docker-run.sh)
 
+|     参数名     |  默认值   |           说明            |
+| :------------: | :-------: | :-----------------------: |
+|      PUID      |     0     |          用户 ID          |
+|      PGID      |     0     |           组 ID           |
+|   REDIS_HOST   | 127.0.0.1 |      Redis 主机地址       |
+|   REDIS_PORT   |   6379    |       Redis 端口号        |
+|   JAVA_OPTS    |     -     | 建议值: -Xms512m -Xmx512m |
+| REDIS_PASSWORD |     -     |        Redis 密码         |
+| REDIS_DATABASE |     0     |      Redis database       |
+
 ### Windows
 
 1. [下载 jdk17](https://kutt.lckp.top/yrnerc)，安装并配置好环境变量
 2. [下载 windows.zip](https://github.com/LuckyPuppy514/jproxy/releases) ，解压到安装目录
 
-| 文件名 | 说明 | 备注 |
-| :-: | :-: | :-: |
-| startup.bat | 启动脚本 | - |
-| shutdown.bat | 关闭脚本 | - |
-| startup.vbs | 后台启动脚本 | 隐藏窗口后台运行 |
-| database | 数据库 | 升级请保留数据库 |
-| config | 配置文件 | - |
-| jproxy.jar | 可执行 jar 包 | - |
-| redis | redis 数据库 | - |
+|    文件名    |     说明      |       备注       |
+| :----------: | :-----------: | :--------------: |
+| startup.bat  |   启动脚本    |        -         |
+| shutdown.bat |   关闭脚本    |        -         |
+| startup.vbs  | 后台启动脚本  | 隐藏窗口后台运行 |
+|   database   |    数据库     | 升级请保留数据库 |
+|    config    |   配置文件    |        -         |
+|  jproxy.jar  | 可执行 jar 包 |        -         |
+|    redis     | redis 数据库  |        -         |
 
 ## ☃️ 基础配置
 

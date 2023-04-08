@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,6 +97,8 @@ public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@CacheEvict(cacheNames = { CacheName.SONARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
+			CacheName.SONARR_RESULT_TITLE }, allEntries = true, condition = "#result == true")
 	public boolean sync(List<Integer> tvdbIdList) {
 		if (tvdbIdList == null || tvdbIdList.isEmpty()) {
 			return true;
