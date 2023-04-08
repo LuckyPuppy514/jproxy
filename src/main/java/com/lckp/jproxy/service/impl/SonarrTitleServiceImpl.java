@@ -212,6 +212,7 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 				for (SonarrTitle sonarrTitle : sonarrTitleList) {
 					String cleanTitle = sonarrTitle.getCleanTitle() != null ? sonarrTitle.getCleanTitle()
 							: FormatUtil.cleanTitle(sonarrTitle.getTitle(), cleanTitleRegex);
+					cleanTitle = cleanTitle.replace(FormatUtil.PLACEHOLDER, ".?");
 					String cleanText = FormatUtil.cleanTitle(text, cleanTitleRegex);
 					String regex = sonarrRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}", cleanTitle);
 					if (cleanText.matches(regex)) {

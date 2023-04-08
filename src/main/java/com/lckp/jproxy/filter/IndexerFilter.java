@@ -1,14 +1,12 @@
 package com.lckp.jproxy.filter;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.filter.wrapper.RequestWrapper;
-import com.lckp.jproxy.filter.wrapper.ResponseWrapper;
 import com.lckp.jproxy.model.request.IndexerRequest;
 import com.lckp.jproxy.service.IIndexerService;
 import com.lckp.jproxy.util.XmlUtil;
@@ -18,7 +16,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +37,6 @@ public abstract class IndexerFilter extends BaseFilter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
-		ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
 		IndexerRequest indexerRequest = getIndexerRequest(requestWrapper);
 
 		// 处理查询
@@ -60,8 +56,7 @@ public abstract class IndexerFilter extends BaseFilter {
 			indexerService.updateIndexerRequest(index, searchTitleList, offsetList, indexerRequest);
 			updateRequestWrapper(indexerRequest, requestWrapper);
 			// 请求
-			chain.doFilter(requestWrapper, responseWrapper);
-			xml = new String(responseWrapper.getContent(), StandardCharsets.UTF_8);
+			xml = indexerService.executeNewRequest(requestWrapper);
 			int count = XmlUtil.count(xml);
 			index++;
 			while (index < size && indexerRequest.getLimit() - count > 0) {
@@ -82,8 +77,7 @@ public abstract class IndexerFilter extends BaseFilter {
 				index++;
 			}
 		} else {
-			chain.doFilter(requestWrapper, responseWrapper);
-			xml = new String(responseWrapper.getContent(), StandardCharsets.UTF_8);
+			xml = indexerService.executeNewRequest(requestWrapper);
 		}
 		// 处理结果
 		xml = indexerService.executeFormatRule(xml);

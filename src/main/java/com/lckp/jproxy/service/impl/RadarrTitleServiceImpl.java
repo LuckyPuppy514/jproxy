@@ -212,6 +212,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 				for (RadarrTitle radarrTitle : radarrTitleList) {
 					String cleanTitle = radarrTitle.getCleanTitle() != null ? radarrTitle.getCleanTitle()
 							: FormatUtil.cleanTitle(radarrTitle.getTitle(), cleanTitleRegex);
+					cleanTitle = cleanTitle.replace(FormatUtil.PLACEHOLDER, ".?");
 					String cleanText = FormatUtil.cleanTitle(text, cleanTitleRegex);
 					String regex = titleRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}", cleanTitle);
 					if (cleanText.matches(regex)) {

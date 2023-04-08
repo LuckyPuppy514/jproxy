@@ -11,7 +11,7 @@
 	<!-- 项目信息 -->
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
-	<version>3.0.4</version>
+	<version>3.0.5</version>
 	<name>JProxy</name>
 	<description>介于 Sonarr/Radarr 和 Jackett/Prowlarr 之间的代理，主要用于优化查询和提升识别率</description>
 	<!-- 依赖版本 -->
@@ -180,8 +180,10 @@
 				<configuration>
 					<pluginExtensions>
 						<pluginExtension>
-							<implementation>com.google.cloud.tools.jib.maven.extension.layerfilter.JibLayerFilterExtension</implementation>
-							<configuration implementation="com.google.cloud.tools.jib.maven.extension.layerfilter.Configuration">
+							<implementation>
+								com.google.cloud.tools.jib.maven.extension.layerfilter.JibLayerFilterExtension</implementation>
+							<configuration
+								implementation="com.google.cloud.tools.jib.maven.extension.layerfilter.Configuration">
 								<!-- 去除生产不需要的依赖 -->
 								<filters>
 									<filter>

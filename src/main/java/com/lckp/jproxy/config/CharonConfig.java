@@ -50,8 +50,6 @@ public class CharonConfig {
 	CharonConfigurer charonConfigurer() {
 		charonConfigurer = charonConfiguration()
 				.set(restTemplate().set(timeout().connection(TIMEOUT).read(TIMEOUT).write(TIMEOUT)));
-		addServer(SystemConfigKey.JACKETT_URL, Common.CHARON_JACKETT_PATH, "http://127.0.0.1:9117");
-		addServer(SystemConfigKey.PROWLARR_URL, Common.CHARON_PROWLARR_PATH, "http://127.0.0.1:9696");
 		addServer(SystemConfigKey.QBITTORRENT_URL, Common.CHARON_QBITTORRENT_PATH, "http://127.0.0.1:8080");
 		addServer(SystemConfigKey.TRANSMISSION_URL, Common.CHARON_TRANSMISSION_PATH, "http://127.0.0.1:9091");
 		return charonConfigurer;
@@ -68,8 +66,7 @@ public class CharonConfig {
 	private void addServer(String key, String path, String url) {
 		serverMap.put(key, requestServerNameRewriter().outgoingServers(url));
 		charonConfigurer.add(requestMapping(key).pathRegex(path + Common.CHARON_ALL_PATH)
-				.set(serverMap.get(key))
-				.set(requestHostHeaderRewriter())
+				.set(serverMap.get(key)).set(requestHostHeaderRewriter())
 				.set(regexRequestPathRewriter().paths(path + Common.CHARON_IN_PATH, Common.CHARON_OUT_PATH)));
 	}
 
