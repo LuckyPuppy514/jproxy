@@ -74,10 +74,10 @@ public class RadarrIndexerServiceImpl extends IndexerServiceImpl implements IRad
 		List<String> searchTitleList = new ArrayList<>();
 		searchTitleList.add(title);
 		// 追加去除年份标题
-		String titleWithOutYear = FormatUtil.removeYear(title);
-		if (titleWithOutYear.length() != title.length()) {
-			searchTitleList.add(titleWithOutYear);
-			title = titleWithOutYear;
+		String titleWithoutYear = FormatUtil.removeYear(title);
+		if (titleWithoutYear.length() != title.length()) {
+			searchTitleList.add(titleWithoutYear);
+			title = titleWithoutYear;
 		}
 		RadarrTitle radarrTitle = radarrTitleService.queryByTitle(title);
 		if (radarrTitle == null) {
@@ -89,7 +89,7 @@ public class RadarrIndexerServiceImpl extends IndexerServiceImpl implements IRad
 			List<RadarrTitle> radarrTitleList = radarrTitleService.query()
 					.eq(TableField.TMDB_ID, radarrTitle.getTmdbId()).eq(TableField.SNO, 0).list();
 			if (!radarrTitleList.isEmpty()) {
-				searchTitleList.add(radarrTitleList.get(0).getTitle());
+				searchTitleList.add(radarrTitleList.get(0).getCleanTitle());
 			}
 		}
 		return searchTitleList;
