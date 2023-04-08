@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.0.4 2023-04-08
+
+1. Fix BUG of append TMDB title to search
+
 ## v3.0.3 2023-04-07
 
 1. Optimize title matching logic
