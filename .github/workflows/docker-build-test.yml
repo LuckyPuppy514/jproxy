@@ -3,7 +3,7 @@ name: docker-build-test
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   DOCKERHUB_REPO: luckypuppy514/jproxy
