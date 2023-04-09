@@ -5,7 +5,7 @@ COPY ./dependencies/ ./
 COPY ./spring-boot-loader/ ./
 COPY ./snapshot-dependencies/ ./
 COPY ./application/ ./
-COPY ./docker/entrypoint.sh ${APP_PATH}
+COPY ./docker/entrypoint.sh ./entrypoint.sh
 
 ENV TZ=Asia/Shanghai, PUID=0, PGID=0, UMASK=022
 
