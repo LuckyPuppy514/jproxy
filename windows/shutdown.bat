@@ -15,6 +15,7 @@ if %errorlevel% equ 0 (
 )
 endlocal
 
+REM 注意：这会杀掉所有 java.exe 进程
 setlocal
 set jproxy=java.exe
 tasklist /fi "imagename eq %jproxy%" | find /i "%jproxy%" >nul
