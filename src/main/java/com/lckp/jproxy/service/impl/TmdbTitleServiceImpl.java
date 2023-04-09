@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.lckp.jproxy.component.SyncIntervalComponent;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +51,8 @@ public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle
 	private final RedisTemplate<Object, Object> redisTemplate;
 
 	private final RestTemplate restTemplate;
+
+	private final SyncIntervalComponent syncIntervalComponent;
 
 	@Value("${time.sync-interval}")
 	private long syncInterval;
@@ -103,8 +106,7 @@ public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle
 		if (tvdbIdList == null || tvdbIdList.isEmpty()) {
 			return true;
 		}
-		if (!Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(CacheName.TMDB_TITLE_SYNC_INTERVAL,
-				1, syncInterval, TimeUnit.MINUTES))) {
+		if(syncIntervalComponent.checkInterval(CacheName.TMDB_TITLE_SYNC_INTERVAL)){
 			return false;
 		}
 

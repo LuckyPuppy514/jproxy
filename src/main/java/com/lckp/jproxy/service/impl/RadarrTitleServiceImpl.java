@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.lckp.jproxy.component.SyncIntervalComponent;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeanUtils;
@@ -62,6 +63,8 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 
 	private final RestTemplate restTemplate;
 
+	private final SyncIntervalComponent syncIntervalComponent;
+
 	@Value("${time.sync-interval}")
 	private long syncInterval;
 
@@ -78,8 +81,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 	@CacheEvict(cacheNames = { CacheName.RADARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
 			CacheName.RADARR_RESULT_TITLE }, allEntries = true, condition = "#result == true")
 	public synchronized boolean sync() {
-		if (!Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(CacheName.RADARR_TITLE_SYNC_INTERVAL,
-				1, syncInterval, TimeUnit.MINUTES))) {
+		if (syncIntervalComponent.checkInterval(CacheName.SONARR_TITLE_SYNC_INTERVAL)) {
 			return false;
 		}
 
