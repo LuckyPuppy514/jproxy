@@ -20,4 +20,4 @@ chown -R ${PUID}:${PGID} /app/
 umask ${UMASK}
 
 # 启动应用
-exec su-exec ${PUID}:${PGID} java ${JAVA_OPTS} -Dfile.encoding=utf-8 -Dspring.config.location=${CONFIG_PATH}/ org.springframework.boot.loader.JarLauncher
+gosu ${PUID}:${PGID} java ${JAVA_OPTS} -Dfile.encoding=utf-8 -Dspring.config.location=${CONFIG_PATH}/ org.springframework.boot.loader.JarLauncher
