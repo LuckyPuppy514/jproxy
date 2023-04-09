@@ -1,4 +1,4 @@
---liquibase formatted sql
+--liquibase formatted sql logicalFilePath:/database/changelog/v3.0.0.sql
 --changeset LuckyPuppy514:1
 --comment: 创建系统用户表
 CREATE TABLE IF NOT EXISTS system_user
