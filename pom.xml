@@ -11,7 +11,7 @@
 	<!-- 项目信息 -->
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
-	<version>3.0.6</version>
+	<version>3.0.7</version>
 	<name>JProxy</name>
 	<description>介于 Sonarr/Radarr 和 Jackett/Prowlarr 之间的代理，主要用于优化查询和提升识别率</description>
 	<!-- 依赖版本 -->
@@ -136,6 +136,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>com.lckp.jproxy.Application</mainClass>
 					<layers>
 						<enabled>true</enabled>
 					</layers>
@@ -164,114 +165,6 @@
 						</exclude>
 					</excludes>
 				</configuration>
-			</plugin>
-			<!-- 打包 Docker 镜像 -->
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>${jib-maven-plugin.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.google.cloud.tools</groupId>
-						<artifactId>jib-layer-filter-extension-maven</artifactId>
-						<version>0.3.0</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<pluginExtensions>
-						<pluginExtension>
-							<implementation>
-								com.google.cloud.tools.jib.maven.extension.layerfilter.JibLayerFilterExtension</implementation>
-							<configuration
-								implementation="com.google.cloud.tools.jib.maven.extension.layerfilter.Configuration">
-								<!-- 去除生产不需要的依赖 -->
-								<filters>
-									<filter>
-										<glob>**/knife4j-*.jar</glob>
-									</filter>
-									<filter>
-										<glob>**/swagger-ui-*.jar</glob>
-									</filter>
-									<filter>
-										<glob>**/lombok-*.jar</glob>
-									</filter>
-									<filter>
-										<glob>**/mybatis-plus-generator-*.jar</glob>
-									</filter>
-									<filter>
-										<glob>**/freemarker-*.jar</glob>
-									</filter>
-								</filters>
-							</configuration>
-						</pluginExtension>
-					</pluginExtensions>
-					<from>
-						<image>eclipse-temurin:17-jre-jammy</image>
-						<platforms>
-							<platform>
-								<os>linux</os>
-								<architecture>amd64</architecture>
-							</platform>
-							<platform>
-								<os>linux</os>
-								<architecture>arm64</architecture>
-							</platform>
-							<platform>
-								<os>linux</os>
-								<architecture>arm</architecture>
-							</platform>
-						</platforms>
-					</from>
-					<to>
-						<image>luckypuppy514/jproxy</image>
-						<tags>
-							<tag>latest</tag>
-							<tag>v${project.version}</tag>
-						</tags>
-					</to>
-					<extraDirectories>
-						<paths>
-							<path>
-								<from>docker</from>
-								<into>/app</into>
-								<includes>entrypoint.sh</includes>
-							</path>
-						</paths>
-						<permissions>
-							<permission>
-								<file>/app/entrypoint.sh</file>
-								<mode>755</mode>
-							</permission>
-						</permissions>
-					</extraDirectories>
-					<container>
-						<appRoot>/app</appRoot>
-						<entrypoint>
-							<arg>/bin/bash</arg>
-							<arg>/app/entrypoint.sh</arg>
-						</entrypoint>
-						<ports>
-							<port>8117</port>
-						</ports>
-						<environment>
-							<PUID>0</PUID>
-							<PGID>0</PGID>
-							<UMASK>022</UMASK>
-							<TZ>Asia/Shanghai</TZ>
-						</environment>
-						<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
-						<mainClass>com.lckp.jproxy.Application</mainClass>
-					</container>
-					<allowInsecureRegistries>true</allowInsecureRegistries>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

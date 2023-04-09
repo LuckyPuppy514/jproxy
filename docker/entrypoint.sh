@@ -11,15 +11,13 @@ if [ ! -d "${DATABASE_PATH}" ]; then
 fi
 
 # 初始化持久化配置
-cp -n /app/resources/application.yml ${CONFIG_PATH}/application.yml
-cp -n /app/resources/application-prod.yml ${CONFIG_PATH}/application-prod.yml
-cp -n /app/resources/database/jproxy.db ${DATABASE_PATH}/jproxy.db
+cp -n /app/BOOT-INF/classes/application.yml ${CONFIG_PATH}/application.yml
+cp -n /app/BOOT-INF/classes/application-prod.yml ${CONFIG_PATH}/application-prod.yml
+cp -n /app/BOOT-INF/classes/database/jproxy.db ${DATABASE_PATH}/jproxy.db
 
 # 设置权限
 chown -R ${PUID}:${PGID} /app/
 umask ${UMASK}
 
 # 启动应用
-cd /app
-dpkg -s gosu >/dev/null 2>&1 || (apt update && apt-get -y install gosu)
-gosu ${PUID}:${PGID} java ${JAVA_OPTS} -Dfile.encoding=utf-8 -Dspring.config.location=${CONFIG_PATH}/ -cp $( cat /app/jib-classpath-file ) $( cat /app/jib-main-class-file )
+exec su-exec ${PUID}:${PGID} java ${JAVA_OPTS} -Dfile.encoding=utf-8 -Dspring.config.location=${CONFIG_PATH}/ org.springframework.boot.loader.JarLauncher
