@@ -3,7 +3,7 @@ name: docker-build
 on:
   push:
     branches:
-      - master
+      - main
     tags:
       - v*
 
