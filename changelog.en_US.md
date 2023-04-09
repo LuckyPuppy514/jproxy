@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.0.8 2023-04-09
+
+1. Update liquibase config
+
 ## v3.0.7 2023-04-09
 
 1. Update package way
