@@ -82,7 +82,7 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 	@CacheEvict(cacheNames = { CacheName.SONARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
 			CacheName.SONARR_RESULT_TITLE }, allEntries = true, condition = "#result == true")
 	public synchronized boolean sync() {
-		if (syncIntervalComponent.checkInterval(CacheName.SONARR_TITLE_SYNC_INTERVAL)) {
+		if (!syncIntervalComponent.checkInterval(CacheName.SONARR_TITLE_SYNC_INTERVAL)) {
 			return false;
 		}
 

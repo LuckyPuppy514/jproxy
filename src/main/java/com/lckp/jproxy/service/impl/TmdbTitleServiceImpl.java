@@ -106,7 +106,7 @@ public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle
 		if (tvdbIdList == null || tvdbIdList.isEmpty()) {
 			return true;
 		}
-		if(syncIntervalComponent.checkInterval(CacheName.TMDB_TITLE_SYNC_INTERVAL)){
+		if(!syncIntervalComponent.checkInterval(CacheName.TMDB_TITLE_SYNC_INTERVAL)){
 			return false;
 		}
 

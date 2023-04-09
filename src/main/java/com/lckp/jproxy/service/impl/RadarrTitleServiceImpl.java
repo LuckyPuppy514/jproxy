@@ -81,7 +81,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 	@CacheEvict(cacheNames = { CacheName.RADARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
 			CacheName.RADARR_RESULT_TITLE }, allEntries = true, condition = "#result == true")
 	public synchronized boolean sync() {
-		if (syncIntervalComponent.checkInterval(CacheName.SONARR_TITLE_SYNC_INTERVAL)) {
+		if (!syncIntervalComponent.checkInterval(CacheName.SONARR_TITLE_SYNC_INTERVAL)) {
 			return false;
 		}
 
