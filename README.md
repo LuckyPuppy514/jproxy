@@ -53,48 +53,38 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Shanghai
-      - REDIS_HOST=jproxy-redis
-      - REDIS_PORT=6379
       - JAVA_OPTS=-Xms512m -Xmx512m
-      links:
-      - jproxy-redis
       ports:
       - 8117:8117
       volumes:
       - /docker/jproxy/database:/app/database
-
-   jproxy-redis:
-      image: redis:latest
-      container_name: jproxy-redis
-      restart: unless-stopped
 ```
 
 如需使用 `docker run` 进行部署，请参考 [docker-run.sh](https://github.com/LuckyPuppy514/jproxy/blob/main/docker/docker-run.sh)
 
-|     参数名     |  默认值   |           说明            |
-| :------------: | :-------: | :-----------------------: |
-|      PUID      |     0     |          用户 ID          |
-|      PGID      |     0     |           组 ID           |
-|   REDIS_HOST   | 127.0.0.1 |      Redis 主机地址       |
-|   REDIS_PORT   |   6379    |       Redis 端口号        |
-|   JAVA_OPTS    |     -     | 建议值: -Xms512m -Xmx512m |
-| REDIS_PASSWORD |     -     |        Redis 密码         |
-| REDIS_DATABASE |     0     |      Redis database       |
+|    参数名     |      默认值       |         说明         |
+| :-----------: | :---------------: | :------------------: |
+|     PUID      |         0         |       用户 ID        |
+|     PGID      |         0         |        组 ID         |
+|      TZ       |   Asia/Shanghai   |         时区         |
+|   JAVA_OPTS   | -Xms512m -Xmx512m |     JVM 运行参数     |
+| CACHE_EXPIRES |       4320        | 缓存过期时间（分钟） |
+| TOKEN_EXPIRES |       10080       | 登录过期时间（分钟） |
+| SYNC_INTERVAL |         3         |   同步间隔（分钟）   |
 
 ### Windows
 
 1. [下载 jdk17](https://kutt.lckp.top/yrnerc)，安装并配置好环境变量
 2. [下载 windows.zip](https://github.com/LuckyPuppy514/jproxy/releases) ，解压到安装目录
 
-|    文件名    |     说明      |       备注       |
-| :----------: | :-----------: | :--------------: |
-| startup.bat  |   启动脚本    |        -         |
-| shutdown.bat |   关闭脚本    |        -         |
-| startup.vbs  | 后台启动脚本  | 隐藏窗口后台运行 |
-|   database   |    数据库     | 升级请保留数据库 |
-|    config    |   配置文件    |        -         |
-|  jproxy.jar  | 可执行 jar 包 |        -         |
-|    redis     | redis 数据库  |        -         |
+|       文件名       |     说明      |       备注       |
+| :----------------: | :-----------: | :--------------: |
+|    startup.bat     |   启动脚本    |        -         |
+|    shutdown.bat    |   关闭脚本    |        -         |
+| startup-daemon.bat | 后台启动脚本  | 隐藏窗口后台运行 |
+|      database      |    数据库     | 升级请保留数据库 |
+|       config       |   配置文件    |        -         |
+|     jproxy.jar     | 可执行 jar 包 |        -         |
 
 ## ☃️ 基础配置
 
@@ -140,7 +130,7 @@ services:
 - [liquibase](https://github.com/liquibase/liquibase)
 - [mybatis](https://github.com/mybatis/mybatis-3)
 - [mybatis-plus](https://github.com/baomidou/mybatis-plus)
-- [redis](https://github.com/redis/redis)
+- [caffeine](https://github.com/ben-manes/caffeine)
 - [knife4j](https://github.com/xiaoymin/knife4j)
 - [charon](https://github.com/mkopylec/charon-spring-boot-starter)
 - [jib](https://github.com/GoogleContainerTools/jib)

@@ -2,13 +2,12 @@ package com.lckp.jproxy.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +18,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.benmanes.caffeine.cache.Cache;
 import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.constant.CacheName;
 import com.lckp.jproxy.constant.Common;
@@ -47,12 +47,11 @@ public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle
 
 	private final ISystemConfigService systemConfigService;
 
-	private final RedisTemplate<Object, Object> redisTemplate;
-
 	private final RestTemplate restTemplate;
 
-	@Value("${time.sync-interval}")
-	private long syncInterval;
+	@Autowired
+	@Qualifier("syncIntervalCache")
+	private Cache<String, Integer> syncIntervalCache;
 
 	private final ITmdbTitleService proxy() {
 		return (ITmdbTitleService) AopContext.currentProxy();
@@ -103,8 +102,10 @@ public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle
 		if (tvdbIdList == null || tvdbIdList.isEmpty()) {
 			return true;
 		}
-		if (!Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(CacheName.TMDB_TITLE_SYNC_INTERVAL,
-				1, syncInterval, TimeUnit.MINUTES))) {
+		if (syncIntervalCache.asMap().compute(CacheName.TMDB_TITLE_SYNC_INTERVAL, (key, value) -> {
+			value = value == null ? 1 : 2;
+			return value;
+		}) > 1) {
 			return false;
 		}
 

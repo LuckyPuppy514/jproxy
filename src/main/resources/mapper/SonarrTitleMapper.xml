@@ -20,6 +20,6 @@
 			GROUP BY tt.title
 		)
 		WHERE title IS NOT NULL
-		ORDER BY monitored DESC, title DESC
+		ORDER BY monitored DESC, LENGTH (title) DESC
 	</select>
 </mapper>

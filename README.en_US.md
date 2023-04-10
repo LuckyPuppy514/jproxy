@@ -53,48 +53,38 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Shanghai
-      - REDIS_HOST=jproxy-redis
-      - REDIS_PORT=6379
       - JAVA_OPTS=-Xms512m -Xmx512m
-      links:
-      - jproxy-redis
       ports:
       - 8117:8117
       volumes:
       - /docker/jproxy/database:/app/database
-
-   jproxy-redis:
-      image: redis:latest
-      container_name: jproxy-redis
-      restart: unless-stopped
 ```
 
 If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/LuckyPuppy514/jproxy/blob/main/docker/docker-run.sh)
 
-|   Parameter    |  Default  |              Description              |
-| :------------: | :-------: | :-----------------------------------: |
-|      PUID      |     0     |                User ID                |
-|      PGID      |     0     |               Group ID                |
-|   REDIS_HOST   | 127.0.0.1 |              Redis host               |
-|   REDIS_PORT   |   6379    |              Redis port               |
-|   JAVA_OPTS    |     -     | Suggested values: ​​-Xms512m -Xmx512m |
-| REDIS_PASSWORD |     -     |            Redis password             |
-| REDIS_DATABASE |     0     |            Redis database             |
+|   Parameter   |      Default      |            Description             |
+| :-----------: | :---------------: | :--------------------------------: |
+|     PUID      |         0         |              User ID               |
+|     PGID      |         0         |              Group ID              |
+|      TZ       |   Asia/Shanghai   |              Timezone              |
+|   JAVA_OPTS   | -Xms512m -Xmx512m |           JVM parameters           |
+| CACHE_EXPIRES |       4320        |  Cache expiration time (minutes)   |
+| TOKEN_EXPIRES |       10080       |  Login expiration time (minutes)   |
+| SYNC_INTERVAL |         3         | Synchronization interval (minutes) |
 
 ### Windows
 
 1. [Download jdk17](https://kutt.lckp.top/yrnerc), install and configure environment variables
 2. [Download windows.zip](https://github.com/LuckyPuppy514/jproxy/releases) ，unzip to the installation directory
 
-|   Filename   |        Explanation        |                 Remark                  |
-| :----------: | :-----------------------: | :-------------------------------------: |
-| startup.bat  |       starup script       |                    -                    |
-| shutdown.bat |      shutdown script      |                    -                    |
-| startup.vbs  | startup background script | hidden window running in the background |
-|   database   |         database          |          keep it while upgrade          |
-|    config    |    configuration files    |                    -                    |
-|  jproxy.jar  |   Runnable jar package    |                    -                    |
-|    redis     |      redis database       |                    -                    |
+|      Filename      |        Explanation        |                 Remark                  |
+| :----------------: | :-----------------------: | :-------------------------------------: |
+|    startup.bat     |       starup script       |                    -                    |
+|    shutdown.bat    |      shutdown script      |                    -                    |
+| startup-daemon.bat | startup background script | hidden window running in the background |
+|      database      |         database          |          keep it while upgrade          |
+|       config       |    configuration files    |                    -                    |
+|     jproxy.jar     |   Runnable jar package    |                    -                    |
 
 ## ☃️ Basic Configuration
 
@@ -140,7 +130,7 @@ Feel free to dive in！[Open an issue](https://github.com/LuckyPuppy514/jproxy/i
 - [liquibase](https://github.com/liquibase/liquibase)
 - [mybatis](https://github.com/mybatis/mybatis-3)
 - [mybatis-plus](https://github.com/baomidou/mybatis-plus)
-- [redis](https://github.com/redis/redis)
+- [caffeine](https://github.com/ben-manes/caffeine)
 - [knife4j](https://github.com/xiaoymin/knife4j)
 - [charon](https://github.com/mkopylec/charon-spring-boot-starter)
 - [jib](https://github.com/GoogleContainerTools/jib)

@@ -91,7 +91,7 @@ It is used to remove special characters in the title and improve the success rat
 
 ## Cache
 
-Used to clear the redis cache
+Used to clear the cache
 
 - When the Series Title, TMDB Title or Movie Title synchronization prompt is too frequent, you can try to clear their cache and try again
 - When the Configuration, Series Rule or Movie Rule are updated, but it does not take effect, you can try to clear their cache or all caches and try again

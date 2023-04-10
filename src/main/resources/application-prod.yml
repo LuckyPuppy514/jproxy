@@ -8,9 +8,9 @@ rule:
    location-backup: https://github.rn.lckp.top/LuckyPuppy514/jproxy/main/src/main/resources/rule
 
 time:
-   cache-expires: 10080
-   token-expires: 10080
-   sync-interval: 3
+   cache-expires: ${CACHE_EXPIRES:4320}
+   token-expires: ${TOKEN_EXPIRES:10080}
+   sync-interval: ${SYNC_INTERVAL:3}
    sync-sonarr-title: 0 0 0/1 * * ?
    sync-sonarr-rule: 0 15 0 * * ?
    sync-radarr-title: 0 30 0/1 * * ?
@@ -28,18 +28,7 @@ spring:
    datasource:
       url: jdbc:sqlite:./database/jproxy.db
       driver-class-name: org.sqlite.JDBC
-   data:
-      redis:
-         host: ${REDIS_HOST:127.0.0.1}
-         port: ${REDIS_PORT:6379}
-         password: ${REDIS_PASSWORD:}
-         database: ${REDIS_DATABASE:0}
-         lettuce:
-            pool:
-               max-active: 8
-               max-wait: -1
-               max-idle: 8
-               min-idle: 0
+
 springdoc:
    swagger-ui:
       enabled: false

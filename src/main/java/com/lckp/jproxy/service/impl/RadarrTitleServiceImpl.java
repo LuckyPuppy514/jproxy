@@ -3,17 +3,16 @@ package com.lckp.jproxy.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -24,6 +23,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.benmanes.caffeine.cache.Cache;
 import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.constant.CacheName;
 import com.lckp.jproxy.constant.Common;
@@ -58,12 +58,11 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 
 	private final ISystemConfigService systemConfigService;
 
-	private final RedisTemplate<Object, Object> redisTemplate;
+	@Autowired
+	@Qualifier("syncIntervalCache")
+	private Cache<String, Integer> syncIntervalCache;
 
 	private final RestTemplate restTemplate;
-
-	@Value("${time.sync-interval}")
-	private long syncInterval;
 
 	private final IRadarrTitleService proxy() {
 		return (IRadarrTitleService) AopContext.currentProxy();
@@ -78,8 +77,10 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 	@CacheEvict(cacheNames = { CacheName.RADARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
 			CacheName.RADARR_RESULT_TITLE }, allEntries = true, condition = "#result == true")
 	public synchronized boolean sync() {
-		if (!Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(CacheName.RADARR_TITLE_SYNC_INTERVAL,
-				1, syncInterval, TimeUnit.MINUTES))) {
+		if (syncIntervalCache.asMap().compute(CacheName.RADARR_TITLE_SYNC_INTERVAL, (key, value) -> {
+			value = value == null ? 1 : 2;
+			return value;
+		}) > 1) {
 			return false;
 		}
 
@@ -189,7 +190,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 	@Cacheable(cacheNames = CacheName.RADARR_RESULT_TITLE)
 	public List<RadarrTitle> queryAll() {
 		return proxy().query().groupBy(TableField.CLEAN_TITLE)
-				.orderByDesc(TableField.MONITORED, TableField.CLEAN_TITLE).list();
+				.last("ORDER BY monitored DESC, LENGTH (title) DESC").list();
 	}
 
 	/**

@@ -3,6 +3,11 @@
 
 # Change Logs
 
+## v3.0.9 2023-04-10
+
+1. Switch cache database: Redis => Caffeine
+2. Optimize title matching logic
+
 ## v3.0.8 2023-04-09
 
 1. Update liquibase config

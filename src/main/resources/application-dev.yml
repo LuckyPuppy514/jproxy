@@ -8,7 +8,7 @@ rule:
    location-backup: http://127.0.0.1:8117
 
 time:
-   cache-expires: 10080
+   cache-expires: 4320
    token-expires: 10080
    sync-interval: 3
    sync-sonarr-title: 0 0 0/1 * * ?
@@ -33,17 +33,7 @@ spring:
    datasource:
       url: jdbc:sqlite::resource:database/jproxy.db
       driver-class-name: org.sqlite.JDBC
-   data:
-      redis:
-         host: 127.0.0.1
-         port: 6379
-         database: 0
-         lettuce:
-            pool:
-               max-active: 8
-               max-wait: -1
-               max-idle: 8
-               min-idle: 0
+
 springdoc:
    swagger-ui:
       path: /swagger-ui.html

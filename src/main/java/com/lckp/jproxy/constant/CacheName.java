@@ -28,5 +28,5 @@ public class CacheName {
 	public static final String TMDB_TITLE_SYNC_INTERVAL = "tmdb_title_sync_interval";
 	public static final String RADARR_TITLE_SYNC_INTERVAL = "radarr_title_sync_interval";
 	public static final String TOKEN_SECRET = "token_secret";
-	public static final String TOKEN_BLACK_LIST = "token_black_list:";
+	public static final String TOKEN_BLACK_LIST = "token_black_list";
 }

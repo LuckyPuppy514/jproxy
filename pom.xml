@@ -11,7 +11,7 @@
 	<!-- 项目信息 -->
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
-	<version>3.0.8</version>
+	<version>3.0.9</version>
 	<name>JProxy</name>
 	<description>介于 Sonarr/Radarr 和 Jackett/Prowlarr 之间的代理，主要用于优化查询和提升识别率</description>
 	<!-- 依赖版本 -->
@@ -24,7 +24,6 @@
 		<mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
 		<charon-spring-webmvc.version>5.1.0</charon-spring-webmvc.version>
 		<dom4j.version>2.1.4</dom4j.version>
-		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
 	</properties>
 	<!-- 依赖 -->
 	<dependencies>
@@ -110,10 +109,14 @@
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 		</dependency>
-		<!-- redis -->
+		<!-- 缓存 -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
 		</dependency>
 		<!-- charon 反向代理 -->
 		<dependency>

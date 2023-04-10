@@ -1,16 +1,17 @@
 package com.lckp.jproxy.service.impl;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import com.lckp.jproxy.constant.CacheName;
 import com.lckp.jproxy.service.ISystemCacheService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -20,22 +21,30 @@ import lombok.RequiredArgsConstructor;
  * @author LuckyPuppy514
  * @date 2023-03-26
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SystemCacheServiceImpl implements ISystemCacheService {
 
-	private final RedisTemplate<Object, Object> redisTemplate;
+	private final CacheManager cacheManager;
+
+	@Autowired
+	@Qualifier("syncIntervalCache")
+	private Cache<String, Integer> syncIntervalCache;
 
 	/**
 	 * @return
 	 * @see com.lckp.jproxy.service.ISystemCacheService#clear()
 	 */
 	@Override
-	@CacheEvict(cacheNames = "*", allEntries = true)
 	public boolean clearAll() {
-		redisTemplate.delete(CacheName.SONARR_TITLE_SYNC_INTERVAL);
-		redisTemplate.delete(CacheName.TMDB_TITLE_SYNC_INTERVAL);
-		redisTemplate.delete(CacheName.RADARR_TITLE_SYNC_INTERVAL);
+		cacheManager.getCacheNames().forEach(cacheName -> {
+			cacheManager.getCache(cacheName).clear();
+			log.debug("缓存已删除：{}", cacheName);
+		});
+		syncIntervalCache.asMap().remove(CacheName.SONARR_TITLE_SYNC_INTERVAL);
+		syncIntervalCache.asMap().remove(CacheName.TMDB_TITLE_SYNC_INTERVAL);
+		syncIntervalCache.asMap().remove(CacheName.RADARR_TITLE_SYNC_INTERVAL);
 		return true;
 	}
 
@@ -50,10 +59,13 @@ public class SystemCacheServiceImpl implements ISystemCacheService {
 		if (StringUtils.isBlank(cacheName)) {
 			return false;
 		}
-		Set<Object> keys = redisTemplate.keys(cacheName + "*");
-		for (Object key : keys) {
-			redisTemplate.delete(key);
+		org.springframework.cache.Cache cache = cacheManager.getCache(cacheName);
+		if (cache != null) {
+			cache.clear();
+		} else {
+			syncIntervalCache.asMap().remove(cacheName);
 		}
+		log.debug("缓存已删除：{}", cacheName);
 		return true;
 	}
 }

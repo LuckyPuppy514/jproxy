@@ -1,9 +1,9 @@
 package com.lckp.jproxy.interceptor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.lckp.jproxy.constant.ApiField;
-import com.lckp.jproxy.constant.Common;
 import com.lckp.jproxy.service.ISystemUserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			log.debug("token: {}", token.substring(0, 12) + "******" + token.substring(token.length() - 5));
 			return true;
 		}
-		response.sendRedirect(Common.INTERCEPTOR_LOGIN_PAGE_PATH);
+		response.sendError(HttpStatus.FORBIDDEN.value());
 		return false;
 	}
 }

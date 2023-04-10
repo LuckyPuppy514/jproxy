@@ -3,16 +3,15 @@ package com.lckp.jproxy.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -23,6 +22,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.benmanes.caffeine.cache.Cache;
 import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.constant.CacheName;
 import com.lckp.jproxy.constant.Common;
@@ -59,13 +59,12 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 
 	private final SonarrTitleMapper sonarrTitleMapper;
 
-	private final RedisTemplate<Object, Object> redisTemplate;
-
 	private final RestTemplate restTemplate;
 
-	@Value("${time.sync-interval}")
-	private long syncInterval;
-
+	@Autowired
+	@Qualifier("syncIntervalCache")
+	private Cache<String, Integer> syncIntervalCache;
+	
 	private final ISonarrTitleService proxy() {
 		return (ISonarrTitleService) AopContext.currentProxy();
 	}
@@ -79,8 +78,10 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 	@CacheEvict(cacheNames = { CacheName.SONARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
 			CacheName.SONARR_RESULT_TITLE }, allEntries = true, condition = "#result == true")
 	public synchronized boolean sync() {
-		if (!Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(CacheName.SONARR_TITLE_SYNC_INTERVAL,
-				1, syncInterval, TimeUnit.MINUTES))) {
+		if (syncIntervalCache.asMap().compute(CacheName.SONARR_TITLE_SYNC_INTERVAL, (key, value) -> {
+			value = value == null ? 1 : 2;
+			return value;
+		}) > 1) {
 			return false;
 		}
 

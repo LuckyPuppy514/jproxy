@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -42,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemUser>
 		implements ISystemUserService {
 
-	private final RedisTemplate<Object, Object> redisTemplate;
+	private final CacheManager cacheManager;
 
 	@Value("${time.token-expires}")
 	private long tokenExpires;
@@ -103,14 +104,15 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 		if (StringUtils.isBlank(token)) {
 			return false;
 		}
-		token = removeBearer(token);
-		if (redisTemplate.opsForValue().get(CacheName.TOKEN_BLACK_LIST + token) != null) {
+		Cache cache = cacheManager.getCache(CacheName.TOKEN_BLACK_LIST);
+		if (cache != null && cache.get(token) != null) {
 			return false;
 		}
 		try {
+			token = removeBearer(token);
 			JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
 		} catch (Exception e) {
-			log.error("invalid token: {}", e.getMessage());
+			log.debug("invalid token: {}", e.getMessage());
 			return false;
 		}
 		return true;
@@ -121,9 +123,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 	 * @see com.lckp.jproxy.service.ISystemUserService#logout(java.lang.String)
 	 */
 	@Override
+	@Cacheable(cacheNames = CacheName.TOKEN_BLACK_LIST, key = "#token")
 	public boolean logout(String token) {
-		redisTemplate.opsForValue().set(CacheName.TOKEN_BLACK_LIST + removeBearer(token), 1, tokenExpires,
-				TimeUnit.MINUTES);
 		return true;
 	}
 
@@ -166,13 +167,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
 	@PostConstruct
 	private void initSecret() {
-		secret = (String) redisTemplate.opsForValue().get(CacheName.TOKEN_SECRET);
-		if (StringUtils.isBlank(secret)) {
-			secret = md5(UUID.randomUUID().toString());
-			redisTemplate.opsForValue().set(CacheName.TOKEN_SECRET, secret, tokenExpires * 10L,
-					TimeUnit.MINUTES);
-		}
-		log.info("初始化 secret 成功：{}",
-				secret == null ? null : secret.substring(0, 5) + "******" + secret.substring(27));
+		secret = md5(UUID.randomUUID().toString());
+		log.info("初始化 secret 成功：{}", secret.substring(0, 5) + "******" + secret.substring(27));
 	}
 }
