@@ -41,7 +41,6 @@ public class SonarrSyncTask {
 		} catch (Exception e) {
 			log.error("同步剧集标题出错：{}", e.getMessage());
 		}
-
 	}
 
 	@Scheduled(cron = "${time.sonarr-rule-sync}")

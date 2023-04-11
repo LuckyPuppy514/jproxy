@@ -16,14 +16,12 @@ public class SystemConfigKey {
 	public static final String SONARR_URL = "sonarrUrl";
 	public static final String SONARR_APIKEY = "sonarrApikey";
 	public static final String SONARR_INDEXER_FORMAT = "sonarrIndexerFormat";
-	public static final String SONARR_DOWNLOADER_FORMAT = "sonarrDownloaderFormat";
 	public static final String SONARR_LANGUAGE_1 = "sonarrLanguage1";
 	public static final String SONARR_LANGUAGE_2 = "sonarrLanguage2";
 	// Radarr
 	public static final String RADARR_URL = "radarrUrl";
 	public static final String RADARR_APIKEY = "radarrApikey";
 	public static final String RADARR_INDEXER_FORMAT = "radarrIndexerFormat";
-	public static final String RADARR_DOWNLOADER_FORMAT = "radarrDownloaderFormat";
 	// 索引器
 	public static final String JACKETT_URL = "jackettUrl";
 	public static final String PROWLARR_URL = "prowlarrUrl";

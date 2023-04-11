@@ -66,6 +66,14 @@ public class ApiField {
 
 	public static final String SONARR_NAME = "name";
 
+	public static final String SONARR_RECORDS = "records";
+
+	public static final String SONARR_SOURCES_TITLE = "sourceTitle";
+
+	public static final String SONARR_DATA = "data";
+
+	public static final String SONARR_TORRENT_INFO_HASH = "torrentInfoHash";
+
 	public static final String RADARR_APIKEY = "apikey";
 
 	public static final String RADARR_TMDB_ID = "tmdbId";
@@ -81,6 +89,14 @@ public class ApiField {
 	public static final String RADARR_QUALITY = "quality";
 
 	public static final String RADARR_NAME = "name";
+
+	public static final String RADARR_RECORDS = "records";
+
+	public static final String RADARR_SOURCES_TITLE = "sourceTitle";
+
+	public static final String RADARR_DATA = "data";
+
+	public static final String RADARR_TORRENT_INFO_HASH = "torrentInfoHash";
 
 	public static final String RADARR_TITLE = "title";
 

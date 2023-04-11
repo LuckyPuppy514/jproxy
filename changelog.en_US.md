@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.1.1 2023-04-12
+
+1. Optimize qBittorrent rename
+
 ## v3.1.0 2023-04-11
 
 1. Remove the proxy of qBittorrent (if you set the proxy in Sonarr according to the old version, please restore the settings)

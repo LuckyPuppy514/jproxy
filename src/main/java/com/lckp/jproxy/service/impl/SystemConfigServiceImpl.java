@@ -73,9 +73,6 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
 		SystemConfig sonarrIndexerFormat = map.get(SystemConfigKey.SONARR_INDEXER_FORMAT);
 		sonarrIndexerFormat.setValidStatus(
 				ValidStatus.getCode(CheckUtil.checkSonarrIndexerFormat(sonarrIndexerFormat.getValue())));
-		SystemConfig sonarrDownloaderFormat = map.get(SystemConfigKey.SONARR_DOWNLOADER_FORMAT);
-		sonarrDownloaderFormat.setValidStatus(ValidStatus
-				.getCode(CheckUtil.checkSonarrDownloaderFormat(sonarrDownloaderFormat.getValue())));
 		// 检查 Radarr 接口和密钥
 		result = CheckUtil.checkSonarrOrRadarrApi(map.get(SystemConfigKey.RADARR_URL).getValue(),
 				map.get(SystemConfigKey.RADARR_APIKEY).getValue());
@@ -92,9 +89,6 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
 		SystemConfig radarrIndexerFormat = map.get(SystemConfigKey.RADARR_INDEXER_FORMAT);
 		radarrIndexerFormat.setValidStatus(
 				ValidStatus.getCode(CheckUtil.checkRadarrIndexerFormat(radarrIndexerFormat.getValue())));
-		SystemConfig radarrDownloaderFormat = map.get(SystemConfigKey.RADARR_DOWNLOADER_FORMAT);
-		radarrDownloaderFormat.setValidStatus(ValidStatus
-				.getCode(CheckUtil.checkRadarrDownloaderFormat(radarrDownloaderFormat.getValue())));
 		// 检查 qBittorrent
 		SystemConfig qBittorrentUrl = map.get(SystemConfigKey.QBITTORRENT_URL);
 		SystemConfig qBittorrentUsername = map.get(SystemConfigKey.QBITTORRENT_USERNAME);

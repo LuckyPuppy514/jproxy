@@ -82,20 +82,6 @@ public class CheckUtil {
 
 	/**
 	 * 
-	 * 检查 Sonarr 下载器格式
-	 *
-	 * @param format
-	 * @return boolean
-	 */
-	public static boolean checkSonarrDownloaderFormat(String format) {
-		if (StringUtils.isBlank(format)) {
-			return false;
-		}
-		return format.contains("{" + Token.SEASON + "}") && format.contains("{" + Token.EPISODE + "}");
-	}
-
-	/**
-	 * 
 	 * 检查 Radarr 索引器格式
 	 *
 	 * @param format
@@ -106,20 +92,6 @@ public class CheckUtil {
 			return false;
 		}
 		return format.contains("{" + Token.TITLE + "}") && format.contains("{" + Token.YEAR + "}");
-	}
-
-	/**
-	 * 
-	 * 检查 Radarr 下载器格式
-	 *
-	 * @param format
-	 * @return boolean
-	 */
-	public static boolean checkRadarrDownloaderFormat(String format) {
-		if (StringUtils.isBlank(format)) {
-			return false;
-		}
-		return format.contains("{" + Token.TITLE + "}");
 	}
 
 	/**

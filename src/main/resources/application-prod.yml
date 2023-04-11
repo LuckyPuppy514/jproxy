@@ -13,10 +13,11 @@ time:
    sync-interval: ${SYNC_INTERVAL:3}
    sonarr-title-sync: 0 0 0/1 * * ?
    sonarr-rule-sync: 0 15 0 * * ?
-   sonarr-rename: 0/20 * * * * ?
+   sonarr-rename: 0 0/1 * * * ?
    radarr-title-sync: 0 30 0/1 * * ?
    radarr-rule-sync: 0 45 1 * * ?
-   radarr-rename: 10 0/1 * * * ?
+   radarr-rename: 30 0/1 * * * ?
+   downloader-reLogin: 0 */30 * * * ?
 
 spring:
    type: com.zaxxer.hikari.HikariDataSource
