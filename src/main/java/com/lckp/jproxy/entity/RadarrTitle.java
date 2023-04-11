@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +27,10 @@ public class RadarrTitle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@TableId
 	private Integer id;
+
+	private Integer movieId;
 
 	private Integer tmdbId;
 

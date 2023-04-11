@@ -3,6 +3,11 @@
 
 # 变更日志
 
+## v3.1.0 2023-04-11
+
+1. 移除 qBittorrent 代理（如按旧版在 Sonarr 设置了代理，请还原设置）
+2. 新增 qBittorrent 重命名，支持 Sonarr 和 Radarr
+
 ## v3.0.9 2023-04-10
 
 1. 切换缓存数据库：Redis => Caffeine

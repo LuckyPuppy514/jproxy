@@ -18,10 +18,11 @@ public class CacheName {
 	public static final String INDEXER_SEARCH_OFFSET = "indexer_search_offset";
 	public static final String SONARR_RULE = "sonarr_rule";
 	public static final String SONARR_RESULT_TITLE = "sonarr_result_title";
+	public static final String SONARR_RENAME = "sonarr_rename";
 	public static final String RADARR_SEARCH_TITLE = "radarr_search_title";
 	public static final String RADARR_RULE = "radarr_rule";
 	public static final String RADARR_RESULT_TITLE = "radarr_result_title";
-	public static final String DOWNLOADER_FORMAT_NAME = "downloader_format_name";
+	public static final String RADARR_RENAME = "radarr_rename";
 
 	// RedisTemplate
 	public static final String SONARR_TITLE_SYNC_INTERVAL = "sonarr_title_sync_interval";

@@ -99,6 +99,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 			int sno = 0;
 			Integer tmdbId = jsonObject.getInteger(ApiField.RADARR_TMDB_ID);
 			Integer id = generateRadarrTitleId(tmdbId, sno);
+			Integer movieId = jsonObject.getInteger(ApiField.RADARR_ID);
 			Integer year = jsonObject.getInteger(ApiField.RADARR_YEAR);
 			String mainTitle = jsonObject.getString(ApiField.RADARR_TITLE);
 			String title = mainTitle;
@@ -106,6 +107,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 					.getCode();
 			RadarrTitle mainRadarrTitle = new RadarrTitle();
 			mainRadarrTitle.setId(id);
+			mainRadarrTitle.setMovieId(movieId);
 			mainRadarrTitle.setTmdbId(tmdbId);
 			mainRadarrTitle.setSno(sno++);
 			mainRadarrTitle.setMainTitle(mainTitle);
@@ -124,6 +126,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 			title = title.substring(index);
 			title = title.replaceAll(" \\(\\d{4}\\)$", "");
 			radarrTitle.setId(id);
+			radarrTitle.setMovieId(movieId);
 			radarrTitle.setSno(sno++);
 			radarrTitle.setTitle(title);
 			radarrTitle.setCleanTitle(FormatUtil.cleanTitle(title, cleanTitleRegex));
@@ -133,6 +136,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 			BeanUtils.copyProperties(mainRadarrTitle, radarrTitle, RadarrTitle.class);
 			id = generateRadarrTitleId(tmdbId, sno);
 			radarrTitle.setId(id);
+			radarrTitle.setMovieId(movieId);
 			radarrTitle.setSno(sno++);
 			radarrTitle.setTitle(title);
 			radarrTitle.setCleanTitle(jsonObject.getString(ApiField.RADARR_CLEAN_TITLE));
@@ -143,6 +147,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 			id = generateRadarrTitleId(tmdbId, sno);
 			title = jsonObject.getString(ApiField.RADARR_ORIGINAL_TITLE);
 			radarrTitle.setId(id);
+			radarrTitle.setMovieId(movieId);
 			radarrTitle.setSno(sno++);
 			radarrTitle.setTitle(title);
 			radarrTitle.setCleanTitle(FormatUtil.cleanTitle(title, cleanTitleRegex));
@@ -156,6 +161,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 				title = alternateTitle.getString(ApiField.RADARR_TITLE);
 				radarrTitle = new RadarrTitle();
 				radarrTitle.setId(id);
+				radarrTitle.setMovieId(movieId);
 				radarrTitle.setTmdbId(tmdbId);
 				radarrTitle.setSno(sno++);
 				radarrTitle.setMainTitle(mainTitle);
@@ -281,10 +287,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 				}
 			}
 		}
-		matcher = Pattern.compile(Token.REGEX).matcher(format);
-		while (matcher.find()) {
-			format = FormatUtil.removeToken(matcher.group(1), format);
-		}
+		format = FormatUtil.removeAllToken(format);
 		return format.trim();
 	}
 

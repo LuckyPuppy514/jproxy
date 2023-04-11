@@ -30,6 +30,8 @@ public class SonarrTitle implements Serializable {
 	@TableId
 	private Integer id;
 
+	private Integer seriesId;
+
 	private Integer tvdbId;
 
 	private Integer sno;

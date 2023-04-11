@@ -29,10 +29,14 @@ public class ApiField {
 	public static final String INDEXER_ITEM = "item";
 
 	public static final String INDEXER_TITLE = "title";
-	
+
 	public static final String INDEXER_LINK = "link";
 
 	public static final String SONARR_APIKEY = "apikey";
+
+	public static final String SONARR_ID = "id";
+
+	public static final String SONARR_SERIES_ID = "seriesId";
 
 	public static final String SONARR_TVDB_ID = "tvdbId";
 
@@ -47,25 +51,51 @@ public class ApiField {
 	public static final String SONARR_ALTERNATE_TITLES = "alternateTitles";
 
 	public static final String SONARR_SCENE_SEASON_NUMBER = "sceneSeasonNumber";
-	
+
+	public static final String SONARR_DOWNLOAD_ID = "downloadId";
+
+	public static final String SONARR_EPISODE = "episode";
+
+	public static final String SONARR_SEASON_NUMBER = "seasonNumber";
+
+	public static final String SONARR_EPISODE_NUMBER = "episodeNumber";
+
+	public static final String SONARR_LANGUAGE = "language";
+
+	public static final String SONARR_QUALITY = "quality";
+
+	public static final String SONARR_NAME = "name";
+
 	public static final String RADARR_APIKEY = "apikey";
-	
+
 	public static final String RADARR_TMDB_ID = "tmdbId";
-	
+
+	public static final String RADARR_ID = "id";
+
+	public static final String RADARR_MOVIE_ID = "movieId";
+
+	public static final String RADARR_DOWNLOAD_ID = "downloadId";
+
+	public static final String RADARR_LANGUAGES = "languages";
+
+	public static final String RADARR_QUALITY = "quality";
+
+	public static final String RADARR_NAME = "name";
+
 	public static final String RADARR_TITLE = "title";
-	
+
 	public static final String RADARR_CLEAN_TITLE = "cleanTitle";
-	
+
 	public static final String RADARR_PATH = "path";
 
 	public static final String RADARR_ORIGINAL_TITLE = "originalTitle";
-	
+
 	public static final String RADARR_ALTERNATE_TITLES = "alternateTitles";
-	
+
 	public static final String RADARR_MONITORED = "monitored";
-	
+
 	public static final String RADARR_YEAR = "year";
-	
+
 	public static final String TMDB_API_KEY = "api_key";
 
 	public static final String TMDB_TVDB_ID = "tvdb_id";
@@ -85,6 +115,6 @@ public class ApiField {
 	public static final String QBITTORRENT_HASH = "hash";
 
 	public static final String QBITTORRENT_NAME = "name";
-	
+
 	public static final String HEADER_TOKEN = "Authorization";
 }

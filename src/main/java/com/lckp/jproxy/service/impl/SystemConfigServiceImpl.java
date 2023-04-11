@@ -19,8 +19,11 @@ import com.lckp.jproxy.constant.ValidStatus;
 import com.lckp.jproxy.entity.SystemConfig;
 import com.lckp.jproxy.exception.SystemConfigException;
 import com.lckp.jproxy.mapper.SystemConfigMapper;
+import com.lckp.jproxy.service.IQbittorrentService;
 import com.lckp.jproxy.service.ISystemConfigService;
 import com.lckp.jproxy.util.CheckUtil;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * <p>
@@ -31,8 +34,11 @@ import com.lckp.jproxy.util.CheckUtil;
  * @since 2023-03-12
  */
 @Service
+@RequiredArgsConstructor
 public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, SystemConfig>
 		implements ISystemConfigService {
+
+	private final IQbittorrentService qbittorrentService;
 
 	private final ISystemConfigService proxy() {
 		return (ISystemConfigService) AopContext.currentProxy();
@@ -86,9 +92,22 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
 		SystemConfig radarrIndexerFormat = map.get(SystemConfigKey.RADARR_INDEXER_FORMAT);
 		radarrIndexerFormat.setValidStatus(
 				ValidStatus.getCode(CheckUtil.checkRadarrIndexerFormat(radarrIndexerFormat.getValue())));
-		// 检查 qBittorrent 地址
-		SystemConfig qBittorrent = map.get(SystemConfigKey.QBITTORRENT_URL);
-		qBittorrent.setValidStatus(ValidStatus.getCode(CheckUtil.checkUrl(qBittorrent.getValue())));
+		SystemConfig radarrDownloaderFormat = map.get(SystemConfigKey.RADARR_DOWNLOADER_FORMAT);
+		radarrDownloaderFormat.setValidStatus(ValidStatus
+				.getCode(CheckUtil.checkRadarrDownloaderFormat(radarrDownloaderFormat.getValue())));
+		// 检查 qBittorrent
+		SystemConfig qBittorrentUrl = map.get(SystemConfigKey.QBITTORRENT_URL);
+		SystemConfig qBittorrentUsername = map.get(SystemConfigKey.QBITTORRENT_USERNAME);
+		SystemConfig qBittorrentPassword = map.get(SystemConfigKey.QBITTORRENT_PASSWORD);
+		qBittorrentUrl.setValidStatus(ValidStatus.getCode(CheckUtil.checkUrl(qBittorrentUrl.getValue())));
+		qBittorrentUsername.setValidStatus(ValidStatus.INVALID.getCode());
+		qBittorrentPassword.setValidStatus(ValidStatus.INVALID.getCode());
+		if (ValidStatus.VALID.getCode().equals(qBittorrentUrl.getValidStatus())) {
+			boolean isLogin = qbittorrentService.login(qBittorrentUrl.getValue(),
+					qBittorrentUsername.getValue(), qBittorrentPassword.getValue());
+			qBittorrentUsername.setValidStatus(ValidStatus.getCode(isLogin));
+			qBittorrentPassword.setValidStatus(ValidStatus.getCode(isLogin));
+		}
 		// 检查 Jackett 地址
 		SystemConfig jackett = map.get(SystemConfigKey.JACKETT_URL);
 		jackett.setValidStatus(ValidStatus.getCode(CheckUtil.checkUrl(jackett.getValue())));

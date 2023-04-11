@@ -20,23 +20,11 @@
 
 ### qBittorrent
 
-> 🌟 代理 qBittorrent 能够在下载完成时格式化 qBittorrent 传输到 Sonarr 的标题，减少导入错误季的情况
+> 🌟 定时重命名 Sonarr / Radarr 下载队列对应的种子名和文件名，减少导入错误的情况
 
-① 填写 qBittorrent 的 `服务地址`，保存后应该如图所示 ✅，否则请检查输入和网络连通性
+填写 qBittorrent 的 `服务地址`，`用户名` 和 `密码`，保存后应该如图所示 ✅，否则请检查输入和网络连通性
 
-![20230405203304](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405203304.webp)
-
-② 在 Sonarr 中修改下载器的 `Host` 和 `Port` 为 JProxy 的 `IP` 和 `端口号`，并在 `Url Base` 追加 `/sonarr/qbittorrent`
-
-`原为空值` ➡️ `/sonarr/qbittorrent`
-
-`/qbittorrent` ➡️ `/sonarr/qbittorrent/qbittorrent`
-
-![20230405203518](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405203518.webp)
-
-🚨 如果做了路径映射 `Remote Path Mappings`，记得修改 `Host` 为 JProxy 的 `IP`
-
-![20230405203612](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405203612.webp)
+![20230411121451](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-11/20230411121451.webp)
 
 ### TMDB
 

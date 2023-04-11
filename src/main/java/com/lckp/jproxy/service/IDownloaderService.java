@@ -1,5 +1,7 @@
 package com.lckp.jproxy.service;
 
+import java.util.List;
+
 /**
  * <p>
  * 下载器服务类
@@ -11,10 +13,50 @@ package com.lckp.jproxy.service;
 public interface IDownloaderService {
 	/**
 	 * 
-	 * byte[] content
+	 * 登录
 	 *
-	 * @param xml
-	 * @return String
+	 * @param url
+	 * @param username
+	 * @param password
+	 * @return boolean
 	 */
-	public byte[] executeFormatRule(byte[] content);
+	public boolean login(String url, String username, String password);
+
+	/**
+	 * 
+	 * 获取登录状态
+	 *
+	 * @return boolean
+	 */
+	public boolean isLogin();
+
+	/**
+	 * 
+	 * 获取文件列表
+	 *
+	 * @param hash
+	 * @return List<String>
+	 */
+	public List<String> files(String hash);
+
+	/**
+	 * 
+	 * 重命名
+	 *
+	 * @param hash
+	 * @param name
+	 * @return boolean
+	 */
+	public boolean rename(String hash, String name);
+
+	/**
+	 * 
+	 * 重命名文件
+	 *
+	 * @param hash
+	 * @param oldPath
+	 * @param newPath
+	 * @return boolean
+	 */
+	public boolean renameFile(String hash, String oldPath, String newPath);
 }

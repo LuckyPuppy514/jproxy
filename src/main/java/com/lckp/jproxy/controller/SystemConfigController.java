@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.lckp.jproxy.config.CharonConfig;
 import com.lckp.jproxy.constant.CacheName;
+import com.lckp.jproxy.constant.SystemConfigKey;
 import com.lckp.jproxy.entity.SystemConfig;
+import com.lckp.jproxy.service.IQbittorrentService;
 import com.lckp.jproxy.service.ISystemCacheService;
 import com.lckp.jproxy.service.ISystemConfigService;
+import com.lckp.jproxy.task.SonarrRenameTask;
 import com.lckp.jproxy.util.Generator;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +45,9 @@ public class SystemConfigController implements CommandLineRunner {
 
 	private final ISystemCacheService systemCacheService;
 
-	private final CharonConfig charonConfig;
+	private final IQbittorrentService qbittorrentService;
+
+	private final SonarrRenameTask sonarrRenameTask;
 
 	private final RestTemplate restTemplate;
 
@@ -56,6 +60,7 @@ public class SystemConfigController implements CommandLineRunner {
 	@Operation(summary = "查询")
 	@GetMapping("/query")
 	public ResponseEntity<List<SystemConfig>> query() {
+		sonarrRenameTask.run();
 		return ResponseEntity.ok(systemConfigService.query().list());
 	}
 
@@ -63,7 +68,6 @@ public class SystemConfigController implements CommandLineRunner {
 	@PostMapping("/update")
 	public ResponseEntity<Void> update(@RequestBody List<SystemConfig> systemConfigList) {
 		systemConfigService.updateSystemConfig(systemConfigList);
-		charonConfig.updateAllServerUrl();
 		systemCacheService.clear(CacheName.SONARR_TITLE_SYNC_INTERVAL);
 		systemCacheService.clear(CacheName.TMDB_TITLE_SYNC_INTERVAL);
 		systemCacheService.clear(CacheName.RADARR_TITLE_SYNC_INTERVAL);
@@ -90,7 +94,6 @@ public class SystemConfigController implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) throws Exception {
-		charonConfig.updateAllServerUrl();
 		try {
 			Generator.setRuleLocation(ruleLocation);
 			restTemplate.getForEntity(Generator.generateAuthorUrl(), String[].class).getBody();
@@ -98,6 +101,13 @@ public class SystemConfigController implements CommandLineRunner {
 			log.info("无法访问规则地址：{} - {}", ruleLocation, e.getMessage());
 			Generator.setRuleLocation(ruleLocationBackup);
 			log.info("已切换到备用地址：{}", ruleLocationBackup);
+		}
+		try {
+			qbittorrentService.login(systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_URL),
+					systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_USERNAME),
+					systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_PASSWORD));
+		} catch (Exception e) {
+			log.info("尝试登录 qBittorrent 失败：{}", e.getMessage());
 		}
 	}
 }

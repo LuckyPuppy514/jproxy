@@ -28,8 +28,8 @@ public class RadarrSyncTask {
 
 	private final IRadarrRuleService radarrRuleService;
 
-	@Scheduled(cron = "${time.sync-radarr-title}")
-	public void syncRadarrTitle() {
+	@Scheduled(cron = "${time.radarr-title-sync}")
+	public synchronized void syncRadarrTitle() {
 		try {
 			log.info("开始同步电影标题");
 			radarrTitleService.sync();
@@ -39,7 +39,7 @@ public class RadarrSyncTask {
 		}
 	}
 
-	@Scheduled(cron = "${time.sync-radarr-rule}")
+	@Scheduled(cron = "${time.radarr-rule-sync}")
 	public void syncRadarrRule() {
 		try {
 			log.info("开始同步电影规则");

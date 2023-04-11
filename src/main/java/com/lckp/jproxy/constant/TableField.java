@@ -22,6 +22,10 @@ public class TableField {
 
 	public static final String TVDB_ID = "tvdb_id";
 
+	public static final String SERIES_ID = "series_id";
+	
+	public static final String MOVIE_ID = "movie_id";
+
 	public static final String PRIORITY = "priority";
 
 	public static final String KEY = "key";

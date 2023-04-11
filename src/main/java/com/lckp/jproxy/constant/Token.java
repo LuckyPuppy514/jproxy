@@ -12,7 +12,7 @@ public class Token {
 	Token() {
 	}
 
-	public static final String REGEX = "\\{([^}]+)";
+	public static final String REGEX = "\\{([^}]+)\\}";
 
 	public static final String TITLE = "title";
 
@@ -24,7 +24,7 @@ public class Token {
 
 	public static final String RESOLUTION = "resolution";
 
-	public static final String SOURCE = "source";
+	public static final String QUALITY = "quality";
 
 	public static final String GROUP = "group";
 

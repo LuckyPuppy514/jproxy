@@ -64,7 +64,7 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 	@Autowired
 	@Qualifier("syncIntervalCache")
 	private Cache<String, Integer> syncIntervalCache;
-	
+
 	private final ISonarrTitleService proxy() {
 		return (ISonarrTitleService) AopContext.currentProxy();
 	}
@@ -100,12 +100,14 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 			int sno = 0;
 			Integer tvdbId = jsonObject.getInteger(ApiField.SONARR_TVDB_ID);
 			Integer id = generateSonarrTitleId(tvdbId, sno);
+			Integer seriesId = jsonObject.getInteger(ApiField.SONARR_ID);
 			String mainTitle = jsonObject.getString(ApiField.SONARR_TITLE);
 			String title = mainTitle;
 			Integer monitored = Monitored.getByFlag(jsonObject.getBooleanValue(ApiField.SONARR_MONITORED))
 					.getCode();
 			SonarrTitle sonarrTitle = new SonarrTitle();
 			sonarrTitle.setId(id);
+			sonarrTitle.setSeriesId(seriesId);
 			sonarrTitle.setTvdbId(tvdbId);
 			sonarrTitle.setSno(sno++);
 			sonarrTitle.setMainTitle(mainTitle);
@@ -122,6 +124,7 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 				title = alternateTitle.getString(ApiField.SONARR_TITLE);
 				sonarrTitle = new SonarrTitle();
 				sonarrTitle.setId(id);
+				sonarrTitle.setSeriesId(seriesId);
 				sonarrTitle.setTvdbId(tvdbId);
 				sonarrTitle.setSno(sno++);
 				sonarrTitle.setMainTitle(mainTitle);
@@ -252,7 +255,6 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 	 */
 	@Override
 	public String format(String text, String format, Map<String, List<SonarrRule>> tokenRuleMap) {
-		boolean episodeFinded = false;
 		Matcher matcher = Pattern.compile(Token.REGEX).matcher(format);
 		while (matcher.find()) {
 			String token = matcher.group(1);
@@ -263,9 +265,6 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 					try {
 						String value = tokenMatcher.replaceAll(sonarrRule.getReplacement());
 						format = FormatUtil.replaceToken(token, value, format, sonarrRule.getOffset());
-						if (Token.EPISODE.equals(token)) {
-							episodeFinded = true;
-						}
 						break;
 					} catch (Exception e) {
 						log.error("replaceAll 出错：{}\n{}", e.getMessage(), JSON.toJSONString(sonarrRule));
@@ -273,28 +272,11 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 				}
 			}
 		}
-		if (!episodeFinded && format.contains("{" + Token.EPISODE + "}")) {
+		if (format.contains("{" + Token.EPISODE + "}")) {
 			return text;
 		}
-		matcher = Pattern.compile(Token.REGEX).matcher(format);
-		while (matcher.find()) {
-			format = FormatUtil.removeToken(matcher.group(1), format);
-		}
+		format = FormatUtil.removeAllToken(format);
 		return format.trim();
-	}
-
-	/**
-	 * @param text
-	 * @param format
-	 * @param tokenRuleMap
-	 * @return
-	 * @see com.lckp.jproxy.service.ISonarrTitleService#formatWithCache(java.lang.String,
-	 *      java.lang.String, java.util.Map)
-	 */
-	@Override
-	@Cacheable(cacheNames = CacheName.DOWNLOADER_FORMAT_NAME, key = "#text")
-	public String formatWithCache(String text, String format, Map<String, List<SonarrRule>> tokenRuleMap) {
-		return format(text, format, tokenRuleMap);
 	}
 
 	/**

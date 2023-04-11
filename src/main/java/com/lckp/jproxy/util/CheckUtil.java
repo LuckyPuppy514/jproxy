@@ -110,6 +110,20 @@ public class CheckUtil {
 
 	/**
 	 * 
+	 * 检查 Radarr 下载器格式
+	 *
+	 * @param format
+	 * @return boolean
+	 */
+	public static boolean checkRadarrDownloaderFormat(String format) {
+		if (StringUtils.isBlank(format)) {
+			return false;
+		}
+		return format.contains("{" + Token.TITLE + "}");
+	}
+
+	/**
+	 * 
 	 * 检查 URL 是否有效
 	 *
 	 * @param url
@@ -125,7 +139,9 @@ public class CheckUtil {
 			restTemplate.getForEntity(url, String.class).getBody();
 			return true;
 		} catch (Exception e) {
-			if (e.getMessage().contains("Too many follow-up requests")) {
+			if (e.getMessage().contains("Too many follow-up requests")
+					|| e.getMessage().contains("redirected too many")) {
+				log.debug(e.getMessage());
 				return true;
 			}
 			log.error("URL 无效：{}", e.getMessage());

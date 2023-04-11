@@ -78,17 +78,6 @@ public interface ISonarrTitleService extends IService<SonarrTitle> {
 
 	/**
 	 * 
-	 * 格式化并缓存
-	 *
-	 * @param text
-	 * @param format
-	 * @param tokenRuleMap
-	 * @return String
-	 */
-	public String formatWithCache(String text, String format, Map<String, List<SonarrRule>> tokenRuleMap);
-
-	/**
-	 * 
 	 * 分页查询
 	 *
 	 * @param request

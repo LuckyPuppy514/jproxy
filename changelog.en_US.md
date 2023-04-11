@@ -3,6 +3,11 @@
 
 # Change Logs
 
+## v3.1.0 2023-04-11
+
+1. Remove the proxy of qBittorrent (if you set the proxy in Sonarr according to the old version, please restore the settings)
+2. Add qBittorrent rename function, support Sonarr and Radarr
+
 ## v3.0.9 2023-04-10
 
 1. Switch cache database: Redis => Caffeine

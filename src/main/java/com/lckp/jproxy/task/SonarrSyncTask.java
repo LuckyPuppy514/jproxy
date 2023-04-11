@@ -31,7 +31,7 @@ public class SonarrSyncTask {
 
 	private final ITmdbTitleService tmdbTitleService;
 
-	@Scheduled(cron = "${time.sync-sonarr-title}")
+	@Scheduled(cron = "${time.sonarr-title-sync}")
 	public void syncSonarrTitle() {
 		try {
 			log.info("开始同步剧集标题");
@@ -44,7 +44,7 @@ public class SonarrSyncTask {
 
 	}
 
-	@Scheduled(cron = "${time.sync-sonarr-rule}")
+	@Scheduled(cron = "${time.sonarr-rule-sync}")
 	public void syncSonarrRule() {
 		try {
 			log.info("开始同步剧集规则");

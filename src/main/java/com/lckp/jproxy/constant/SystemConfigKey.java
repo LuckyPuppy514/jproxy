@@ -23,11 +23,14 @@ public class SystemConfigKey {
 	public static final String RADARR_URL = "radarrUrl";
 	public static final String RADARR_APIKEY = "radarrApikey";
 	public static final String RADARR_INDEXER_FORMAT = "radarrIndexerFormat";
+	public static final String RADARR_DOWNLOADER_FORMAT = "radarrDownloaderFormat";
 	// 索引器
 	public static final String JACKETT_URL = "jackettUrl";
 	public static final String PROWLARR_URL = "prowlarrUrl";
 	// 下载器
 	public static final String QBITTORRENT_URL = "qbittorrentUrl";
+	public static final String QBITTORRENT_USERNAME = "qbittorrentUsername";
+	public static final String QBITTORRENT_PASSWORD = "qbittorrentPassword";
 	public static final String TRANSMISSION_URL = "transmissionUrl";
 	// TMDB
 	public static final String TMDB_URL = "tmdbUrl";

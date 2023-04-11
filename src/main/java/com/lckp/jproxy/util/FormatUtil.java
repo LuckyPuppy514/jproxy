@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.lckp.jproxy.constant.Token;
+
 /**
  * <p>
  * 格式化工具类
@@ -155,5 +157,16 @@ public class FormatUtil {
 	 */
 	public static String removeToken(String token, String text) {
 		return text.replace("{" + token + "}", "");
+	}
+
+	/**
+	 * 
+	 * 移除所有 token
+	 *
+	 * @param text
+	 * @return String
+	 */
+	public static String removeAllToken(String text) {
+		return text.replaceAll(Token.REGEX, "");
 	}
 }

@@ -20,23 +20,11 @@
 
 ### qBittorrent
 
-> 🌟 Proxy qBittorrent is able to format the titles that qBittorrent transmits to Sonarr when the download is complete, reducing the chance of importing the wrong season
+> 🌟 Rename the torrent name and file name corresponding to the Sonarr / Radarr download queue regularly to reduce import errors
 
-① Fill in the `Server Url` of qBittorrent, after saving, it should be as shown in the picture ✅ , otherwise please check the input and network connectivity
+Fill in qBittorrent's `Server Url`, `Username` and `Password`, after saving it should be as shown in the picture ✅, otherwise please check the input and network connectivity
 
-![20230406182922](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406182922.webp)
-
-② Modify the `Host` and `Port` of the downloader in Sonarr to the `IP` and `Port` of JProxy, and append `/sonarr/qbittorrent` to `Url Base`
-
-`Empty` ➡️ `/sonarr/qbittorrent`
-
-`/qbittorrent` ➡️ `/sonarr/qbittorrent/qbittorrent`
-
-![20230405203518](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405203518.webp)
-
-🚨 If you have `Remote Path Mappings`，do not forget modify the `Host` to the `IP` of JProxy
-
-![20230405203612](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405203612.webp)
+![20230411121728](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-11/20230411121728.webp)
 
 ### TMDB
 
@@ -102,17 +90,17 @@ Used to clear the cache
 
 ![20230406191845](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406191845.webp)
 
-| Properties | Description | Remarks |
-| :-: | :-: | :-: |
-| Token | If one of the same token matches successfully, it will not continue to match | can be used in `Indexer Format` using `{token}` |
-| Priority | The priority of similar token is matched from small to large | Default 1000 |
-| Matching regular expressions | Matching regular expressions | Refer to: [Rookie Tutorial](https://www.runoob.com/java/java-regular-expressions.html), it is recommended that a single rule should not be too complicated |
-| Replacement content | Replacement content after successful matching | You can refer to existing rules |
-| Offset | Only used by token `season` and `episode` | Please make sure to match the applicable scope of the regex to avoid affecting other rules |
-| Test example | Used to test current rules | Can refer to existing rules |
-| Test Results | Automatic Updates When Rules or Test Cases Change | - |
-| Remarks | It is recommended to fill in the applicable example of the rules | You can refer to the existing rules |
-| Author | The name of the author of the rule | Mainly for sharing |
+|          Properties          |                                 Description                                  |                                                                          Remarks                                                                           |
+| :--------------------------: | :--------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|            Token             | If one of the same token matches successfully, it will not continue to match |                                                      can be used in `Indexer Format` using `{token}`                                                       |
+|           Priority           |         The priority of similar token is matched from small to large         |                                                                        Default 1000                                                                        |
+| Matching regular expressions |                         Matching regular expressions                         | Refer to: [Rookie Tutorial](https://www.runoob.com/java/java-regular-expressions.html), it is recommended that a single rule should not be too complicated |
+|     Replacement content      |                Replacement content after successful matching                 |                                                              You can refer to existing rules                                                               |
+|            Offset            |                  Only used by token `season` and `episode`                   |                                 Please make sure to match the applicable scope of the regex to avoid affecting other rules                                 |
+|         Test example         |                          Used to test current rules                          |                                                                Can refer to existing rules                                                                 |
+|         Test Results         |              Automatic Updates When Rules or Test Cases Change               |                                                                             -                                                                              |
+|           Remarks            |       It is recommended to fill in the applicable example of the rules       |                                                            You can refer to the existing rules                                                             |
+|            Author            |                      The name of the author of the rule                      |                                                                     Mainly for sharing                                                                     |
 
 ![20230406191925](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406191925.webp)
 
