@@ -59,7 +59,7 @@ public class RadarrRenameTask {
 	private final CacheManager cacheManager;
 
 	@Scheduled(cron = "${time.radarr-rename}")
-	public void run() {
+	public synchronized void run() {
 		try {
 			log.debug("开始执行 Radarr 重命名任务");
 			if (!qbittorrentService.isLogin()) {

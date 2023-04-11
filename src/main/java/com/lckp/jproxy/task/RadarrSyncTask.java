@@ -29,7 +29,7 @@ public class RadarrSyncTask {
 	private final IRadarrRuleService radarrRuleService;
 
 	@Scheduled(cron = "${time.radarr-title-sync}")
-	public synchronized void syncRadarrTitle() {
+	public void syncRadarrTitle() {
 		try {
 			log.info("开始同步电影标题");
 			radarrTitleService.sync();

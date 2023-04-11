@@ -113,7 +113,7 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 		params.add("hash", hash);
 		params.add("name", name);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Cookie", cookie);
+		headers.add(HttpHeaders.COOKIE, cookie);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(api.toString(), request, String.class);
 		return response.getStatusCode().is2xxSuccessful();
@@ -137,7 +137,7 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 		params.add("oldPath", oldPath);
 		params.add("newPath", newPath);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Cookie", cookie);
+		headers.add(HttpHeaders.COOKIE, cookie);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(api.toString(), request, String.class);
 		return response.getStatusCode().is2xxSuccessful();
