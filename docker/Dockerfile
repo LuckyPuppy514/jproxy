@@ -9,6 +9,6 @@ COPY ./docker/entrypoint.sh ./entrypoint.sh
 
 ENV TZ=Asia/Shanghai PUID=0 PGID=0 UMASK=022 JAVA_OPTS="-Xms512m -Xmx512m"
 
-RUN apt update && apt install gosu && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install gosu dumb-init && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT [ "/bin/bash", "/app/entrypoint.sh" ]
