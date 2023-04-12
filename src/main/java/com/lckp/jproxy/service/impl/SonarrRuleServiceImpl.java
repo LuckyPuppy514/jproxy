@@ -93,7 +93,7 @@ public class SonarrRuleServiceImpl extends ServiceImpl<SonarrRuleMapper, SonarrR
 		String ruleSyncAuthors = systemConfigService.queryValueByKey(SystemConfigKey.RULE_SYNC_AUTHORS);
 		String[] authors;
 		if (StringUtils.isBlank(ruleSyncAuthors)) {
-			log.debug("规则同步作者为空 {}", ruleSyncAuthors);
+			log.debug("规则同步作者为空", ruleSyncAuthors);
 			return true;
 		} else if (Common.RULE_SYNC_AUTHORS_ALL.equals(ruleSyncAuthors)) {
 			String authorUrl = Generator.generateAuthorUrl();
@@ -111,8 +111,9 @@ public class SonarrRuleServiceImpl extends ServiceImpl<SonarrRuleMapper, SonarrR
 				List<SonarrRule> sonarrRuleList = JSON.parseArray(body, SonarrRule.class);
 				sonarrRuleList.forEach(sonarrRule -> sonarrRule.setValidStatus(null));
 				proxy().saveOrUpdateBatch(sonarrRuleList);
+				log.info("同步剧集规则成功：{} - {}", author, sonarrRuleList.size());
 			} catch (Exception e) {
-				log.error("同步 Sonarr 规则出错：{}", e.getMessage());
+				log.error("同步剧集规则出错：{}", e.getMessage());
 			}
 		}
 		return true;

@@ -136,6 +136,7 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 			}
 		}
 		proxy().saveOrUpdateBatch(sonarrTitleList, Common.BATCH_SIZE);
+		log.info("同步剧集标题成功：{}", sonarrTitleList.size());
 		return true;
 	}
 

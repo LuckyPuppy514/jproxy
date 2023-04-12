@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.1.2 2023-04-12
+
+1. Merge pull request [#27](https://github.com/LuckyPuppy514/jproxy/pull/27)
+
 ## v3.1.1 2023-04-12
 
 1. Optimize qBittorrent rename

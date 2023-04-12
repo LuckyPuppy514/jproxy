@@ -34,10 +34,8 @@ public class SonarrSyncTask {
 	@Scheduled(cron = "${time.sonarr-title-sync}")
 	public void syncSonarrTitle() {
 		try {
-			log.info("开始同步剧集标题");
 			sonarrTitleService.sync();
 			tmdbTitleService.sync(sonarrTitleService.queryNeedSyncTmdbTitle());
-			log.info("同步剧集标题完毕");
 		} catch (Exception e) {
 			log.error("同步剧集标题出错：{}", e.getMessage());
 		}
@@ -46,9 +44,7 @@ public class SonarrSyncTask {
 	@Scheduled(cron = "${time.sonarr-rule-sync}")
 	public void syncSonarrRule() {
 		try {
-			log.info("开始同步剧集规则");
 			sonarrRuleService.sync();
-			log.info("同步剧集规则完毕");
 		} catch (Exception e) {
 			log.error("同步剧集规则出错：{}", e.getMessage());
 		}

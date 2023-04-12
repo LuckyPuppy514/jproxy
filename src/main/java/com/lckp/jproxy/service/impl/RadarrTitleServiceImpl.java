@@ -173,6 +173,7 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 			}
 		}
 		proxy().saveOrUpdateBatch(radarrTitleList, Common.BATCH_SIZE);
+		log.info("同步电影标题成功：{}", radarrTitleList.size());
 		return true;
 	}
 

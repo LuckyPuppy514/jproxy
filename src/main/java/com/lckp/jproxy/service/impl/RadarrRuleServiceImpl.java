@@ -94,7 +94,7 @@ public class RadarrRuleServiceImpl extends ServiceImpl<RadarrRuleMapper, RadarrR
 		String ruleSyncAuthors = systemConfigService.queryValueByKey(SystemConfigKey.RULE_SYNC_AUTHORS);
 		String[] authors;
 		if (StringUtils.isBlank(ruleSyncAuthors)) {
-			log.debug("规则同步作者为空 {}", ruleSyncAuthors);
+			log.debug("规则同步作者为空");
 			return true;
 		} else if (Common.RULE_SYNC_AUTHORS_ALL.equals(ruleSyncAuthors)) {
 			String authorUrl = Generator.generateAuthorUrl();
@@ -112,8 +112,9 @@ public class RadarrRuleServiceImpl extends ServiceImpl<RadarrRuleMapper, RadarrR
 				List<RadarrRule> radarrRuleList = JSON.parseArray(body, RadarrRule.class);
 				radarrRuleList.forEach(radarrRule -> radarrRule.setValidStatus(null));
 				proxy().saveOrUpdateBatch(radarrRuleList, Common.BATCH_SIZE);
+				log.info("同步电影规则成功：{} - {}", author, radarrRuleList.size());
 			} catch (Exception e) {
-				log.error("同步 Radarr 规则出错：{}", e.getMessage());
+				log.error("同步电影规则出错：{}", e.getMessage());
 			}
 		}
 		return true;

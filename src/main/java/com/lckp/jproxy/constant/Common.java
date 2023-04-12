@@ -41,7 +41,7 @@ public class Common {
 	public static final String FILTER_SONARR_QBITTORRENT_PATH = "/sonarr/qbittorrent/api/v2/torrents/info";
 	public static final String FILTER_SONARR_TRANSMISSION_PATH = "/sonarr/transmission/*";
 	// 批量保存大小
-	public static final int BATCH_SIZE = 100;
+	public static final int BATCH_SIZE = 200;
 	// 规则同步作者
 	public static final String RULE_SYNC_AUTHORS_ALL = "ALL";
 	// 标题主规则 ID

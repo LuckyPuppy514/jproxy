@@ -31,9 +31,7 @@ public class RadarrSyncTask {
 	@Scheduled(cron = "${time.radarr-title-sync}")
 	public void syncRadarrTitle() {
 		try {
-			log.info("开始同步电影标题");
 			radarrTitleService.sync();
-			log.info("同步电影标题完毕");
 		} catch (Exception e) {
 			log.error("同步电影标题出错：{}", e.getMessage());
 		}
@@ -42,9 +40,7 @@ public class RadarrSyncTask {
 	@Scheduled(cron = "${time.radarr-rule-sync}")
 	public void syncRadarrRule() {
 		try {
-			log.info("开始同步电影规则");
 			radarrRuleService.sync();
-			log.info("同步电影规则完毕");
 		} catch (Exception e) {
 			log.error("同步电影规则出错：{}", e.getMessage());
 		}

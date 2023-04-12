@@ -35,7 +35,7 @@ public class DownloaderReLoginTask {
 			qbittorrentService.login(systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_URL),
 					systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_USERNAME),
 					systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_PASSWORD));
-			log.info("qBittorrent 已重新登录");
+			log.debug("qBittorrent 已重新登录");
 		}
 	}
 }

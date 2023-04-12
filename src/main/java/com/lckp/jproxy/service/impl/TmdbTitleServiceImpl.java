@@ -31,6 +31,7 @@ import com.lckp.jproxy.service.ISystemConfigService;
 import com.lckp.jproxy.service.ITmdbTitleService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -40,6 +41,7 @@ import lombok.RequiredArgsConstructor;
  * @author LuckyPuppy514
  * @since 2023-03-19
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle>
@@ -122,6 +124,7 @@ public class TmdbTitleServiceImpl extends ServiceImpl<TmdbTitleMapper, TmdbTitle
 			}
 		}
 		proxy().saveOrUpdateBatch(tmdbTitleList, Common.BATCH_SIZE);
+		log.info("同步剧集标题成功：{}", tmdbTitleList.size());
 		return true;
 	}
 
