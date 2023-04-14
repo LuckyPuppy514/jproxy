@@ -38,9 +38,6 @@ public class DownloaderLoginTask implements CommandLineRunner {
 		if (qbittorrentService.login()) {
 			log.debug("qBittorrent 已重新登录");
 		}
-		if (transmissionService.login()) {
-			log.debug("Transmission 已重新登录");
-		}
 	}
 
 	@Override

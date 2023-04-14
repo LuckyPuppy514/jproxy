@@ -3,6 +3,7 @@ package com.lckp.jproxy.task;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -12,7 +13,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,6 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.lckp.jproxy.constant.ApiField;
-import com.lckp.jproxy.constant.CacheName;
 import com.lckp.jproxy.constant.Common;
 import com.lckp.jproxy.constant.Downloader;
 import com.lckp.jproxy.constant.Messages;
@@ -63,8 +62,6 @@ public class SonarrRenameTask {
 
 	private final RestTemplate restTemplate;
 
-	private final CacheManager cacheManager;
-
 	@Value("${time.sonarr-rename-fall-back}")
 	private int fallBackTime;
 
@@ -93,41 +90,39 @@ public class SonarrRenameTask {
 				Map<String, List<SonarrRule>> tokenRuleMap = new ConcurrentHashMap<>();
 				tokenRuleMap.put(Token.SEASON, sonarrRuleService.query(Token.SEASON));
 				tokenRuleMap.put(Token.EPISODE, sonarrRuleService.query(Token.EPISODE));
+				Map<String, Integer> torrentInfoHashMap = new HashMap<>(jsonArray.size());
 				jsonArray.forEach(object -> {
-					String torrentInfoHash = null;
 					try {
 						JSONObject json = (JSONObject) object;
-						torrentInfoHash = json.getString(ApiField.RADARR_DOWNLOAD_ID);
+						String sourceTitle = json.getString(ApiField.SONARR_SOURCES_TITLE);
+						String torrentInfoHash = json.getString(ApiField.RADARR_DOWNLOAD_ID);
 						if (StringUtils.isNotBlank(torrentInfoHash)) {
 							torrentInfoHash = torrentInfoHash.toLowerCase();
 						} else {
 							torrentInfoHash = json.getJSONObject(ApiField.SONARR_DATA)
 									.getString(ApiField.SONARR_TORRENT_INFO_HASH);
 						}
-						String sourceTitle = json.getString(ApiField.SONARR_SOURCES_TITLE);
-						if (StringUtils.isNotBlank(torrentInfoHash) && cacheManager
-								.getCache(CacheName.SONARR_RENAME).get(torrentInfoHash) == null) {
+						if (StringUtils.isNotBlank(torrentInfoHash)
+								&& torrentInfoHashMap.get(torrentInfoHash) == null) {
+							torrentInfoHashMap.put(torrentInfoHash, 1);
 							// 种子重命名
 							String downloadClient = json.getJSONObject(ApiField.SONARR_DATA)
 									.getString(ApiField.SONARR_DOWNLOAD_CLIENT);
 							if (Downloader.TRANSMISSION.getName().equalsIgnoreCase(downloadClient)) {
-								if (transmissionService.rename(torrentInfoHash, sourceTitle)) {
-									cacheManager.getCache(CacheName.SONARR_RENAME).put(torrentInfoHash, 1);
-									log.info("Transmission 种子重命名：{} => {}", torrentInfoHash, sourceTitle);
-								} else {
-									log.debug("Transmission 种子重命名失败：{} => {}", torrentInfoHash, sourceTitle);
-								}
+								transmissionService.rename(torrentInfoHash, sourceTitle);
 							} else {
 								if (qbittorrentService.rename(torrentInfoHash, sourceTitle)) {
-									cacheManager.getCache(CacheName.SONARR_RENAME).put(torrentInfoHash, 1);
-									log.info("qBittorrent 种子重命名：{} => {}", torrentInfoHash, sourceTitle);
-									// 文件重命名 SxxExx
-									String newFileNameFormat = sonarrTitleService.format(sourceTitle,
-											"{" + Token.SEASON + "}", tokenRuleMap);
-									newFileNameFormat = newFileNameFormat + "{" + Token.EPISODE + "}";
+									boolean renamed = false;
+									// 文件重命名 Exx
+									String newFileNameFormat = "{" + Token.EPISODE + "}";
 									List<String> files = qbittorrentService.files(torrentInfoHash);
 									for (String oldFilePath : files) {
 										int startIndex = oldFilePath.lastIndexOf("/") + 1;
+										if (sourceTitle.equals(oldFilePath.substring(0, startIndex - 1))) {
+											log.debug("qBittorrent 文件已经重命名: {}", oldFilePath);
+											renamed = true;
+											break;
+										}
 										String oldFileName = oldFilePath.substring(startIndex);
 										String newFileName = oldFileName;
 										Matcher extensionMatcher = Pattern
@@ -143,7 +138,11 @@ public class SonarrRenameTask {
 										String newFilePath = sourceTitle + "/" + newFileName;
 										qbittorrentService.renameFile(torrentInfoHash, oldFilePath,
 												newFilePath);
-										log.info("qBittorrent 文件重命名：{} => {}", oldFileName, newFileName);
+										log.info("qBittorrent 文件重命名成功：{} => {}", oldFileName, newFileName);
+									}
+									if (!renamed) {
+										log.info("qBittorrent 种子重命名成功：{} => {}", torrentInfoHash,
+												sourceTitle);
 									}
 								} else {
 									log.debug("qBittorrent 种子重命名失败：{} => {}", torrentInfoHash, sourceTitle);
@@ -152,9 +151,6 @@ public class SonarrRenameTask {
 						}
 					} catch (Exception e) {
 						if (e.getMessage().contains("Not Found")) {
-							if (StringUtils.isNotBlank(torrentInfoHash)) {
-								cacheManager.getCache(CacheName.SONARR_RENAME).put(torrentInfoHash, 1);
-							}
 							log.debug("下载器重命名出错（单个）：{}", e.getMessage());
 						} else {
 							log.error("下载器重命名出错（单个）：{}", e);

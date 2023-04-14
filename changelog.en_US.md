@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.1.4 2023-04-14
+
+1. Optimize downloader rename
+
 ## v3.1.3 2023-04-14
 
 1. Optimize qBittorrent rename

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -70,7 +71,7 @@ public class TransmissionServiceImpl implements ITransmissionService {
 		HttpEntity<JSONObject> request = new HttpEntity<>(params, headers);
 		try {
 			ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
-			if (response.getStatusCode().is4xxClientError()) {
+			if (HttpStatusCode.valueOf(409).equals(response.getStatusCode())) {
 				headers = response.getHeaders();
 				headers.forEach((headerName, values) -> {
 					if (headerName.equalsIgnoreCase(ApiField.TRANSMISSION_SESSION_ID)) {
@@ -139,15 +140,17 @@ public class TransmissionServiceImpl implements ITransmissionService {
 		name = name.replace(":", "_");
 		String oldName = getTorrentName(hash);
 		if (StringUtils.isBlank(oldName) || oldName.equalsIgnoreCase(hash)) {
+			log.debug("Transmission 种子暂时无法重命名：{}", oldName);
 			return false;
-		}
-		if (oldName.equals(name)) {
-			return true;
 		}
 		Matcher matcher = Pattern.compile(Common.VIDEO_EXTENSION_REGEX).matcher(oldName);
 		if (matcher.find()) {
 			String extension = matcher.group(1);
 			name = name + extension;
+		}
+		if (oldName.equals(name)) {
+			log.debug("Transmission 种子已经重命名：{}", name);
+			return false;
 		}
 		JSONObject arguments = new JSONObject();
 		arguments.put("ids", hash);
@@ -163,8 +166,17 @@ public class TransmissionServiceImpl implements ITransmissionService {
 		headers.add(ApiField.TRANSMISSION_SESSION_ID, session);
 		HttpEntity<JSONObject> request = new HttpEntity<>(params, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+		if (HttpStatusCode.valueOf(409).equals(response.getStatusCode()) && login()) {
+			headers.remove(ApiField.TRANSMISSION_SESSION_ID);
+			headers.add(ApiField.TRANSMISSION_SESSION_ID, session);
+			response = restTemplate.postForEntity(url, request, String.class);
+		}
 		log.debug("body: {}", response.getBody());
-		return response.getStatusCode().is2xxSuccessful();
+		if (response.getStatusCode().is2xxSuccessful()) {
+			log.info("Transmission 种子重命名成功：{} => {}", oldName, name);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -200,6 +212,11 @@ public class TransmissionServiceImpl implements ITransmissionService {
 		headers.add(ApiField.TRANSMISSION_SESSION_ID, session);
 		HttpEntity<JSONObject> request = new HttpEntity<>(params, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(this.url, request, String.class);
+		if (HttpStatusCode.valueOf(409).equals(response.getStatusCode()) && login()) {
+			headers.remove(ApiField.TRANSMISSION_SESSION_ID);
+			headers.add(ApiField.TRANSMISSION_SESSION_ID, session);
+			response = restTemplate.postForEntity(url, request, String.class);
+		}
 		log.debug("body: {}", response.getBody());
 		if (response.getStatusCode().is2xxSuccessful()) {
 			arguments = JSON.parseObject(response.getBody()).getJSONObject(ApiField.TRANSMISSION_ARGUMENTS);
