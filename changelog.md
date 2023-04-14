@@ -3,6 +3,12 @@
 
 # 变更日志
 
+## v3.1.3 2023-04-14
+
+1. 优化 qBittorrent 重命名
+2. 新增 Transmission 重命名
+3. 优化无绝对集数剧集查询
+
 ## v3.1.2 2023-04-12
 
 1. 合并 PR [#27](https://github.com/LuckyPuppy514/jproxy/pull/27)

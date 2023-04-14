@@ -36,7 +36,7 @@ graph LR
 
 ![20230405044128](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405044128.webp)
 ![20230406181845](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406181845.webp)
-![20230406181914](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406181914.webp)
+![20230414101425](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414101425.webp)
 
 ## 🧱 Install
 
@@ -97,11 +97,11 @@ If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/Lu
 ① Fill in `Sonarr Server Url`, `API KEY`, and `Indexer Address` in `System -  Configure` (Jackett or Prowlarr)
 
 ![20230404182207](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404182207.webp)
-![20230406182057](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406182057.webp)
+![20230414101841](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414101841.webp)
 
 💡 After saving, it should normally be as shown in the picture below ✅, otherwise please check the input and network connectivity
 
-![20230406182207](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406182207.webp)
+![20230414101757](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414101757.webp)
 
 ② For the first use, it is recommended to manually synchronize `Series Title` and `Series Rule` once (it will be automatically synchronized later)
 

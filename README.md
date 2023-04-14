@@ -36,7 +36,7 @@ graph LR
 
 ![20230405044128](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405044128.webp)
 ![20230405044054](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405044054.webp)
-![20230406161713](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406161713.webp)
+![20230414101403](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414101403.webp)
 
 ## 🧱 项目安装
 
@@ -97,11 +97,11 @@ services:
 ① 在 `系统配置 - 基础配置` 中填写 `Sonarr 服务地址` 和 `API 密钥`，以及 `索引器地址`（Jackett / Prowlarr 二选一即可）
 
 ![20230404182207](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404182207.webp)
-![20230404170949](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404170949.webp)
+![20230414101622](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414101622.webp)
 
 💡 保存后，正常应如下图所示 ✅ ，否则请检查输入和网络连通性
 
-![20230404171234](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404171234.webp)
+![20230414101718](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414101718.webp)
 
 ② 首次使用，建议手动同步一次 `剧集标题` 和 `剧集规则`（后续会自动同步）
 

@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.service.IQbittorrentService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,9 +37,13 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 
 	private final RestTemplate restTemplate;
 
-	private String cookie = null;
+	private String url;
 
-	private String url = null;
+	private String username;
+
+	private String password;
+
+	private String cookie = null;
 
 	private boolean isLogin = false;
 
@@ -54,25 +59,43 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 	@Override
 	public boolean login(String url, String username, String password) {
 		this.url = url;
+		this.username = username;
+		this.password = password;
 		this.cookie = null;
 		this.isLogin = false;
-		StringBuilder api = new StringBuilder(url);
+		StringBuilder api = new StringBuilder(this.url);
 		api.append("/api/v2/auth/login");
 		MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-		params.add("username", username);
-		params.add("password", password);
+		params.add(ApiField.QBITTORRENT_USERNAME, username);
+		params.add(ApiField.QBITTORRENT_PASSWORD, password);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params);
-		ResponseEntity<String> response = restTemplate.postForEntity(api.toString(), request, String.class);
-		if (response.getStatusCode().is2xxSuccessful()) {
-			HttpHeaders headers = response.getHeaders();
-			headers.forEach((headerName, values) -> {
-				if (headerName.equalsIgnoreCase(HttpHeaders.SET_COOKIE)) {
-					cookie = values.get(0);
-					isLogin = true;
-				}
-			});
+		try {
+			ResponseEntity<String> response = restTemplate.postForEntity(api.toString(), request,
+					String.class);
+			if (response.getStatusCode().is2xxSuccessful()) {
+				HttpHeaders headers = response.getHeaders();
+				headers.forEach((headerName, values) -> {
+					if (headerName.equalsIgnoreCase(HttpHeaders.SET_COOKIE)) {
+						this.cookie = values.get(0);
+						this.isLogin = StringUtils.isNotBlank(cookie);
+						log.debug("qBittorrent Cookie: {}", cookie);
+					}
+				});
+			}
+		} catch (Exception e) {
+			log.debug("qBittorrent 登录出错：{}", e.getMessage());
 		}
-		return StringUtils.isNotBlank(cookie);
+		return this.isLogin;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @see com.lckp.jproxy.service.IDownloaderService#login()
+	 */
+	@Override
+	public boolean login() {
+		return login(this.url, this.username, this.password);
 	}
 
 	/**
@@ -83,9 +106,9 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 	@Override
 	public List<String> files(String hash) {
 		StringBuilder api = new StringBuilder();
-		api.append(url);
-		api.append("/api/v2/torrents/files");
-		api.append("?hash=" + hash);
+		api.append(this.url);
+		api.append("/api/v2/torrents/files?");
+		api.append(ApiField.QBITTORRENT_HASH + "=" + hash);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.COOKIE, cookie);
 		HttpEntity<String> request = new HttpEntity<>(headers);
@@ -93,7 +116,7 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 		log.debug("body: {}", body);
 		JSONArray jsonArray = JSON.parseArray(body);
 		List<String> fileList = new ArrayList<>(jsonArray.size());
-		jsonArray.forEach(object -> fileList.add(((JSONObject) object).getString("name")));
+		jsonArray.forEach(object -> fileList.add(((JSONObject) object).getString(ApiField.QBITTORRENT_NAME)));
 		return fileList;
 	}
 
@@ -107,13 +130,13 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 	@Override
 	public boolean rename(String hash, String name) {
 		StringBuilder api = new StringBuilder();
-		api.append(url);
+		api.append(this.url);
 		api.append("/api/v2/torrents/rename");
 		MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-		params.add("hash", hash);
-		params.add("name", name);
+		params.add(ApiField.QBITTORRENT_HASH, hash);
+		params.add(ApiField.QBITTORRENT_NAME, name);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.COOKIE, cookie);
+		headers.add(HttpHeaders.COOKIE, this.cookie);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(api.toString(), request, String.class);
 		return response.getStatusCode().is2xxSuccessful();
@@ -130,14 +153,14 @@ public class QbittorrentServiceImpl implements IQbittorrentService {
 	@Override
 	public boolean renameFile(String hash, String oldPath, String newPath) {
 		StringBuilder api = new StringBuilder();
-		api.append(url);
+		api.append(this.url);
 		api.append("/api/v2/torrents/renameFile");
 		MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-		params.add("hash", hash);
-		params.add("oldPath", oldPath);
-		params.add("newPath", newPath);
+		params.add(ApiField.QBITTORRENT_HASH, hash);
+		params.add(ApiField.QBITTORRENT_OLD_PATH, oldPath);
+		params.add(ApiField.QBITTORRENT_NEW_PATH, newPath);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.COOKIE, cookie);
+		headers.add(HttpHeaders.COOKIE, this.cookie);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(api.toString(), request, String.class);
 		return response.getStatusCode().is2xxSuccessful();

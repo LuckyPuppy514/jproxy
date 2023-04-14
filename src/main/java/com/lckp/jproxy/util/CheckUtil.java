@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.lckp.jproxy.constant.Token;
@@ -110,13 +112,16 @@ public class CheckUtil {
 					.setConnectTimeout(CONNECT_TIMEOUT).build();
 			restTemplate.getForEntity(url, String.class).getBody();
 			return true;
+		} catch (HttpClientErrorException | HttpServerErrorException e) {
+			log.debug("URL 检查：{}", e.getMessage());
+			return true;
 		} catch (Exception e) {
 			if (e.getMessage().contains("Too many follow-up requests")
 					|| e.getMessage().contains("redirected too many")) {
-				log.debug(e.getMessage());
+				log.debug("URL 检查：{}", e.getMessage());
 				return true;
 			}
-			log.error("URL 无效：{}", e.getMessage());
+			log.debug("URL 无效：{}", e.getMessage());
 		}
 		return false;
 	}

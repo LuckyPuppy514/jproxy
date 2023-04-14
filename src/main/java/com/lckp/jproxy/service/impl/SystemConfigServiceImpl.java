@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,6 +22,7 @@ import com.lckp.jproxy.exception.SystemConfigException;
 import com.lckp.jproxy.mapper.SystemConfigMapper;
 import com.lckp.jproxy.service.IQbittorrentService;
 import com.lckp.jproxy.service.ISystemConfigService;
+import com.lckp.jproxy.service.ITransmissionService;
 import com.lckp.jproxy.util.CheckUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,8 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
 		implements ISystemConfigService {
 
 	private final IQbittorrentService qbittorrentService;
+
+	private final ITransmissionService transmissionService;
 
 	private final ISystemConfigService proxy() {
 		return (ISystemConfigService) AopContext.currentProxy();
@@ -89,18 +93,38 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
 		SystemConfig radarrIndexerFormat = map.get(SystemConfigKey.RADARR_INDEXER_FORMAT);
 		radarrIndexerFormat.setValidStatus(
 				ValidStatus.getCode(CheckUtil.checkRadarrIndexerFormat(radarrIndexerFormat.getValue())));
-		// 检查 qBittorrent
-		SystemConfig qBittorrentUrl = map.get(SystemConfigKey.QBITTORRENT_URL);
-		SystemConfig qBittorrentUsername = map.get(SystemConfigKey.QBITTORRENT_USERNAME);
-		SystemConfig qBittorrentPassword = map.get(SystemConfigKey.QBITTORRENT_PASSWORD);
-		qBittorrentUrl.setValidStatus(ValidStatus.getCode(CheckUtil.checkUrl(qBittorrentUrl.getValue())));
-		qBittorrentUsername.setValidStatus(ValidStatus.INVALID.getCode());
-		qBittorrentPassword.setValidStatus(ValidStatus.INVALID.getCode());
-		if (ValidStatus.VALID.getCode().equals(qBittorrentUrl.getValidStatus())) {
-			boolean isLogin = qbittorrentService.login(qBittorrentUrl.getValue(),
-					qBittorrentUsername.getValue(), qBittorrentPassword.getValue());
-			qBittorrentUsername.setValidStatus(ValidStatus.getCode(isLogin));
-			qBittorrentPassword.setValidStatus(ValidStatus.getCode(isLogin));
+		// 检查 qbittorrent
+		SystemConfig qbittorrentUrl = map.get(SystemConfigKey.QBITTORRENT_URL);
+		SystemConfig qbittorrentUsername = map.get(SystemConfigKey.QBITTORRENT_USERNAME);
+		SystemConfig qbittorrentPassword = map.get(SystemConfigKey.QBITTORRENT_PASSWORD);
+		qbittorrentUrl.setValidStatus(ValidStatus.getCode(CheckUtil.checkUrl(qbittorrentUrl.getValue())));
+		qbittorrentUsername.setValidStatus(ValidStatus.INVALID.getCode());
+		qbittorrentPassword.setValidStatus(ValidStatus.INVALID.getCode());
+		if (ValidStatus.VALID.getCode().equals(qbittorrentUrl.getValidStatus())) {
+			boolean isLogin = qbittorrentService.login(qbittorrentUrl.getValue(),
+					qbittorrentUsername.getValue(), qbittorrentPassword.getValue());
+			qbittorrentUsername.setValidStatus(ValidStatus.getCode(isLogin));
+			qbittorrentPassword.setValidStatus(ValidStatus.getCode(isLogin));
+		}
+		// 检查 transmission
+		SystemConfig transmissionUrl = map.get(SystemConfigKey.TRANSMISSION_URL);
+		if (StringUtils.isNotBlank(transmissionUrl.getValue())) {
+			String url = transmissionUrl.getValue().replaceAll("/$", "");
+			if (!url.endsWith("/transmission/rpc")) {
+				url = url.replace("/transmission/web", "") + "/transmission/rpc";
+			}
+			transmissionUrl.setValue(url);
+		}
+		SystemConfig transmissionUsername = map.get(SystemConfigKey.TRANSMISSION_USERNAME);
+		SystemConfig transmissionPassword = map.get(SystemConfigKey.TRANSMISSION_PASSWORD);
+		transmissionUrl.setValidStatus(ValidStatus.getCode(CheckUtil.checkUrl(transmissionUrl.getValue())));
+		transmissionUsername.setValidStatus(ValidStatus.INVALID.getCode());
+		transmissionPassword.setValidStatus(ValidStatus.INVALID.getCode());
+		if (ValidStatus.VALID.getCode().equals(transmissionUrl.getValidStatus())) {
+			boolean isLogin = transmissionService.login(transmissionUrl.getValue(),
+					transmissionUsername.getValue(), transmissionPassword.getValue());
+			transmissionUsername.setValidStatus(ValidStatus.getCode(isLogin));
+			transmissionPassword.setValidStatus(ValidStatus.getCode(isLogin));
 		}
 		// 检查 Jackett 地址
 		SystemConfig jackett = map.get(SystemConfigKey.JACKETT_URL);

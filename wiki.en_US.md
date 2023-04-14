@@ -2,8 +2,9 @@
 
 - [Advanced Configuration](#advanced-configuration)
   - [Sonarr](#sonarr)
-    - [qBittorrent](#qbittorrent)
     - [TMDB](#tmdb)
+    - [qBittorrent](#qbittorrent)
+    - [Transmission](#transmission)
   - [Radarr](#radarr)
   - [Clean Title Regex](#clean-title-regex)
 - [Usage](#usage)
@@ -18,14 +19,6 @@
 
 ## Sonarr
 
-### qBittorrent
-
-> 🌟 Rename the torrent name and file name corresponding to the Sonarr / Radarr download queue regularly to reduce import errors
-
-Fill in qBittorrent's `Server Url`, `Username` and `Password`, after saving it should be as shown in the picture ✅, otherwise please check the input and network connectivity
-
-![20230411121728](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-11/20230411121728.webp)
-
 ### TMDB
 
 > 🌟 Synchronize the TMDB title, which can be used to add the title of the primary language and the secondary language when searching, and can also be used to match the title of the result to improve the recognition rate, and supports modification for users to manually calibrate
@@ -38,6 +31,22 @@ Fill in qBittorrent's `Server Url`, `Username` and `Password`, after saving it s
 ② For the first use, it is recommended to manually synchronize the data once (it will be automatically synchronized later)
 
 ![20230406184943](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406184943.webp)
+
+### qBittorrent
+
+> 🌟 Rename the torrent name and file name corresponding to the Sonarr / Radarr grabbed queue regularly to reduce import errors
+
+Fill in qBittorrent's `Server Url`, `Username` and `Password`, after saving it should be as shown in the picture ✅, otherwise please check the input and network connectivity
+
+![20230414104619](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414104619.webp)
+
+### Transmission
+
+> 🌟 Rename the torrent name corresponding to the Sonarr / Radarr grabbed queue regularly to reduce import errors
+
+Fill in Transmission's `Server Url`, `Username` and `Password`, after saving it should be as shown in the picture ✅, otherwise please check the input and network connectivity
+
+![20230414104645](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414104645.webp)
 
 ## Radarr
 

@@ -3,6 +3,12 @@
 
 # Change Logs
 
+## v3.1.3 2023-04-14
+
+1. Optimize qBittorrent rename
+2. Added Transmission rename
+3. Optimize search of series without absolute number
+
 ## v3.1.2 2023-04-12
 
 1. Merge pull request [#27](https://github.com/LuckyPuppy514/jproxy/pull/27)

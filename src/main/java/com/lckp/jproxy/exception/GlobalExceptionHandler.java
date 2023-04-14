@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
 	@ResponseBody
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> dealException(Exception e, HttpServletRequest request) {
-		log.error("其他异常：{}", e.getMessage());
+		log.error("其他异常：{}", e.getMessage(), e);
 		return ResponseEntity.internalServerError().body(e.getMessage());
 	}
 }

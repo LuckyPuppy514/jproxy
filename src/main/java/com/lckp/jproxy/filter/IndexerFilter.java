@@ -41,7 +41,11 @@ public abstract class IndexerFilter extends BaseFilter {
 
 		// 处理查询
 		String xml = "";
-		if (StringUtils.isNotBlank(indexerRequest.getSearchKey())) {
+		String searchKey = indexerRequest.getSearchKey();
+		if (StringUtils.isNotBlank(searchKey)) {
+			// 无绝对集数，去除 00
+			searchKey = searchKey.replaceAll(" 00$", "");
+			indexerRequest.setSearchKey(searchKey);
 			// 获取所有待查询标题
 			String title = indexerService.getTitle(indexerRequest.getSearchKey());
 			List<String> searchTitleList = indexerService.getSearchTitle(title);

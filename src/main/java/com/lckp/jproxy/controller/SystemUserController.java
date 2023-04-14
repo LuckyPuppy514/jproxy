@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.constant.Messages;
 import com.lckp.jproxy.entity.SystemUser;
 import com.lckp.jproxy.model.request.SystemUserLoginRequest;
@@ -65,7 +65,7 @@ public class SystemUserController {
 	@Operation(summary = "信息")
 	@GetMapping("/info")
 	public ResponseEntity<SystemUser> info(HttpServletRequest servletRequest) {
-		String token = servletRequest.getHeader(ApiField.HEADER_TOKEN);
+		String token = servletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 		SystemUser systemUser = systemUserService.getSystemUser(token);
 		systemUser.setPassword("******");
 		return ResponseEntity.ok(systemUser);
@@ -75,7 +75,7 @@ public class SystemUserController {
 	@PostMapping("/update")
 	public ResponseEntity<Void> update(@RequestBody SystemUser systemUser,
 			HttpServletRequest servletRequest) {
-		String token = servletRequest.getHeader(ApiField.HEADER_TOKEN);
+		String token = servletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 		SystemUser currentSystemUser = systemUserService.getSystemUser(token);
 		if (StringUtils.isNotBlank(systemUser.getUsername())) {
 			currentSystemUser.setUsername(systemUser.getUsername());
@@ -90,7 +90,7 @@ public class SystemUserController {
 	@Operation(summary = "注销")
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout(HttpServletRequest servletRequest) {
-		systemUserService.logout(servletRequest.getHeader(ApiField.HEADER_TOKEN));
+		systemUserService.logout(servletRequest.getHeader(HttpHeaders.AUTHORIZATION));
 		return ResponseEntity.ok().build();
 	}
 }

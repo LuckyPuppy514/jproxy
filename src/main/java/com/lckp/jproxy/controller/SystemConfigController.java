@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.lckp.jproxy.constant.CacheName;
-import com.lckp.jproxy.constant.SystemConfigKey;
 import com.lckp.jproxy.entity.SystemConfig;
-import com.lckp.jproxy.service.IQbittorrentService;
 import com.lckp.jproxy.service.ISystemCacheService;
 import com.lckp.jproxy.service.ISystemConfigService;
 import com.lckp.jproxy.task.SonarrRenameTask;
@@ -44,8 +42,6 @@ public class SystemConfigController implements CommandLineRunner {
 	private final ISystemConfigService systemConfigService;
 
 	private final ISystemCacheService systemCacheService;
-
-	private final IQbittorrentService qbittorrentService;
 
 	private final SonarrRenameTask sonarrRenameTask;
 
@@ -101,13 +97,6 @@ public class SystemConfigController implements CommandLineRunner {
 			log.info("无法访问规则地址：{} - {}", ruleLocation, e.getMessage());
 			Generator.setRuleLocation(ruleLocationBackup);
 			log.info("已切换到备用地址：{}", ruleLocationBackup);
-		}
-		try {
-			qbittorrentService.login(systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_URL),
-					systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_USERNAME),
-					systemConfigService.queryValueByKey(SystemConfigKey.QBITTORRENT_PASSWORD));
-		} catch (Exception e) {
-			log.info("尝试登录 qBittorrent 失败：{}", e.getMessage());
 		}
 	}
 }

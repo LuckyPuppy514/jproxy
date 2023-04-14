@@ -24,6 +24,14 @@ public interface IDownloaderService {
 
 	/**
 	 * 
+	 * 登录
+	 *
+	 * @return boolean
+	 */
+	public boolean login();
+
+	/**
+	 * 
 	 * 获取登录状态
 	 *
 	 * @return boolean

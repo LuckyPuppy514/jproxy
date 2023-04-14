@@ -72,7 +72,13 @@ public class ApiField {
 
 	public static final String SONARR_DATA = "data";
 
+	public static final String SONARR_DATE = "date";
+
+	public static final String SONARR_TZ = "UTC";
+
 	public static final String SONARR_TORRENT_INFO_HASH = "torrentInfoHash";
+
+	public static final String SONARR_DOWNLOAD_CLIENT = "downloadClient";
 
 	public static final String RADARR_APIKEY = "apikey";
 
@@ -96,6 +102,10 @@ public class ApiField {
 
 	public static final String RADARR_DATA = "data";
 
+	public static final String RADARR_DATE = "date";
+
+	public static final String RADARR_TZ = "UTC";
+
 	public static final String RADARR_TORRENT_INFO_HASH = "torrentInfoHash";
 
 	public static final String RADARR_TITLE = "title";
@@ -112,6 +122,8 @@ public class ApiField {
 
 	public static final String RADARR_YEAR = "year";
 
+	public static final String RADARR_DOWNLOAD_CLIENT = "downloadClient";
+
 	public static final String TMDB_API_KEY = "api_key";
 
 	public static final String TMDB_TVDB_ID = "tvdb_id";
@@ -126,11 +138,26 @@ public class ApiField {
 
 	public static final String TMDB_NAME = "name";
 
-	public static final String QBITTORRENT_PROGRESS = "progress";
-
 	public static final String QBITTORRENT_HASH = "hash";
 
 	public static final String QBITTORRENT_NAME = "name";
 
-	public static final String HEADER_TOKEN = "Authorization";
+	public static final String QBITTORRENT_USERNAME = "username";
+
+	public static final String QBITTORRENT_PASSWORD = "password";
+
+	public static final String QBITTORRENT_OLD_PATH = "oldPath";
+
+	public static final String QBITTORRENT_NEW_PATH = "newPath";
+
+	public static final String TRANSMISSION_METHOD = "method";
+
+	public static final String TRANSMISSION_ARGUMENTS = "arguments";
+
+	public static final String TRANSMISSION_SESSION_ID = "X-Transmission-Session-Id";
+
+	public static final String TRANSMISSION_TORRENTS = "torrents";
+
+	public static final String TRANSMISSION_NAME = "name";
+
 }

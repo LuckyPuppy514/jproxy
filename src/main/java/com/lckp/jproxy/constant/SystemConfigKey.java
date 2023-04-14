@@ -30,6 +30,8 @@ public class SystemConfigKey {
 	public static final String QBITTORRENT_USERNAME = "qbittorrentUsername";
 	public static final String QBITTORRENT_PASSWORD = "qbittorrentPassword";
 	public static final String TRANSMISSION_URL = "transmissionUrl";
+	public static final String TRANSMISSION_USERNAME = "transmissionUsername";
+	public static final String TRANSMISSION_PASSWORD = "transmissionPassword";
 	// TMDB
 	public static final String TMDB_URL = "tmdbUrl";
 	public static final String TMDB_APIKEY = "tmdbApikey";
