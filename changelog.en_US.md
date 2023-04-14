@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.1.6 2023-04-14
+
+1. Fix downloader rename bug
+
 ## v3.1.4 2023-04-14
 
 1. Optimize downloader rename

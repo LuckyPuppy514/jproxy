@@ -118,7 +118,8 @@ public class SonarrRenameTask {
 									List<String> files = qbittorrentService.files(torrentInfoHash);
 									for (String oldFilePath : files) {
 										int startIndex = oldFilePath.lastIndexOf("/") + 1;
-										if (sourceTitle.equals(oldFilePath.substring(0, startIndex - 1))) {
+										if (startIndex > 0 && sourceTitle
+												.equals(oldFilePath.substring(0, startIndex - 1))) {
 											log.debug("qBittorrent 文件已经重命名: {}", oldFilePath);
 											renamed = true;
 											break;
