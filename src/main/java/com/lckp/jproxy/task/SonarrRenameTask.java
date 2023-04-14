@@ -133,7 +133,11 @@ public class SonarrRenameTask {
 											newFileName = sonarrTitleService
 													.format(oldFileName, newFileNameFormat, tokenRuleMap)
 													.trim();
-											newFileName = newFileName + extension;
+											if (StringUtils.isBlank(newFileName)) {
+												newFileName = oldFileName;
+											} else {
+												newFileName = newFileName + extension;
+											}
 										}
 										String newFilePath = sourceTitle + "/" + newFileName;
 										qbittorrentService.renameFile(torrentInfoHash, oldFilePath,
