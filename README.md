@@ -62,15 +62,16 @@ services:
 
 如需使用 `docker run` 进行部署，请参考 [docker-run.sh](https://github.com/LuckyPuppy514/jproxy/blob/main/docker/docker-run.sh)
 
-|    参数名     |      默认值       |         说明         |
-| :-----------: | :---------------: | :------------------: |
-|     PUID      |         0         |       用户 ID        |
-|     PGID      |         0         |        组 ID         |
-|      TZ       |   Asia/Shanghai   |         时区         |
-|   JAVA_OPTS   | -Xms512m -Xmx512m |     JVM 运行参数     |
-| CACHE_EXPIRES |       4320        | 缓存过期时间（分钟） |
-| TOKEN_EXPIRES |       10080       | 登录过期时间（分钟） |
-| SYNC_INTERVAL |         3         |   同步间隔（分钟）   |
+|    参数名     |      默认值       |             说明             |
+| :-----------: | :---------------: | :--------------------------: |
+|     PUID      |         0         |           用户 ID            |
+|     PGID      |         0         |            组 ID             |
+|      TZ       |   Asia/Shanghai   |             时区             |
+|   JAVA_OPTS   | -Xms512m -Xmx512m |         JVM 运行参数         |
+| CACHE_EXPIRES |       4320        |     缓存过期时间（分钟）     |
+| TOKEN_EXPIRES |       10080       |     登录过期时间（分钟）     |
+| SYNC_INTERVAL |         3         |       同步间隔（分钟）       |
+|  RENAME_FILE  |       true        | 文件重命名开关（true/false） |
 
 ### Windows
 

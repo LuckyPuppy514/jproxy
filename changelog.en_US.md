@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.1.7 2023-04-16
+
+1. Add file rename switch
+
 ## v3.1.6 2023-04-14
 
 1. Fix downloader rename bug

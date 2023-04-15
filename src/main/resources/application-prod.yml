@@ -21,6 +21,9 @@ time:
    radarr-rename-fall-back: 6
    downloader-login: 0 */30 * * * ?
 
+rename:
+   file: ${RENAME_FILE:true}
+
 spring:
    type: com.zaxxer.hikari.HikariDataSource
    hikari:

@@ -54,6 +54,9 @@ public class RadarrRenameTask {
 	@Value("${time.radarr-rename-fall-back}")
 	private int fallBackTime;
 
+	@Value("${rename.file}")
+	private boolean renameFile;
+
 	@Scheduled(cron = "${time.radarr-rename}")
 	public synchronized void run() {
 		try {
@@ -96,31 +99,38 @@ public class RadarrRenameTask {
 								transmissionService.rename(torrentInfoHash, sourceTitle);
 							} else {
 								if (qbittorrentService.rename(torrentInfoHash, sourceTitle)) {
-									boolean renamed = false;
-									List<String> files = qbittorrentService.files(torrentInfoHash);
-									for (String oldFilePath : files) {
-										int startIndex = oldFilePath.lastIndexOf("/") + 1;
-										if (sourceTitle.equals(oldFilePath.substring(0, startIndex - 1))) {
-											log.debug("qBittorrent 文件已经重命名: {}", oldFilePath);
-											renamed = true;
-											break;
+									if (renameFile) {
+										boolean renamed = false;
+										List<String> files = qbittorrentService.files(torrentInfoHash);
+										for (String oldFilePath : files) {
+											int startIndex = oldFilePath.lastIndexOf("/") + 1;
+											if (startIndex > 0 && sourceTitle
+													.equals(oldFilePath.substring(0, startIndex - 1))) {
+												log.debug("qBittorrent 文件已经重命名: {}", oldFilePath);
+												renamed = true;
+												break;
+											}
+											String oldFileName = oldFilePath.substring(startIndex);
+											String newFileName = oldFileName;
+											Matcher extensionMatcher = Pattern
+													.compile(Common.VIDEO_EXTENSION_REGEX)
+													.matcher(oldFileName);
+											if (extensionMatcher.find()) {
+												String extension = extensionMatcher.group(1);
+												newFileName = sourceTitle + extension;
+											}
+											String newFilePath = sourceTitle + "/" + newFileName;
+											qbittorrentService.renameFile(torrentInfoHash, oldFilePath,
+													newFilePath);
+											log.info("qBittorrent 文件重命名成功：{} => {}", oldFileName,
+													newFileName);
 										}
-										String oldFileName = oldFilePath.substring(startIndex);
-										String newFileName = oldFileName;
-										Matcher extensionMatcher = Pattern
-												.compile(Common.VIDEO_EXTENSION_REGEX).matcher(oldFileName);
-										if (extensionMatcher.find()) {
-											String extension = extensionMatcher.group(1);
-											newFileName = sourceTitle + extension;
+										if (!renamed) {
+											log.info("qBittorrent 种子重命名成功：{} => {}", torrentInfoHash,
+													sourceTitle);
 										}
-										String newFilePath = sourceTitle + "/" + newFileName;
-										qbittorrentService.renameFile(torrentInfoHash, oldFilePath,
-												newFilePath);
-										log.info("qBittorrent 文件重命名成功：{} => {}", oldFileName, newFileName);
-									}
-									if (!renamed) {
-										log.info("qBittorrent 种子重命名成功：{} => {}", torrentInfoHash,
-												sourceTitle);
+									} else {
+										log.debug("已关闭文件重命名");
 									}
 								} else {
 									log.debug("qBittorrent 种子重命名失败：{} => {}", torrentInfoHash, sourceTitle);

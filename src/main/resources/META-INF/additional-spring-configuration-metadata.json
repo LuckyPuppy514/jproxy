@@ -1,174 +1,177 @@
-{
-	"properties": [
-		{
-			"name": "project.code",
-			"type": "java.lang.String",
-			"description": "项目代码"
-		},
-		{
-			"name": "project.name",
-			"type": "java.lang.String",
-			"description": "项目名称"
-		},
-		{
-			"name": "project.version",
-			"type": "java.lang.String",
-			"description": "项目版本"
-		},
-		{
-			"name": "knife4j.enable",
-			"type": "java.lang.String",
-			"description": "增强开关"
-		},
-		{
-			"name": "knife4j.setting.language",
-			"type": "java.lang.String",
-			"description": "语言"
-		},
-		{
-			"name": "project.description",
-			"type": "java.lang.String",
-			"description": "项目简介"
-		},
-		{
-			"name": "spring.devtools.restart.enabled",
-			"type": "java.lang.String",
-			"description": "热部署开关"
-		},
-		{
-			"name": "spring.devtools.restart.additional-paths",
-			"type": "java.lang.String",
-			"description": "热部署附加路径"
-		},
-		{
-			"name": "spring.devtools.restart.additional-exclude",
-			"type": "java.lang.String",
-			"description": "热部署排除路径"
-		},
-		{
-			"name": "spring.type",
-			"type": "java.lang.String",
-			"description": "连接池类型"
-		},
-		{
-			"name": "spring.hikari.minimum-idle",
-			"type": "java.lang.String",
-			"description": "最小空闲连接"
-		},
-		{
-			"name": "spring.hikari.maximum-pool-size",
-			"type": "java.lang.String",
-			"description": "最大连接池数量"
-		},
-		{
-			"name": "spring.hikari.idle-timeout",
-			"type": "java.lang.String",
-			"description": "空闲超时时间"
-		},
-		{
-			"name": "spring.hikari.max-lifetime",
-			"type": "java.lang.String",
-			"description": "最长生命周期"
-		},
-		{
-			"name": "spring.hikari.connection-timeout",
-			"type": "java.lang.String",
-			"description": "连接超时时间"
-		},
-		{
-			"name": "spring.hikari.connection-test-query",
-			"type": "java.lang.String",
-			"description": "连接测试语句"
-		},
-		{
-			"name": "knife4j.setting.swagger-model-name",
-			"type": "java.lang.String",
-			"description": "实体类标题"
-		},
-		{
-			"name": "knife4j.production",
-			"type": "java.lang.String",
-			"description": "生产环境开关"
-		},
-		{
-			"name": "time.cache-expires",
-			"type": "java.lang.String",
-			"description": "缓存过期时间（分钟）"
-		},
-		{
-			"name": "time.token-expires",
-			"type": "java.lang.String",
-			"description": "Token 过期时间（分钟）"
-		},
-		{
-			"name": "time.sync-interval",
-			"type": "java.lang.String",
-			"description": "同步间隔（分钟）"
-		},
-		{
-			"name": "rules.location",
-			"type": "java.lang.String",
-			"description": "规则地址"
-		},
-		{
-			"name": "logging.level.'com.lckp.top'",
-			"type": "java.lang.String",
-			"description": "主包日志级别"
-		},
-		{
-			"name": "rule.location-backup",
-			"type": "java.lang.String",
-			"description": "备用规则地址"
-		},
-		{
-			"name": "rule.location",
-			"type": "java.lang.String",
-			"description": "规则地址"
-		},
-		{
-			"name": "time.sonarr-title-sync",
-			"type": "java.lang.String",
-			"description": "剧集标题同步时间"
-		},
-		{
-			"name": "time.sonarr-rule-sync",
-			"type": "java.lang.String",
-			"description": "剧集规则同步时间"
-		},
-		{
-			"name": "time.sonarr-rename",
-			"type": "java.lang.String",
-			"description": "剧集重命名时间"
-		},
-		{
-			"name": "time.radarr-title-sync",
-			"type": "java.lang.String",
-			"description": "电影标题同步时间"
-		},
-		{
-			"name": "time.radarr-rule-sync",
-			"type": "java.lang.String",
-			"description": "电影规则同步时间"
-		},
-		{
-			"name": "time.radarr-rename",
-			"type": "java.lang.String",
-			"description": "电影重命名时间"
-		},
-		{
-			"name": "time.downloader-login",
-			"type": "java.lang.String",
-			"description": "下载器登录时间"
-		},
-		{
-			"name": "time.radarr-rename-fall-back",
-			"type": "java.lang.String",
-			"description": "电影重命名回溯时间（分钟）"
-		},
-		{
-			"name": "time.sonarr-rename-fall-back",
-			"type": "java.lang.String",
-			"description": "剧集重命名回溯时间（分钟）"
-		}
-	]
-}
+{"properties": [
+  {
+    "name": "project.code",
+    "type": "java.lang.String",
+    "description": "项目代码"
+  },
+  {
+    "name": "project.name",
+    "type": "java.lang.String",
+    "description": "项目名称"
+  },
+  {
+    "name": "project.version",
+    "type": "java.lang.String",
+    "description": "项目版本"
+  },
+  {
+    "name": "knife4j.enable",
+    "type": "java.lang.String",
+    "description": "增强开关"
+  },
+  {
+    "name": "knife4j.setting.language",
+    "type": "java.lang.String",
+    "description": "语言"
+  },
+  {
+    "name": "project.description",
+    "type": "java.lang.String",
+    "description": "项目简介"
+  },
+  {
+    "name": "spring.devtools.restart.enabled",
+    "type": "java.lang.String",
+    "description": "热部署开关"
+  },
+  {
+    "name": "spring.devtools.restart.additional-paths",
+    "type": "java.lang.String",
+    "description": "热部署附加路径"
+  },
+  {
+    "name": "spring.devtools.restart.additional-exclude",
+    "type": "java.lang.String",
+    "description": "热部署排除路径"
+  },
+  {
+    "name": "spring.type",
+    "type": "java.lang.String",
+    "description": "连接池类型"
+  },
+  {
+    "name": "spring.hikari.minimum-idle",
+    "type": "java.lang.String",
+    "description": "最小空闲连接"
+  },
+  {
+    "name": "spring.hikari.maximum-pool-size",
+    "type": "java.lang.String",
+    "description": "最大连接池数量"
+  },
+  {
+    "name": "spring.hikari.idle-timeout",
+    "type": "java.lang.String",
+    "description": "空闲超时时间"
+  },
+  {
+    "name": "spring.hikari.max-lifetime",
+    "type": "java.lang.String",
+    "description": "最长生命周期"
+  },
+  {
+    "name": "spring.hikari.connection-timeout",
+    "type": "java.lang.String",
+    "description": "连接超时时间"
+  },
+  {
+    "name": "spring.hikari.connection-test-query",
+    "type": "java.lang.String",
+    "description": "连接测试语句"
+  },
+  {
+    "name": "knife4j.setting.swagger-model-name",
+    "type": "java.lang.String",
+    "description": "实体类标题"
+  },
+  {
+    "name": "knife4j.production",
+    "type": "java.lang.String",
+    "description": "生产环境开关"
+  },
+  {
+    "name": "time.cache-expires",
+    "type": "java.lang.String",
+    "description": "缓存过期时间（分钟）"
+  },
+  {
+    "name": "time.token-expires",
+    "type": "java.lang.String",
+    "description": "Token 过期时间（分钟）"
+  },
+  {
+    "name": "time.sync-interval",
+    "type": "java.lang.String",
+    "description": "同步间隔（分钟）"
+  },
+  {
+    "name": "rules.location",
+    "type": "java.lang.String",
+    "description": "规则地址"
+  },
+  {
+    "name": "logging.level.'com.lckp.top'",
+    "type": "java.lang.String",
+    "description": "主包日志级别"
+  },
+  {
+    "name": "rule.location-backup",
+    "type": "java.lang.String",
+    "description": "备用规则地址"
+  },
+  {
+    "name": "rule.location",
+    "type": "java.lang.String",
+    "description": "规则地址"
+  },
+  {
+    "name": "time.sonarr-title-sync",
+    "type": "java.lang.String",
+    "description": "剧集标题同步时间"
+  },
+  {
+    "name": "time.sonarr-rule-sync",
+    "type": "java.lang.String",
+    "description": "剧集规则同步时间"
+  },
+  {
+    "name": "time.sonarr-rename",
+    "type": "java.lang.String",
+    "description": "剧集重命名时间"
+  },
+  {
+    "name": "time.radarr-title-sync",
+    "type": "java.lang.String",
+    "description": "电影标题同步时间"
+  },
+  {
+    "name": "time.radarr-rule-sync",
+    "type": "java.lang.String",
+    "description": "电影规则同步时间"
+  },
+  {
+    "name": "time.radarr-rename",
+    "type": "java.lang.String",
+    "description": "电影重命名时间"
+  },
+  {
+    "name": "time.downloader-login",
+    "type": "java.lang.String",
+    "description": "下载器登录时间"
+  },
+  {
+    "name": "time.radarr-rename-fall-back",
+    "type": "java.lang.String",
+    "description": "电影重命名回溯时间（分钟）"
+  },
+  {
+    "name": "time.sonarr-rename-fall-back",
+    "type": "java.lang.String",
+    "description": "剧集重命名回溯时间（分钟）"
+  },
+  {
+    "name": "rename.file",
+    "type": "java.lang.String",
+    "description": "文件重命名开关"
+  }
+]}

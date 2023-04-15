@@ -71,6 +71,7 @@ If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/Lu
 | CACHE_EXPIRES |       4320        |  Cache expiration time (minutes)   |
 | TOKEN_EXPIRES |       10080       |  Login expiration time (minutes)   |
 | SYNC_INTERVAL |         3         | Synchronization interval (minutes) |
+|  RENAME_FILE  |       true        |  File rename switch (true/false)   |
 
 ### Windows
 
