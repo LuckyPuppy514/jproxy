@@ -9,7 +9,9 @@
   <a href="./LICENSE"><img allt="MIT License" src="https://badgen.net/github/license/LuckyPuppy514/jproxy"/></a>
 </p>
 
-[中文](https://github.com/LuckyPuppy514/jproxy/blob/main/README.md) | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/README.en_US.md)
+<div align="center">
+  简体中文 | <a href="https://github.com/LuckyPuppy514/jproxy/blob/main/README.en_US.md">English</a>
+</div>
 
 - [🌟 项目简介](#-项目简介)
 - [🧱 项目安装](#-项目安装)

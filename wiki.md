@@ -1,4 +1,4 @@
-[中文](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.md) | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.en_US.md)
+简体中文 | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.en_US.md)
 
 - [进阶配置](#进阶配置)
   - [Sonarr](#sonarr)

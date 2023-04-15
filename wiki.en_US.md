@@ -1,4 +1,4 @@
-[中文](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.md) | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.en_US.md)
+[中文](https://github.com/LuckyPuppy514/jproxy/blob/main/wiki.md) | English
 
 - [Advanced Configuration](#advanced-configuration)
   - [Sonarr](#sonarr)
