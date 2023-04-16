@@ -1,7 +1,11 @@
 
-[中文](https://github.com/LuckyPuppy514/jproxy/blob/main/changelog.md) | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/changelog.en_US.md)
+[中文](https://github.com/LuckyPuppy514/jproxy/blob/main/changelog.md) | English
 
 # Change Logs
+
+## v3.1.8 2023-04-17
+
+1. Added version display and upgrade prompt
 
 ## v3.1.7 2023-04-16
 

@@ -156,7 +156,7 @@ public class RadarrIndexerServiceImpl extends IndexerServiceImpl implements IRad
 			radarrTitleService.sync();
 			radarrTitle = radarrTitleService.queryByTitle(title);
 			if (radarrTitle == null) {
-				log.error("找不到匹配的标题：{}", title);
+				log.debug("找不到匹配的标题：{}", title);
 				radarrTitle = new RadarrTitle();
 				radarrTitle.setTitle(title);
 			}

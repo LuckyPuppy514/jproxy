@@ -145,7 +145,7 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 			tmdbTitleService.sync(sonarrTitleService.queryNeedSyncTmdbTitle());
 			sonarrTitle = sonarrTitleService.queryByTitle(title);
 			if (sonarrTitle == null) {
-				log.error("找不到匹配的标题：{}", title);
+				log.debug("找不到匹配的标题：{}", title);
 				sonarrTitle = new SonarrTitle();
 				sonarrTitle.setTitle(title);
 			}

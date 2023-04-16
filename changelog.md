@@ -1,7 +1,11 @@
 
-[中文](https://github.com/LuckyPuppy514/jproxy/blob/main/changelog.md) | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/changelog.en_US.md)
+简体中文 | [English](https://github.com/LuckyPuppy514/jproxy/blob/main/changelog.en_US.md)
 
 # 变更日志
+
+## v3.1.8 2023-04-17
+
+1. 新增版本号展示及版本升级提示
 
 ## v3.1.7 2023-04-16
 

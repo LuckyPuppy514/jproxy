@@ -160,4 +160,5 @@ public class ApiField {
 
 	public static final String TRANSMISSION_NAME = "name";
 
+	public static final String GITHUB_TAG_NAME = "tag_name";
 }

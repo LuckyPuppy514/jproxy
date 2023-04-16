@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.constant.CacheName;
 import com.lckp.jproxy.entity.SystemConfig;
 import com.lckp.jproxy.service.ISystemCacheService;
@@ -47,11 +50,37 @@ public class SystemConfigController implements CommandLineRunner {
 
 	private final RestTemplate restTemplate;
 
+	@Value("${project.version}")
+	private String projectVersion;
+
 	@Value("${rule.location}")
 	private String ruleLocation;
 
 	@Value("${rule.location-backup}")
 	private String ruleLocationBackup;
+
+	private String latestVersion;
+
+	@Operation(summary = "版本号")
+	@GetMapping("/version")
+	public ResponseEntity<String> version() {
+		if (StringUtils.isBlank(latestVersion)) {
+			try {
+				latestVersion = JSON.parseObject(restTemplate.getForObject(
+						"https://api.github.com/repos/LuckyPuppy514/jproxy/releases/latest", String.class))
+						.getString(ApiField.GITHUB_TAG_NAME);
+				if (StringUtils.isNotBlank(latestVersion)) {
+					latestVersion = latestVersion.replace("v", "");
+				}
+			} catch (Exception e) {
+				log.debug("获取最新版本号出错：{}", e.getMessage());
+			}
+		}
+		if ((projectVersion).equals(latestVersion)) {
+			return ResponseEntity.ok(projectVersion);
+		}
+		return ResponseEntity.ok(projectVersion + " 🚨");
+	}
 
 	@Operation(summary = "查询")
 	@GetMapping("/query")
