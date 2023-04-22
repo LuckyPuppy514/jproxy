@@ -75,6 +75,13 @@ If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/Lu
 | SYNC_INTERVAL |         3         | Synchronization interval (minutes) |
 |  RENAME_FILE  |       true        |  File rename switch (true/false)   |
 
+If you need to set a proxy, you can append the corresponding proxy parameters in `JAVA_OPTS`
+
+- HTTP Proxy
+  `-Xms512m -Xmx512m -Dhttp.proxyHost=192.168.6.2 -Dhttp.proxyPort=12345`
+- SOCKS Proxy
+  `-Xms512m -Xmx512m -DsocksProxyHost=192.168.6.2 -DsocksProxyPort=54321`
+
 ### Windows
 
 1. [Download jdk17](https://kutt.lckp.top/yrnerc), install and configure environment variables
@@ -88,13 +95,6 @@ If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/Lu
 |      database      |         database          |          keep it while upgrade          |
 |       config       |    configuration files    |                    -                    |
 |     jproxy.jar     |   Runnable jar package    |                    -                    |
-
-If you need to set a proxy, you can append the corresponding proxy parameters in `JAVA_OPTS`
-
-- HTTP Proxy
-  `-Xms512m -Xmx512m -Dhttp.proxyHost=192.168.6.2 -Dhttp.proxyPort=12345`
-- SOCKS Proxy
-  `-Xms512m -Xmx512m -DsocksProxyHost=192.168.6.2 -DsocksProxyPort=54321`
 
 ## ☃️ Basic Configuration
 
