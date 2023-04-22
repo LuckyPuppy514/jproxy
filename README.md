@@ -75,6 +75,13 @@ services:
 | SYNC_INTERVAL |         3         |       同步间隔（分钟）       |
 |  RENAME_FILE  |       true        | 文件重命名开关（true/false） |
 
+如需设置代理，可在 `JAVA_OPTS` 添加对应的代理参数
+
+- HTTP 代理
+  `-Xms512m -Xmx512m -Dhttp.proxyHost=192.168.6.2 -Dhttp.proxyPort=12345`
+- SOCKS 代理
+  `-Xms512m -Xmx512m -DsocksProxyHost=192.168.6.2 -DsocksProxyPort=54321`
+
 ### Windows
 
 1. [下载 jdk17](https://kutt.lckp.top/yrnerc)，安装并配置好环境变量

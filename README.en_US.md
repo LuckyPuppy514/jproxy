@@ -89,6 +89,13 @@ If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/Lu
 |       config       |    configuration files    |                    -                    |
 |     jproxy.jar     |   Runnable jar package    |                    -                    |
 
+If you need to set a proxy, you can append the corresponding proxy parameters in `JAVA_OPTS`
+
+- HTTP Proxy
+  `-Xms512m -Xmx512m -Dhttp.proxyHost=192.168.6.2 -Dhttp.proxyPort=12345`
+- SOCKS Proxy
+  `-Xms512m -Xmx512m -DsocksProxyHost=192.168.6.2 -DsocksProxyPort=54321`
+
 ## ☃️ Basic Configuration
 
 - URL: `http://127.0.0.1:8117/login`
