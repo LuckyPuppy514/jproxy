@@ -139,9 +139,10 @@ public class SonarrRenameTask {
 												String extension = extensionMatcher.group(1);
 												newFileName = extensionMatcher.replaceAll("");
 												newFileName = sonarrTitleService
-														.format(oldFileName, newFileNameFormat, tokenRuleMap)
+														.format(newFileName, newFileNameFormat, tokenRuleMap)
 														.trim();
-												if (StringUtils.isBlank(newFileName)) {
+												if (StringUtils.isBlank(newFileName)
+														|| !newFileName.matches("S\\d+E\\d+")) {
 													newFileName = oldFileName;
 												} else {
 													newFileName = newFileName + extension;

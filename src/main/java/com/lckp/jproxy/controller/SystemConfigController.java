@@ -76,7 +76,7 @@ public class SystemConfigController implements CommandLineRunner {
 				log.debug("获取最新版本号出错：{}", e.getMessage());
 			}
 		}
-		if ((projectVersion).equals(latestVersion)) {
+		if (StringUtils.isBlank(latestVersion) || (projectVersion).equals(latestVersion)) {
 			return ResponseEntity.ok(projectVersion);
 		}
 		return ResponseEntity.ok(projectVersion + " 🚨");

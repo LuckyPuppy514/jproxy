@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.1.9 2023-04-29
+
+1. Fix downloader rename bug
+
 ## v3.1.8 2023-04-17
 
 1. Added version display and upgrade prompt
