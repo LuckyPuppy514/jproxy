@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lckp.jproxy.constant.CacheName;
 import com.lckp.jproxy.constant.Messages;
 import com.lckp.jproxy.constant.SystemConfigKey;
+import com.lckp.jproxy.constant.TableField;
 import com.lckp.jproxy.entity.TmdbTitle;
 import com.lckp.jproxy.model.request.TmdbTitleQueryRequest;
 import com.lckp.jproxy.model.response.PageResponse;
@@ -93,7 +94,14 @@ public class TmdbTitleController {
 	@CacheEvict(cacheNames = { CacheName.SONARR_SEARCH_TITLE, CacheName.INDEXER_SEARCH_OFFSET,
 			CacheName.SONARR_RESULT_TITLE }, allEntries = true)
 	public ResponseEntity<Void> save(@RequestBody TmdbTitle tmdbTitle) {
-		tmdbTitleService.updateById(tmdbTitle);
+		if (tmdbTitle.getTmdbId() == null) {
+			List<TmdbTitle> tmdbTitleList = tmdbTitleService.query()
+					.eq(TableField.TVDB_ID, tmdbTitle.getTvdbId()).list();
+			if (!tmdbTitleList.isEmpty()) {
+				tmdbTitle.setTmdbId(tmdbTitleList.get(0).getTmdbId());
+			}
+		}
+		tmdbTitleService.saveOrUpdate(tmdbTitle);
 		return ResponseEntity.ok().build();
 	}
 }

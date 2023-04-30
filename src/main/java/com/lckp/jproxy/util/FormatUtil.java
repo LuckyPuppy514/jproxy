@@ -55,7 +55,7 @@ public class FormatUtil {
 	 */
 	public static String removeYear(String title) {
 		if (StringUtils.isNotBlank(title)) {
-			return title.replaceAll(" \\d{4}$", "");
+			return title.replaceAll(" (19|20)\\d{2}$", "");
 		}
 		return "";
 	}
@@ -69,7 +69,7 @@ public class FormatUtil {
 	 */
 	public static String removeEpisode(String title) {
 		if (StringUtils.isNotBlank(title)) {
-			return title.replaceAll(" \\d+$", "");
+			return title.replaceAll(" 0*(\\d{1,3}|1[0-8]\\d{2})$", "");
 		}
 		return "";
 	}
