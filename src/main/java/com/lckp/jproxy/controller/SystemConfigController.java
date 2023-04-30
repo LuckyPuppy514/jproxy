@@ -59,27 +59,24 @@ public class SystemConfigController implements CommandLineRunner {
 	@Value("${rule.location-backup}")
 	private String ruleLocationBackup;
 
-	private String latestVersion;
-
 	@Operation(summary = "版本号")
 	@GetMapping("/version")
 	public ResponseEntity<String> version() {
-		if (StringUtils.isBlank(latestVersion)) {
-			try {
-				latestVersion = JSON.parseObject(restTemplate.getForObject(
-						"https://api.github.com/repos/LuckyPuppy514/jproxy/releases/latest", String.class))
-						.getString(ApiField.GITHUB_TAG_NAME);
-				if (StringUtils.isNotBlank(latestVersion)) {
-					latestVersion = latestVersion.replace("v", "");
+		String latestVersion = null;
+		try {
+			latestVersion = JSON.parseObject(restTemplate.getForObject(
+					"https://api.github.com/repos/LuckyPuppy514/jproxy/releases/latest", String.class))
+					.getString(ApiField.GITHUB_TAG_NAME);
+			if (StringUtils.isNotBlank(latestVersion)) {
+				latestVersion = latestVersion.replace("v", "");
+				if (!projectVersion.equals(latestVersion)) {
+					return ResponseEntity.ok(projectVersion + " 🚨");
 				}
-			} catch (Exception e) {
-				log.debug("获取最新版本号出错：{}", e.getMessage());
 			}
+		} catch (Exception e) {
+			log.debug("获取最新版本号出错：{}", e.getMessage());
 		}
-		if (StringUtils.isBlank(latestVersion) || (projectVersion).equals(latestVersion)) {
-			return ResponseEntity.ok(projectVersion);
-		}
-		return ResponseEntity.ok(projectVersion + " 🚨");
+		return ResponseEntity.ok(projectVersion);
 	}
 
 	@Operation(summary = "查询")

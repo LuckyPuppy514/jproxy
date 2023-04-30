@@ -21,7 +21,8 @@ public class FormatUtil {
 
 	// 正则表达式特殊字符
 	private static final String REGEX_SPECIAL_CHAR = "[\\$\\(\\)\\*\\+\\.\\[\\]\\?\\^\\{\\}\\|\\\\]";
-
+	// 冠词
+	private static final String REGEX_ARTICLE = "^(A|An|The) ";
 	// 占位符
 	public static final String PLACEHOLDER = "\s";
 	private static final String PLACEHOLDERS = "\s+";
@@ -35,6 +36,7 @@ public class FormatUtil {
 	 * @return String
 	 */
 	public static String cleanTitle(String title, String regex) {
+		title = title.replaceAll(REGEX_ARTICLE, "");
 		title = title.replaceAll(REGEX_SPECIAL_CHAR, PLACEHOLDER);
 		String cleanTitle = title.replaceAll(regex, PLACEHOLDER);
 		if (StringUtils.isBlank(cleanTitle)) {

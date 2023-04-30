@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.0 2023-04-30
+
+1. Optimize clean title logic
+
 ## v3.1.9 2023-04-29
 
 1. Fix downloader rename bug
