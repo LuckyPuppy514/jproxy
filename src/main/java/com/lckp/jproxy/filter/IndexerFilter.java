@@ -66,12 +66,13 @@ public abstract class IndexerFilter extends BaseFilter {
 			while (index < size && indexerRequest.getLimit() - count > 0) {
 				// 更新参数
 				offset = offset + count;
-				if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber()) && index == size - 1
-						&& offset < indexerRequest.getLimit()) {
-					indexerRequest.setSeasonNumber(null);
-					indexerRequest.setEpisodeNumber(null);
-				} else {
-					break;
+				if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber()) && index == size - 1) {
+					if (offset < indexerRequest.getLimit()) {
+						indexerRequest.setSeasonNumber(null);
+						indexerRequest.setEpisodeNumber(null);
+					} else {
+						break;
+					}
 				}
 				indexerRequest.setOffset(offset);
 				indexerRequest.setLimit(indexerRequest.getLimit() - count);
