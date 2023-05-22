@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.2 2023-05-23
+
+1. Optimize search logic
+
 ## v3.2.1 2023-04-30
 
 1. TMDB added title add function

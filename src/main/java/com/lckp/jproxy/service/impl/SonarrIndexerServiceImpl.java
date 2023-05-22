@@ -73,11 +73,15 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 		}
 		searchTitleList.add(sonarrTitle.getTitle());
 		// 主标题追加 TMDB 标题
-		if (Integer.valueOf(0).equals(sonarrTitle.getSno())) {
+		if (Integer.valueOf(0).equals(sonarrTitle.getSno())
+				|| Integer.valueOf(1).equals(sonarrTitle.getSno())) {
 			List<TmdbTitle> tmdbTitleList = tmdbTitleService.query()
 					.eq(TableField.TVDB_ID, sonarrTitle.getTvdbId()).list();
-			for (TmdbTitle tmdbTitle : tmdbTitleList) {
-				searchTitleList.add(tmdbTitle.getTitle());
+			if (!tmdbTitleList.isEmpty()) {
+				for (TmdbTitle tmdbTitle : tmdbTitleList) {
+					searchTitleList.add(tmdbTitle.getTitle());
+				}
+				searchTitleList.add(tmdbTitleList.get(0).getTitle());
 			}
 		}
 		return searchTitleList;

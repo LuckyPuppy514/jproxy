@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
@@ -105,17 +106,27 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 			String title = mainTitle;
 			Integer monitored = Monitored.getByFlag(jsonObject.getBooleanValue(ApiField.SONARR_MONITORED))
 					.getCode();
+			SonarrTitle mainSonarrTitle = new SonarrTitle();
+			mainSonarrTitle.setId(id);
+			mainSonarrTitle.setSeriesId(seriesId);
+			mainSonarrTitle.setTvdbId(tvdbId);
+			mainSonarrTitle.setSno(sno++);
+			mainSonarrTitle.setMainTitle(mainTitle);
+			mainSonarrTitle.setTitle(title);
+			mainSonarrTitle.setCleanTitle(FormatUtil.cleanTitle(title, cleanTitleRegex));
+			mainSonarrTitle.setSeasonNumber(-1);
+			mainSonarrTitle.setMonitored(monitored);
+			sonarrTitleList.add(mainSonarrTitle);
+
+			String titleSlug = jsonObject.getString(ApiField.SONARR_TITLE_SLUG);
 			SonarrTitle sonarrTitle = new SonarrTitle();
+			BeanUtils.copyProperties(mainSonarrTitle, sonarrTitle, SonarrTitle.class);
+			id = generateSonarrTitleId(tvdbId, sno);
 			sonarrTitle.setId(id);
-			sonarrTitle.setSeriesId(seriesId);
-			sonarrTitle.setTvdbId(tvdbId);
 			sonarrTitle.setSno(sno++);
-			sonarrTitle.setMainTitle(mainTitle);
-			sonarrTitle.setTitle(title);
-			sonarrTitle.setCleanTitle(FormatUtil.cleanTitle(title, cleanTitleRegex));
-			sonarrTitle.setSeasonNumber(-1);
-			sonarrTitle.setMonitored(monitored);
+			sonarrTitle.setCleanTitle(FormatUtil.cleanTitle(titleSlug, cleanTitleRegex));
 			sonarrTitleList.add(sonarrTitle);
+
 			// 备选标题
 			JSONArray alternateTitles = jsonObject.getJSONArray(ApiField.SONARR_ALTERNATE_TITLES);
 			for (Object object2 : alternateTitles) {

@@ -42,6 +42,8 @@ public class ApiField {
 
 	public static final String SONARR_TITLE = "title";
 
+	public static final String SONARR_TITLE_SLUG = "titleSlug";
+
 	public static final String SONARR_SERIES_TYPE = "seriesType";
 
 	public static final String SONARR_STATUS = "status";
