@@ -69,8 +69,8 @@ public abstract class IndexerFilter extends BaseFilter {
 				if (index == size - 1) {
 					if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())
 							&& offsetList.get(index - 1) < indexerRequest.getLimit()) {
-						indexerRequest.setSeasonNumber(null);
-						indexerRequest.setEpisodeNumber(null);
+						indexerRequest.setSeasonNumber("");
+						indexerRequest.setEpisodeNumber("");
 					} else {
 						break;
 					}
