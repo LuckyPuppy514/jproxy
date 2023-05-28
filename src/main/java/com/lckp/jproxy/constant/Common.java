@@ -47,7 +47,7 @@ public class Common {
 	// 标题主规则 ID
 	public static final String MOST_IMPORTANT_TITLE_RULE_ID = "00000000000000000000000000000000";
 	// 视频文件扩展名正则表达式
-	public static final String VIDEO_EXTENSION_REGEX = "(\\.(mp4|avi|wmv|flv|mov|mkv|webm|mpg|mpeg|3gp|iso))$";
+	public static final String VIDEO_AND_SUBTITLE_EXTENSION_REGEX = "(\\.(mp4|avi|wmv|flv|mov|mkv|webm|mpg|mpeg|3gp|iso|ass|srt|ssa|idx|sub))$";
 	// 时间格式
 	public static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 }

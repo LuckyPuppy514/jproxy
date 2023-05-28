@@ -133,7 +133,7 @@ public class SonarrRenameTask {
 											String oldFileName = oldFilePath.substring(startIndex);
 											String newFileName = oldFileName;
 											Matcher extensionMatcher = Pattern
-													.compile(Common.VIDEO_EXTENSION_REGEX)
+													.compile(Common.VIDEO_AND_SUBTITLE_EXTENSION_REGEX)
 													.matcher(oldFileName);
 											if (extensionMatcher.find()) {
 												String extension = extensionMatcher.group(1);

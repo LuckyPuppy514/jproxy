@@ -143,7 +143,7 @@ public class TransmissionServiceImpl implements ITransmissionService {
 			log.debug("Transmission 种子暂时无法重命名：{}", oldName);
 			return false;
 		}
-		Matcher matcher = Pattern.compile(Common.VIDEO_EXTENSION_REGEX).matcher(oldName);
+		Matcher matcher = Pattern.compile(Common.VIDEO_AND_SUBTITLE_EXTENSION_REGEX).matcher(oldName);
 		if (matcher.find()) {
 			String extension = matcher.group(1);
 			name = name + extension;

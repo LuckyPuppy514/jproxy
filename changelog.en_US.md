@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.3 2023-05-28
+
+1. Optimize downloader file rename logic
+
 ## v3.2.2 2023-05-23
 
 1. Optimize search logic
