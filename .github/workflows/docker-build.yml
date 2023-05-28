@@ -36,8 +36,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Generate App Version
-        run: echo APP_VERSION=`git describe --tags --always` >> $GITHUB_ENV
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.DOCKERHUB_REPO }}
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -47,8 +50,7 @@ jobs:
             linux/amd64
             linux/arm64
           push: true
-          build-args: |
-            APP_VERSION=${{ env.APP_VERSION }}
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:${{ env.APP_VERSION }}
+            ${{ env.DOCKERHUB_REPO }}:${{ steps.meta.outputs.version }}
+          labels: ${{ steps.meta.outputs.labels }}
