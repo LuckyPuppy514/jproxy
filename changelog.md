@@ -5,7 +5,7 @@
 
 ## v3.2.4 2023-05-29
 
-1. 优化 Docker 镜像构建工作流
+1. 合并来自 DDS-Derek/main 的 PR [#41](https://github.com/LuckyPuppy514/jproxy/pull/41)
 
 ## v3.2.3 2023-05-28
 

@@ -5,7 +5,7 @@
 
 ## v3.2.4 2023-05-29
 
-1. Optimize workflows of Docker image
+1. Merge pull request [#41](https://github.com/LuckyPuppy514/jproxy/pull/41) from DDS-Derek/main
 
 ## v3.2.3 2023-05-28
 
