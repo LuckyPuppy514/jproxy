@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # 初始化持久化目录
 CONFIG_PATH=/app/config

@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.4 2023-05-29
+
+1. Optimize workflows of Docker image
+
 ## v3.2.3 2023-05-28
 
 1. Optimize downloader file rename logic
