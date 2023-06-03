@@ -37,7 +37,7 @@ public class FormatUtil {
 	 */
 	public static String cleanTitle(String title, String regex) {
 		title = title.replaceAll(REGEX_SPECIAL_CHAR, PLACEHOLDER);
-		title = title.replaceAll(REGEX_ARTICLE, "");
+		title = title.replaceAll(REGEX_ARTICLE, PLACEHOLDER);
 		String cleanTitle = title.replaceAll(regex, PLACEHOLDER);
 		if (StringUtils.isBlank(cleanTitle)) {
 			cleanTitle = title;
