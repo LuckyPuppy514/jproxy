@@ -20,9 +20,9 @@ public class FormatUtil {
 	}
 
 	// 正则表达式特殊字符
-	private static final String REGEX_SPECIAL_CHAR = "[\\$\\(\\)\\*\\+\\.\\[\\]\\?\\^\\{\\}\\|\\\\]";
+	private static final String REGEX_SPECIAL_CHAR = "[\\$\\*\\+\\.\\?\\^\\{\\}\\|\\\\]";
 	// 冠词
-	private static final String REGEX_ARTICLE = "^(A|An|The) ";
+	private static final String REGEX_ARTICLE = "((?i)a|an|the) ";
 	// 占位符
 	public static final String PLACEHOLDER = "\s";
 	private static final String PLACEHOLDERS = "\s+";
