@@ -3,6 +3,10 @@
 
 # 变更日志
 
+## v3.2.5 2023-06-03
+
+1. 优化标题匹配逻辑
+
 ## v3.2.4 2023-05-29
 
 1. 合并来自 DDS-Derek/main 的 PR [#41](https://github.com/LuckyPuppy514/jproxy/pull/41)

@@ -232,6 +232,13 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 					String cleanText = FormatUtil.cleanTitle(text, cleanTitleRegex);
 					String regex = sonarrRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}", cleanTitle);
 					if (cleanText.matches(regex)) {
+						// 单个词或数字，前或后有单词，则不匹配
+						if (cleanTitle.matches("([a-zA-Z]+|\\d+)") && (cleanText
+								.matches("[a-zA-Z]+" + FormatUtil.PLACEHOLDER + cleanTitle)
+								|| cleanText.matches(cleanTitle + FormatUtil.PLACEHOLDER + "[a-zA-Z]+"))) {
+							log.debug("单个词或数字：{}，不匹配：{}", cleanTitle, cleanText);
+							continue;
+						}
 						format = FormatUtil.replaceToken(Token.TITLE, sonarrTitle.getMainTitle(), format);
 						Integer seasonNumber = sonarrTitle.getSeasonNumber();
 						if (!Integer.valueOf(-1).equals(seasonNumber)

@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.5 2023-06-03
+
+1. Optimize title matching logic
+
 ## v3.2.4 2023-05-29
 
 1. Merge pull request [#41](https://github.com/LuckyPuppy514/jproxy/pull/41) from DDS-Derek/main
