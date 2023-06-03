@@ -239,7 +239,7 @@ public class SonarrTitleServiceImpl extends ServiceImpl<SonarrTitleMapper, Sonar
 							String suffixRegex = sonarrRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}",
 									cleanTitle + FormatUtil.PLACEHOLDER + "[a-zA-Z]+");
 							// 排除特殊英文单词
-							cleanText = cleanText.replaceAll("(season \\d+|episode \\d+|ep \\d+| aka )", "|");
+							cleanText = cleanText.replaceAll("( season \\d+| episode \\d+| ep \\d+| aka )", "|");
 							if (cleanText.matches(prefixRegex) || cleanText.matches(suffixRegex)) {
 								log.debug("英文标题前或后有英文单词：{}，不匹配：{}", cleanText, cleanTitle);
 								continue;
