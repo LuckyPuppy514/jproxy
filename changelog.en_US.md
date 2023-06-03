@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.6 2023-06-03
+
+1. Optimize title matching logic
+
 ## v3.2.5 2023-06-03
 
 1. Optimize title matching logic
