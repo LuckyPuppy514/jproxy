@@ -6,6 +6,7 @@
 ## v3.2.7 2023-06-04
 
 1. Fix bug of clean title
+2. Fix bug about TMDB sync
 
 ## v3.2.6 2023-06-03
 
