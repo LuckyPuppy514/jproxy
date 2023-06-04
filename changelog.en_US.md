@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.7 2023-06-04
+
+1. Fix bug of clean title
+
 ## v3.2.6 2023-06-03
 
 1. Optimize title matching logic

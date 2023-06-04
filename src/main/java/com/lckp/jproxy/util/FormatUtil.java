@@ -19,8 +19,13 @@ public class FormatUtil {
 	FormatUtil() {
 	}
 
+	// 分隔符
+	private static final String REGEX_SEPARATOR = "[\\[\\]【】]";
+	// 分隔符占位符
+	public static final String PLACEHOLDER_SEPARATOR = "/";
+	private static final String PLACEHOLDER_SEPARATORS = "/+";
 	// 正则表达式特殊字符
-	private static final String REGEX_SPECIAL_CHAR = "[\\$\\*\\+\\.\\?\\^\\{\\}\\|\\\\]";
+	private static final String REGEX_SPECIAL_CHAR = "[\\$\\(\\)\\*\\+\\.\\?\\^\\{\\}\\|\\\\]";
 	// 冠词
 	private static final String REGEX_ARTICLE = "(\\b|\\s)((?i)a|an|the)\s";
 	// 占位符
@@ -36,12 +41,14 @@ public class FormatUtil {
 	 * @return String
 	 */
 	public static String cleanTitle(String title, String regex) {
+		title = title.replaceAll(REGEX_SEPARATOR, PLACEHOLDER_SEPARATOR);
 		title = title.replaceAll(REGEX_SPECIAL_CHAR, PLACEHOLDER);
 		title = title.replaceAll(REGEX_ARTICLE, PLACEHOLDER);
 		String cleanTitle = title.replaceAll(regex, PLACEHOLDER);
 		if (StringUtils.isBlank(cleanTitle)) {
 			cleanTitle = title;
 		}
+		cleanTitle = cleanTitle.replaceAll(PLACEHOLDER_SEPARATORS, PLACEHOLDER_SEPARATOR);
 		cleanTitle = cleanTitle.replaceAll(PLACEHOLDERS, PLACEHOLDER);
 		return cleanTitle.toLowerCase().trim();
 	}
