@@ -43,8 +43,8 @@ public class FormatUtil {
 	public static String cleanTitle(String title, String regex) {
 		title = title.replaceAll(REGEX_SEPARATOR, PLACEHOLDER_SEPARATOR);
 		title = title.replaceAll(REGEX_SPECIAL_CHAR, PLACEHOLDER);
-		title = title.replaceAll(REGEX_ARTICLE, PLACEHOLDER);
 		String cleanTitle = title.replaceAll(regex, PLACEHOLDER);
+		cleanTitle = cleanTitle.replaceAll(REGEX_ARTICLE, PLACEHOLDER);
 		if (StringUtils.isBlank(cleanTitle)) {
 			cleanTitle = title;
 		}

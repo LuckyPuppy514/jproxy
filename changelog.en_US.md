@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.2.8 2023-06-13
+
+1. Optimize clean title logic
+
 ## v3.2.7 2023-06-04
 
 1. Fix bug of clean title
