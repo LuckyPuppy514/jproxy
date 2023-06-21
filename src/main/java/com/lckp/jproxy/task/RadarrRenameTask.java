@@ -117,11 +117,12 @@ public class RadarrRenameTask {
 													.compile(Common.VIDEO_AND_SUBTITLE_EXTENSION_REGEX)
 													.matcher(oldFileName);
 											if (extensionMatcher.find()) {
+												newFileName = sourceTitle;
 												String extension = extensionMatcher.group(1);
 												if (extension.matches(Common.SUBTITLE_EXTENSION_REGEX)) {
 													newFileName = newFileName + "." + subtitleNo++;
 												}
-												newFileName = sourceTitle + extension;
+												newFileName = newFileName + extension;
 											}
 											String newFilePath = sourceTitle + "/" + newFileName;
 											qbittorrentService.renameFile(torrentInfoHash, oldFilePath,
