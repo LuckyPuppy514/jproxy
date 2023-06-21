@@ -100,6 +100,7 @@ public class RadarrRenameTask {
 							} else {
 								if (qbittorrentService.rename(torrentInfoHash, sourceTitle)) {
 									if (renameFile) {
+										int subtitleNo = 1;
 										boolean renamed = false;
 										List<String> files = qbittorrentService.files(torrentInfoHash);
 										for (String oldFilePath : files) {
@@ -117,6 +118,9 @@ public class RadarrRenameTask {
 													.matcher(oldFileName);
 											if (extensionMatcher.find()) {
 												String extension = extensionMatcher.group(1);
+												if (extension.matches(Common.SUBTITLE_EXTENSION_REGEX)) {
+													newFileName = newFileName + "." + subtitleNo++;
+												}
 												newFileName = sourceTitle + extension;
 											}
 											String newFilePath = sourceTitle + "/" + newFileName;

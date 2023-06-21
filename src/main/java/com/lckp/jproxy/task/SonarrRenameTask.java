@@ -116,6 +116,7 @@ public class SonarrRenameTask {
 							} else {
 								if (qbittorrentService.rename(torrentInfoHash, sourceTitle)) {
 									if (renameFile) {
+										int subtitleNo = 1;
 										boolean renamed = false;
 										// 文件重命名 SxxExx
 										String newFileNameFormat = sonarrTitleService.format(sourceTitle,
@@ -145,6 +146,9 @@ public class SonarrRenameTask {
 														|| !newFileName.matches("S\\d+E\\d+")) {
 													newFileName = oldFileName;
 												} else {
+													if (extension.matches(Common.SUBTITLE_EXTENSION_REGEX)) {
+														newFileName = newFileName + "." + subtitleNo++;
+													}
 													newFileName = newFileName + extension;
 												}
 											}
