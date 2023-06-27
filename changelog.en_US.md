@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.3.0 2023-06-27
+
+1. Optimize file rename logic
+
 ## v3.2.9 2023-06-22
 
 1. Optimize file rename logic

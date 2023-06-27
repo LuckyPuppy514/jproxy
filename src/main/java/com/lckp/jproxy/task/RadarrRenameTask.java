@@ -104,14 +104,14 @@ public class RadarrRenameTask {
 										boolean renamed = false;
 										List<String> files = qbittorrentService.files(torrentInfoHash);
 										for (String oldFilePath : files) {
-											int startIndex = oldFilePath.lastIndexOf("/") + 1;
-											if (startIndex > 0 && sourceTitle
-													.equals(oldFilePath.substring(0, startIndex - 1))) {
+											int lastIndex = oldFilePath.lastIndexOf("/") + 1;
+											if (lastIndex > 0 && sourceTitle
+													.equals(oldFilePath.substring(0, lastIndex - 1))) {
 												log.debug("qBittorrent 文件已经重命名: {}", oldFilePath);
 												renamed = true;
 												break;
 											}
-											String oldFileName = oldFilePath.substring(startIndex);
+											String oldFileName = oldFilePath.substring(lastIndex);
 											String newFileName = oldFileName;
 											Matcher extensionMatcher = Pattern
 													.compile(Common.VIDEO_AND_SUBTITLE_EXTENSION_REGEX)
@@ -124,7 +124,15 @@ public class RadarrRenameTask {
 												}
 												newFileName = newFileName + extension;
 											}
-											String newFilePath = sourceTitle + "/" + newFileName;
+											String newFilePath;
+											int index = oldFilePath.indexOf("/");
+											if (index + 1 == lastIndex) {
+												newFilePath = sourceTitle + "/" + newFileName;
+											} else {
+												newFilePath = sourceTitle
+														+ oldFilePath.substring(index, lastIndex)
+														+ newFileName;
+											}
 											qbittorrentService.renameFile(torrentInfoHash, oldFilePath,
 													newFilePath);
 											log.info("qBittorrent 文件重命名成功：{} => {}", oldFileName,
