@@ -109,7 +109,11 @@ public class SonarrRuleServiceImpl extends ServiceImpl<SonarrRuleMapper, SonarrR
 						.getBody();
 				log.debug("Sonarr Rules: {}", body);
 				List<SonarrRule> sonarrRuleList = JSON.parseArray(body, SonarrRule.class);
-				sonarrRuleList.forEach(sonarrRule -> sonarrRule.setValidStatus(null));
+				sonarrRuleList.forEach(sonarrRule -> {
+					if (ValidStatus.VALID.getCode().equals(sonarrRule.getValidStatus())) {
+						sonarrRule.setValidStatus(null);
+					}
+				});
 				proxy().saveOrUpdateBatch(sonarrRuleList);
 				log.info("同步剧集规则成功：{} - {}", author, sonarrRuleList.size());
 			} catch (Exception e) {

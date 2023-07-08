@@ -110,7 +110,11 @@ public class RadarrRuleServiceImpl extends ServiceImpl<RadarrRuleMapper, RadarrR
 						.getBody();
 				log.debug("Radarr Rules: {}", body);
 				List<RadarrRule> radarrRuleList = JSON.parseArray(body, RadarrRule.class);
-				radarrRuleList.forEach(radarrRule -> radarrRule.setValidStatus(null));
+				radarrRuleList.forEach(radarrRule -> {
+					if (ValidStatus.VALID.getCode().equals(radarrRule.getValidStatus())) {
+						radarrRule.setValidStatus(null);
+					}
+				});
 				proxy().saveOrUpdateBatch(radarrRuleList, Common.BATCH_SIZE);
 				log.info("同步电影规则成功：{} - {}", author, radarrRuleList.size());
 			} catch (Exception e) {

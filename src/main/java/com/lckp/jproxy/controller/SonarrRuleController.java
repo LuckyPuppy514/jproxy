@@ -152,6 +152,11 @@ public class SonarrRuleController {
 			List<SonarrRule> sonarrRuleList = JSON.parseObject(content,
 					new TypeReference<List<SonarrRule>>() {
 					});
+			sonarrRuleList.forEach(sonarrRule -> {
+				if (ValidStatus.VALID.getCode().equals(sonarrRule.getValidStatus())) {
+					sonarrRule.setValidStatus(null);
+				}
+			});
 			sonarrRuleService.saveOrUpdateBatch(sonarrRuleList);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {

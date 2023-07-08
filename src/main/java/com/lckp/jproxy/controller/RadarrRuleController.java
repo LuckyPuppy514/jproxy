@@ -152,6 +152,11 @@ public class RadarrRuleController {
 			List<RadarrRule> radarrRuleList = JSON.parseObject(content,
 					new TypeReference<List<RadarrRule>>() {
 					});
+			radarrRuleList.forEach(radarrRule -> {
+				if (ValidStatus.VALID.getCode().equals(radarrRule.getValidStatus())) {
+					radarrRule.setValidStatus(null);
+				}
+			});
 			radarrRuleService.saveOrUpdateBatch(radarrRuleList);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {

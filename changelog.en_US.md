@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.3.1 2023-07-08
+
+1. Optimize import logic
+
 ## v3.3.0 2023-06-27
 
 1. Optimize file rename logic
