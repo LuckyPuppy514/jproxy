@@ -80,7 +80,7 @@ public abstract class IndexerFilter extends BaseFilter {
 				updateRequestWrapper(indexerRequest, requestWrapper);
 				String newXml = indexerService.executeNewRequest(requestWrapper);
 				count = XmlUtil.count(newXml);
-				if (count > 0) {
+				if (count > 0 || xml.length() == 0) {
 					xml = XmlUtil.merger(xml, newXml);
 				}
 				if (++index >= size) {
