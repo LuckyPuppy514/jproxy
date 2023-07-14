@@ -59,7 +59,7 @@ public abstract class IndexerFilter extends BaseFilter {
 			int index = indexerService.calculateCurrentIndex(offset, offsetList);
 			int count = 0;
 			while (index < size && indexerRequest.getLimit() - count > 0) {
-				if (index == size - 1) {
+				if (size > 1 && index == size - 1) {
 					// 已查询到的结果数量少于 6 则去除季集信息尝试查询
 					if (offset < 6) {
 						// 只查询 limit - 1 条记录
