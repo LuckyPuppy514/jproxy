@@ -68,15 +68,16 @@ public abstract class IndexerFilter extends BaseFilter {
 				// 更新参数
 				offset = offset + count;
 				if (index == size - 1) {
-					if (offsetList.get(index - 1) < 10) {
+					// 已查询到的结果数量少于 10 则去除季集信息尝试查询
+					if (offset < 10) {
 						// 只查询 limit - 1 条记录
 						indexerRequest.setLimit(indexerRequest.getLimit() - 1);
 						if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())) {
 							indexerRequest.setSeasonNumber("");
 							indexerRequest.setEpisodeNumber("");
 						} else {
-							indexerRequest
-									.setSearchKey(FormatUtil.removeEpisode(indexerRequest.getSearchKey()));
+							indexerRequest.setSearchKey(
+									FormatUtil.removeSeasonEpisode(indexerRequest.getSearchKey()));
 						}
 					} else {
 						break;
