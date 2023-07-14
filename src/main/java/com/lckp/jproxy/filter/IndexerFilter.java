@@ -9,6 +9,7 @@ import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.filter.wrapper.RequestWrapper;
 import com.lckp.jproxy.model.request.IndexerRequest;
 import com.lckp.jproxy.service.IIndexerService;
+import com.lckp.jproxy.util.FormatUtil;
 import com.lckp.jproxy.util.XmlUtil;
 
 import jakarta.servlet.FilterChain;
@@ -67,10 +68,14 @@ public abstract class IndexerFilter extends BaseFilter {
 				// 更新参数
 				offset = offset + count;
 				if (index == size - 1) {
-					if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())
-							&& offsetList.get(index - 1) < indexerRequest.getLimit()) {
-						indexerRequest.setSeasonNumber("");
-						indexerRequest.setEpisodeNumber("");
+					if (offsetList.get(index - 1) < 10) {
+						if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())) {
+							indexerRequest.setSeasonNumber("");
+							indexerRequest.setEpisodeNumber("");
+						} else {
+							indexerRequest
+									.setSearchKey(FormatUtil.removeEpisode(indexerRequest.getSearchKey()));
+						}
 					} else {
 						break;
 					}

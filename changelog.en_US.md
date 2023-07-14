@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.3.2 2023-07-14
+
+1. Optimize search logic
+
 ## v3.3.1 2023-07-08
 
 1. Optimize import logic
