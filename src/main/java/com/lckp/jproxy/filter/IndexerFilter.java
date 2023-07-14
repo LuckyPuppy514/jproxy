@@ -68,7 +68,9 @@ public abstract class IndexerFilter extends BaseFilter {
 				// 更新参数
 				offset = offset + count;
 				if (index == size - 1) {
-					if (offsetList.get(index - 1) < indexerRequest.getLimit()) {
+					if (offsetList.get(index - 1) < 10) {
+						// 只查询 limit - 1 条记录
+						indexerRequest.setLimit(indexerRequest.getLimit() - 1);
 						if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())) {
 							indexerRequest.setSeasonNumber("");
 							indexerRequest.setEpisodeNumber("");
