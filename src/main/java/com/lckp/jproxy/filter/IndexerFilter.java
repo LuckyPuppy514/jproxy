@@ -57,19 +57,11 @@ public abstract class IndexerFilter extends BaseFilter {
 			List<Integer> offsetList = indexerService.getOffsetList(offsetKey, size);
 			// 计算当前标题下标
 			int index = indexerService.calculateCurrentIndex(offset, offsetList);
-			// 更新参数
-			indexerService.updateIndexerRequest(index, searchTitleList, offsetList, indexerRequest);
-			updateRequestWrapper(indexerRequest, requestWrapper);
-			// 请求
-			xml = indexerService.executeNewRequest(requestWrapper);
-			int count = XmlUtil.count(xml);
-			index++;
+			int count = 0;
 			while (index < size && indexerRequest.getLimit() - count > 0) {
-				// 更新参数
-				offset = offset + count;
 				if (index == size - 1) {
-					// 已查询到的结果数量少于 10 则去除季集信息尝试查询
-					if (offset < 10) {
+					// 已查询到的结果数量少于 6 则去除季集信息尝试查询
+					if (offset < 6) {
 						// 只查询 limit - 1 条记录
 						indexerRequest.setLimit(indexerRequest.getLimit() - 1);
 						if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())) {
@@ -83,13 +75,14 @@ public abstract class IndexerFilter extends BaseFilter {
 						break;
 					}
 				}
+				// 更新参数
+				offset = offset + count;
 				indexerRequest.setOffset(offset);
 				indexerRequest.setLimit(indexerRequest.getLimit() - count);
-				offsetList.set(index - 1, offset);
+				offsetList.set(index, offset);
 				indexerService.updateOffsetList(offsetKey, offsetList);
 				indexerService.updateIndexerRequest(index, searchTitleList, offsetList, indexerRequest);
 				updateRequestWrapper(indexerRequest, requestWrapper);
-				// 重新请求
 				String newXml = indexerService.executeNewRequest(requestWrapper);
 				count = XmlUtil.count(newXml);
 				if (count > 0) {
