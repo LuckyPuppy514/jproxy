@@ -60,8 +60,8 @@ public abstract class IndexerFilter extends BaseFilter {
 			int count = 0;
 			do {
 				if (size > 1 && index == size - 1) {
-					// 已查询到的结果数量少于 6 则去除季集信息尝试查询
-					if (offset < 6) {
+					// 已查询到的结果数量少于 8 则去除季集信息尝试查询
+					if (offset < 8) {
 						// 只查询 limit - 1 条记录
 						indexerRequest.setLimit(indexerRequest.getLimit() - 1);
 						if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())) {
