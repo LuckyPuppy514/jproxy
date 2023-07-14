@@ -58,7 +58,7 @@ public abstract class IndexerFilter extends BaseFilter {
 			// 计算当前标题下标
 			int index = indexerService.calculateCurrentIndex(offset, offsetList);
 			int count = 0;
-			while (index < size && indexerRequest.getLimit() - count > 0) {
+			do {
 				if (size > 1 && index == size - 1) {
 					// 已查询到的结果数量少于 6 则去除季集信息尝试查询
 					if (offset < 6) {
@@ -75,12 +75,7 @@ public abstract class IndexerFilter extends BaseFilter {
 						break;
 					}
 				}
-				// 更新参数
-				offset = offset + count;
-				indexerRequest.setOffset(offset);
-				indexerRequest.setLimit(indexerRequest.getLimit() - count);
-				offsetList.set(index, offset);
-				indexerService.updateOffsetList(offsetKey, offsetList);
+				// 请求
 				indexerService.updateIndexerRequest(index, searchTitleList, offsetList, indexerRequest);
 				updateRequestWrapper(indexerRequest, requestWrapper);
 				String newXml = indexerService.executeNewRequest(requestWrapper);
@@ -88,8 +83,16 @@ public abstract class IndexerFilter extends BaseFilter {
 				if (count > 0) {
 					xml = XmlUtil.merger(xml, newXml);
 				}
-				index++;
-			}
+				if (++index >= size) {
+					break;
+				}
+				// 更新参数
+				offset = offset + count;
+				indexerRequest.setOffset(offset);
+				indexerRequest.setLimit(indexerRequest.getLimit() - count);
+				offsetList.set(index, offset);
+				indexerService.updateOffsetList(offsetKey, offsetList);
+			} while (indexerRequest.getLimit() - count > 0);
 		} else {
 			xml = indexerService.executeNewRequest(requestWrapper);
 		}
