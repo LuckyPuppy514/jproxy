@@ -221,6 +221,17 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 					String cleanText = FormatUtil.cleanTitle(text, cleanTitleRegex);
 					String regex = titleRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}", cleanTitle);
 					if (cleanText.matches(regex)) {
+						// 英文标题前或后有英文单词，则不匹配
+						if (cleanTitle.matches("[" + FormatUtil.PLACEHOLDER + ".?a-zA-Z]+")) {
+							String prefixRegex = titleRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}",
+									"[a-zA-Z]+" + FormatUtil.PLACEHOLDER + cleanTitle);
+							String suffixRegex = titleRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}",
+									cleanTitle + FormatUtil.PLACEHOLDER + "[a-zA-Z]+");
+							if (cleanText.matches(prefixRegex) || cleanText.matches(suffixRegex)) {
+								log.debug("英文标题前或后有英文单词：{}，不匹配：{}", cleanText, cleanTitle);
+								continue;
+							}
+						}
 						String titleYear = String.valueOf(radarrTitle.getYear());
 						boolean yearMatch = true;
 						for (RadarrRule yearRule : yearRuleList) {
