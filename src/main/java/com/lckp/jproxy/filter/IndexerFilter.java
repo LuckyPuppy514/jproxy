@@ -62,9 +62,7 @@ public abstract class IndexerFilter extends BaseFilter {
 			do {
 				if (size > 2 && index == size - 1) {
 					// 已查询到的结果数量少于 minCount 则去除季集信息尝试查询
-					if (minCount > 0 && offset < minCount) {
-						// 只查询 limit - 1 条记录
-						indexerRequest.setLimit(indexerRequest.getLimit() - 1);
+					if (minCount > 0 && offsetList.get(index - 1) < minCount) {
 						if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())) {
 							indexerRequest.setSeasonNumber("");
 							indexerRequest.setEpisodeNumber("");
