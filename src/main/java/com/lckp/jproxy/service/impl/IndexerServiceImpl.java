@@ -76,7 +76,7 @@ public class IndexerServiceImpl implements IIndexerService {
 	@Override
 	public int calculateCurrentIndex(int offset, List<Integer> offsetList) {
 		for (int index = 0; index < offsetList.size(); index++) {
-			if (Integer.valueOf(0).equals(offsetList.get(index))
+			if (Integer.valueOf(-1).equals(offsetList.get(index))
 					|| offsetList.get(index).intValue() > offset) {
 				return index;
 			}
@@ -94,7 +94,7 @@ public class IndexerServiceImpl implements IIndexerService {
 	public List<Integer> getOffsetList(String key, int size) {
 		List<Integer> offsetList = new ArrayList<>(size);
 		for (int i = 0; i < size; i++) {
-			offsetList.add(0);
+			offsetList.add(-1);
 		}
 		return offsetList;
 	}
