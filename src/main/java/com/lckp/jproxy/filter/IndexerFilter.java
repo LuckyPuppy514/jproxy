@@ -89,7 +89,7 @@ public abstract class IndexerFilter extends BaseFilter {
 				offset = offset + count;
 				indexerRequest.setOffset(offset);
 				indexerRequest.setLimit(indexerRequest.getLimit() - count);
-				offsetList.set(index, offset);
+				offsetList.set(index - 1, offset);
 				indexerService.updateOffsetList(offsetKey, offsetList);
 			} while (indexerRequest.getLimit() - count > 0);
 		} else {
