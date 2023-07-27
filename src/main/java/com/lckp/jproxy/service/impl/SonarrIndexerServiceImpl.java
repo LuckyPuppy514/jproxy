@@ -13,6 +13,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,9 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 	protected final ISystemConfigService systemConfigService;
 
 	protected final ISystemCacheService systemCacheService;
+
+	@Value("${min-count}")
+	private int minCount;
 
 	/**
 	 * 
@@ -159,5 +163,10 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 			}
 		}
 		return sonarrTitle;
+	}
+
+	@Override
+	public int getMinCount() {
+		return minCount;
 	}
 }

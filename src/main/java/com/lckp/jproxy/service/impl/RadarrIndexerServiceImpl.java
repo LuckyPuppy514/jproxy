@@ -90,7 +90,6 @@ public class RadarrIndexerServiceImpl extends IndexerServiceImpl implements IRad
 					.eq(TableField.TMDB_ID, radarrTitle.getTmdbId()).eq(TableField.SNO, 0).list();
 			if (!radarrTitleList.isEmpty()) {
 				searchTitleList.add(radarrTitleList.get(0).getCleanTitle());
-				searchTitleList.add(radarrTitleList.get(0).getCleanTitle());
 			}
 		}
 		return searchTitleList;

@@ -173,5 +173,10 @@
     "name": "rename.file",
     "type": "java.lang.String",
     "description": "文件重命名开关"
+  },
+  {
+    "name": "min-count",
+    "type": "java.lang.String",
+    "description": "当结果数量少于该值时，会追加主标题（去除季数和集数）搜索"
   }
 ]}

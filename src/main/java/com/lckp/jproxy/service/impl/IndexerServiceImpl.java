@@ -182,4 +182,13 @@ public class IndexerServiceImpl implements IIndexerService {
 	protected Charset getCharset() {
 		return StandardCharsets.UTF_8;
 	}
+
+	/**
+	 * @return
+	 * @see com.lckp.jproxy.service.IIndexerService#getMinCount()
+	 */
+	@Override
+	public int getMinCount() {
+		return -1;
+	}
 }

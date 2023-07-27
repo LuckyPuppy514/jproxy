@@ -44,3 +44,5 @@ springdoc:
       enabled: false
 knife4j:
    production: true
+
+min-count: ${MIN_COUNT:8}

@@ -98,4 +98,12 @@ public interface IIndexerService {
 	 * @return String
 	 */
 	public String executeFormatRule(String xml);
+
+	/**
+	 * 
+	 * 获取追加主标题（去除季数集数）搜索时最少结果数量
+	 *
+	 * @return int
+	 */
+	public int getMinCount();
 }

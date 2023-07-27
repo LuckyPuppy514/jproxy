@@ -58,10 +58,11 @@ public abstract class IndexerFilter extends BaseFilter {
 			// 计算当前标题下标
 			int index = indexerService.calculateCurrentIndex(offset, offsetList);
 			int count = 0;
+			int minCount = indexerService.getMinCount();
 			do {
-				if (size > 1 && index == size - 1) {
-					// 已查询到的结果数量少于 8 则去除季集信息尝试查询
-					if (offset < 8) {
+				if (minCount > 0 && size > 1 && index == size - 1) {
+					// 已查询到的结果数量少于 minCount 则去除季集信息尝试查询
+					if (offset < minCount) {
 						// 只查询 limit - 1 条记录
 						indexerRequest.setLimit(indexerRequest.getLimit() - 1);
 						if (StringUtils.isNotBlank(indexerRequest.getSeasonNumber())) {

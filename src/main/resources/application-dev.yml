@@ -57,3 +57,5 @@ knife4j:
    setting:
       language: zh_cn
       swagger-model-name: 实体类列表
+
+min-count: ${MIN_COUNT:8}
