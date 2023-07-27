@@ -81,7 +81,7 @@ public class IndexerServiceImpl implements IIndexerService {
 				return index;
 			}
 		}
-		return 0;
+		return offsetList.size() - 1;
 	}
 
 	/**
