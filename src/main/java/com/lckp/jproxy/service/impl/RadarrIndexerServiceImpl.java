@@ -135,14 +135,12 @@ public class RadarrIndexerServiceImpl extends IndexerServiceImpl implements IRad
 				}
 				// 从 description 提取语言信息
 				Element descriptionElement = item.element(ApiField.INDEXER_DESCRIPTION);
-				if (newText.contains("{" + Token.LANGUAGE + "}") && descriptionElement != null) {
+				if (descriptionElement != null && StringUtils.isNotBlank(descriptionElement.getText())) {
 					String description = descriptionElement.getText();
-					if (StringUtils.isNotBlank(description)) {
-						String language = radarrTitleService.format(description, "{" + Token.LANGUAGE + "}",
-								tokenRuleMap);
-						if (StringUtils.isNotBlank(language)) {
-							newText = FormatUtil.replaceToken("{" + Token.LANGUAGE + "}", language, newText);
-						}
+					String language = radarrTitleService.format(description, "{" + Token.LANGUAGE + "}",
+							tokenRuleMap);
+					if (StringUtils.isNotBlank(language)) {
+						newText = FormatUtil.replaceToken(Token.LANGUAGE, language, newText);
 					}
 				}
 				newText = radarrTitleService.format(text, newText, tokenRuleMap);
