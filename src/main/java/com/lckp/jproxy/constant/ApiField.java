@@ -29,6 +29,8 @@ public class ApiField {
 	public static final String INDEXER_ITEM = "item";
 
 	public static final String INDEXER_TITLE = "title";
+	
+	public static final String INDEXER_DESCRIPTION = "description";
 
 	public static final String INDEXER_LINK = "link";
 

@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.3.5 2023-08-06
+
+1. Optimize language matching logic
+
 ## v3.3.4 2023-07-27
 
 1. New parameter `min-count`：append primary title (without season and episode number) to search while current result count less than this value

@@ -31,6 +31,7 @@ import com.lckp.jproxy.service.ISonarrTitleService;
 import com.lckp.jproxy.service.ISystemCacheService;
 import com.lckp.jproxy.service.ISystemConfigService;
 import com.lckp.jproxy.service.ITmdbTitleService;
+import com.lckp.jproxy.util.FormatUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -121,15 +122,27 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 				Element item = items.next();
 				Element titleElement = item.element(ApiField.INDEXER_TITLE);
 				String text = titleElement.getText();
-				String formatText = sonarrTitleService.formatTitle(text, format, cleanTitleRegex,
+				String newText = sonarrTitleService.formatTitle(text, format, cleanTitleRegex,
 						tokenRuleMap.get(Token.TITLE), sonarrTitleList);
-				if (formatText.contains("{" + Token.TITLE + "}")) {
+				if (newText.contains("{" + Token.TITLE + "}")) {
 					log.debug("索引器格式化失败：{} ==> 未匹配到标题", text);
 					continue;
 				}
-				formatText = sonarrTitleService.format(text, formatText, tokenRuleMap);
-				titleElement.setText(formatText);
-				log.debug("索引器格式化：{} ==> {}", text, formatText);
+				// 从 description 提取语言信息
+				Element descriptionElement = item.element(ApiField.INDEXER_DESCRIPTION);
+				if (newText.contains("{" + Token.LANGUAGE + "}") && descriptionElement != null) {
+					String description = descriptionElement.getText();
+					if (StringUtils.isNotBlank(description)) {
+						String language = sonarrTitleService.format(description, "{" + Token.LANGUAGE + "}",
+								tokenRuleMap);
+						if (StringUtils.isNotBlank(language)) {
+							newText = FormatUtil.replaceToken("{" + Token.LANGUAGE + "}", language, newText);
+						}
+					}
+				}
+				newText = sonarrTitleService.format(text, newText, tokenRuleMap);
+				titleElement.setText(newText);
+				log.debug("索引器格式化：{} ==> {}", text, newText);
 			}
 			return document.asXML();
 		} catch (DocumentException e) {

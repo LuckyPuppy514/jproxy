@@ -133,6 +133,18 @@ public class RadarrIndexerServiceImpl extends IndexerServiceImpl implements IRad
 					log.debug("索引器格式化失败：{} ==> 未匹配到标题", text);
 					continue;
 				}
+				// 从 description 提取语言信息
+				Element descriptionElement = item.element(ApiField.INDEXER_DESCRIPTION);
+				if (newText.contains("{" + Token.LANGUAGE + "}") && descriptionElement != null) {
+					String description = descriptionElement.getText();
+					if (StringUtils.isNotBlank(description)) {
+						String language = radarrTitleService.format(description, "{" + Token.LANGUAGE + "}",
+								tokenRuleMap);
+						if (StringUtils.isNotBlank(language)) {
+							newText = FormatUtil.replaceToken("{" + Token.LANGUAGE + "}", language, newText);
+						}
+					}
+				}
 				newText = radarrTitleService.format(text, newText, tokenRuleMap);
 				titleElement.setText(newText);
 				log.debug("索引器格式化：{} ==> {}", text, newText);
