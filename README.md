@@ -119,15 +119,23 @@ services:
 ![20230404172313](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404172313.webp)
 ![20230404172225](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404172225.webp)
 
-③ 在 `Sonarr - Indexers` 中，修改索引器 `URL` 的 `IP` 和 `端口号` 为 JProxy 的 `IP` 和 `端口号`，并追加路径 `/sonarr/jackett`（Prowlarr 则追加 `/sonarr/prowlarr`）
-  
+③ 修改索引器地址的 `IP` 和 `端口号` 为 JProxy 的 `IP` 和 `端口号`，并追加相应路径
+
+Jackett
+
 `http://192.168.6.15:9117/api/v2.0/......` ➡️ `http://192.168.6.14:8117/sonarr/jackett/api/v2.0/......`
-  
+
 ![20230404172541](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404172541.webp)
 
-💡 建议先修改一个，确认正常后再修改其他的索引器配置
+Prowlarr
 
-![20230405044447](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405044447.webp)
+`http://192.168.6.15:9696` ➡️ `http://192.168.6.14:8117/sonarr/prowlarr`
+
+![20230806204236](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-08-06/20230806204236.webp)
+
+并关闭本地安全认证
+
+![20230806210826](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-08-06/20230806210826.webp)
 
 [🎗️ 进阶配置和使用说明请查看 Wiki](https://github.com/LuckyPuppy514/jproxy/wiki)
 

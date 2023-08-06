@@ -60,15 +60,19 @@ Fill in Transmission's `Server Url`, `Username` and `Password`, after saving it 
 ![20230406185347](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406185347.webp)
 ![20230406185409](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406185409.webp)
 
-③ In `Radarr - Settings - Indexer`, modify the `IP` and `Port` of `URL` of the indexer to the `IP` and `Port` of JProxy, and append the path `/radarr/jackett` (Prowlarr should append with `/radarr/prowlarr`)
+③ Modify the `IP` and `Port` of the indexer to the `IP` and `Port` of JProxy, and append the path
+
+Jackett
 
 `http://192.168.6.15:9117/api/v2.0/......` ➡️ `http://192.168.6.14:8117/radarr/jackett/api/v2.0/......`
 
 ![20230406185508](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406185508.webp)
 
-💡 It is recommended to modify one first, and then modify other indexer configurations after confirming that it is normal
+Prowlarr
 
-![20230406185100](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406185100.webp)
+`http://192.168.6.15:9696` ➡️ `http://192.168.6.14:8117/radarr/prowlarr`
+
+![20230806210400](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-08-06/20230806210400.webp)
 
 💡 When the Radarr quality language is configured as the main language, Radarr itself will automatically append the language title to the search, but at the same time, if the search result does not match the language, it will be rejected, so it is recommended
 

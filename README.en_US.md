@@ -119,15 +119,23 @@ If you need to set a proxy, you can append the corresponding proxy parameters in
 ![20230406182240](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406182240.webp)
 ![20230406182304](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-06/20230406182304.webp)
 
-③ In `Sonarr - Indexers`, modify the `IP` and `Port` of the indexer `URL` to the `IP` and `Port` of JProxy, and append the path `/sonarr/jackett` (Prowlarr should append with `/ sonarr/prowlarr`)
+③ Modify the `IP` and `Port` of the indexer to the `IP` and `Port` of JProxy, and append the path
+
+Jackett
 
 `http://192.168.6.15:9117/api/v2.0/......` ➡️ `http://192.168.6.14:8117/sonarr/jackett/api/v2.0/......`
-  
+
 ![20230404172541](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-04/20230404172541.webp)
 
-💡 It is recommended to modify one first, and then modify other indexer configurations after confirming that it is normal
+Prowlarr
 
-![20230405044447](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-05/20230405044447.webp)
+`http://192.168.6.15:9696` ➡️ `http://192.168.6.14:8117/sonarr/prowlarr`
+
+![20230806210024](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-08-06/20230806210024.webp)
+
+And change `Authentication Required` to `Disabled for Local Addresses`
+
+![20230806211107](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-08-06/20230806211107.webp)
 
 [🎗️ For advanced configuration and usage, see wiki](https://github.com/LuckyPuppy514/jproxy/wiki)
 
