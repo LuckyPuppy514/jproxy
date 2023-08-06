@@ -60,4 +60,24 @@ public class XmlUtil {
 		builder.append(xml2.substring(xml2.indexOf("<" + ApiField.INDEXER_ITEM + ">")));
 		return builder.toString();
 	}
+
+	/**
+	 * 
+	 * 移除多余结果
+	 *
+	 * @param xml
+	 * @param limit
+	 * @return String
+	 */
+	public static String remove(String xml, int limit) {
+		int count = 0;
+		int index = 0;
+		String itemPrefix = "<" + ApiField.INDEXER_ITEM + ">";
+		String itemSuffix = "</" + ApiField.INDEXER_ITEM + ">";
+		while (count++ <= limit) {
+			index = xml.indexOf(itemPrefix, index + 1);
+		}
+		xml = xml.substring(0, index) + xml.substring(xml.lastIndexOf(itemSuffix) + itemSuffix.length());
+		return xml;
+	}
 }

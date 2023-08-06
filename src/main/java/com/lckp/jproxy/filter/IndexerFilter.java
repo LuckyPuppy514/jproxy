@@ -82,6 +82,11 @@ public abstract class IndexerFilter extends BaseFilter {
 				if (count > 0 || xml.length() == 0) {
 					xml = XmlUtil.merger(xml, newXml);
 				}
+				// 处理 Prowlarr 分页异常
+				if (count > indexerRequest.getLimit()) {
+					xml = XmlUtil.remove(xml, 99);
+					break;
+				}
 				if (++index >= size) {
 					break;
 				}

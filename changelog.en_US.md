@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.3.8 2023-08-06
+
+1. Fix bug of pagination
+
 ## v3.3.7 2023-08-06
 
 1. Optimize search logic
