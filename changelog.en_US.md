@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.3.7 2023-08-06
+
+1. Optimize search logic
+
 ## v3.3.6 2023-08-06
 
 1. Optimize matching logic
