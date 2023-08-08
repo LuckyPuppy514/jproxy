@@ -65,7 +65,8 @@ public class SystemCacheServiceImpl implements ISystemCacheService {
 		org.springframework.cache.Cache cache = cacheManager.getCache(cacheName);
 		if (cache != null) {
 			cache.clear();
-		} else if (CacheName.INDEXER_RESULT.equals(cacheName)) {
+		}
+		if (CacheName.INDEXER_RESULT.equals(cacheName)) {
 			indexerResultCache.asMap().clear();
 		} else {
 			syncIntervalCache.asMap().remove(cacheName);
