@@ -51,7 +51,8 @@ public abstract class IndexerFilter extends BaseFilter {
 		String cacheKey = indexerService.generateCacheKey(requestWrapper);
 		String xml = indexerResultCache.asMap().get(cacheKey);
 		if (xml != null) {
-			log.debug("From cache: {}\n{}", cacheKey, xml);
+			log.debug("From cache: {}", cacheKey);
+			log.trace("{}", xml);
 			writeToResponse(xml, response);
 			return;
 		}
@@ -118,7 +119,8 @@ public abstract class IndexerFilter extends BaseFilter {
 			// 缓存结果
 			indexerResultCache.asMap().put(cacheKey, xml);
 		}
-		log.debug("\n{}", xml);
+		log.debug("From request: {}", cacheKey);
+		log.trace("{}", xml);
 		writeToResponse(xml, response);
 	}
 
