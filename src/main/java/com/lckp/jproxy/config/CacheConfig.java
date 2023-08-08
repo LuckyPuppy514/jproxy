@@ -63,7 +63,7 @@ public class CacheConfig {
 			public long expireAfterRead(String key, Object graph, long currentTime, long currentDuration) {
 				return currentDuration;
 			}
-		}).initialCapacity(3).maximumSize(10).build();
+		}).initialCapacity(100).maximumSize(1000).build();
 	}
 
 	@Bean
