@@ -75,7 +75,7 @@ services:
 |        SYNC_INTERVAL         |         3         |                     同步间隔（分钟）                     |
 |         RENAME_FILE          |       true        |               文件重命名开关（true/false）               |
 |          MIN_COUNT           |         6         | 当结果数量少于该值时，会追加主标题（去除季数和集数）搜索 |
-| INDEXER_RESULT_CACHE_EXPIRES |        15         |                    索引器结果缓存时间                    |
+| INDEXER_RESULT_CACHE_EXPIRES |        15         |              索引器结果缓存过期时间（分钟）              |
 
 如需设置代理，可在 `JAVA_OPTS` 添加对应的代理参数
 
