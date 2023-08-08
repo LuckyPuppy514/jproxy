@@ -47,6 +47,12 @@ public class XmlUtil {
 	 * @return String
 	 */
 	public static String merger(String xml1, String xml2) {
+		if (xml1 == null) {
+			return xml2;
+		}
+		if (xml2 == null) {
+			return xml1;
+		}
 		int index = xml1.indexOf("<" + ApiField.INDEXER_ITEM + ">");
 		if (index == -1) {
 			return xml2;

@@ -178,5 +178,10 @@
     "name": "min-count",
     "type": "java.lang.String",
     "description": "当结果数量少于该值时，会追加主标题（去除季数和集数）搜索"
+  },
+  {
+    "name": "time.indexer-result-cache-expires",
+    "type": "java.lang.String",
+    "description": "索引器结果缓存过期时间（分钟）"
   }
 ]}

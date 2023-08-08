@@ -11,7 +11,7 @@
 	<!-- 项目信息 -->
 	<groupId>com.lckp</groupId>
 	<artifactId>jproxy</artifactId>
-	<version>3.3.8</version>
+	<version>3.3.9</version>
 	<name>JProxy</name>
 	<description>介于 Sonarr/Radarr 和 Jackett/Prowlarr 之间的代理，主要用于优化查询和提升识别率</description>
 	<!-- 依赖版本 -->

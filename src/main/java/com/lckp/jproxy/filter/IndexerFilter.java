@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import com.lckp.jproxy.constant.ApiField;
 import com.lckp.jproxy.filter.wrapper.RequestWrapper;
 import com.lckp.jproxy.model.request.IndexerRequest;
 import com.lckp.jproxy.service.IIndexerService;
+import com.lckp.jproxy.util.ApplicationContextHolder;
 import com.lckp.jproxy.util.FormatUtil;
 import com.lckp.jproxy.util.XmlUtil;
 
@@ -34,14 +36,27 @@ public abstract class IndexerFilter extends BaseFilter {
 
 	private final IIndexerService indexerService;
 
+	private Cache<String, String> indexerResultCache;
+
 	@Override
+	@SuppressWarnings("unchecked")
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
-		IndexerRequest indexerRequest = getIndexerRequest(requestWrapper);
-
+		// 读取缓存
+		if (indexerResultCache == null) {
+			indexerResultCache = (Cache<String, String>) ApplicationContextHolder
+					.getBean("indexerResultCache");
+		}
+		String cacheKey = indexerService.generateCacheKey(requestWrapper);
+		String xml = indexerResultCache.asMap().get(cacheKey);
+		if (xml != null) {
+			log.debug("From cache: {}\n{}", cacheKey, xml);
+			writeToResponse(xml, response);
+			return;
+		}
 		// 处理查询
-		String xml = "";
+		IndexerRequest indexerRequest = getIndexerRequest(requestWrapper);
 		String searchKey = indexerRequest.getSearchKey();
 		if (StringUtils.isNotBlank(searchKey)) {
 			// 无绝对集数，去除 00
@@ -79,7 +94,7 @@ public abstract class IndexerFilter extends BaseFilter {
 				updateRequestWrapper(indexerRequest, requestWrapper);
 				String newXml = indexerService.executeNewRequest(requestWrapper);
 				count = XmlUtil.count(newXml);
-				if (count > 0 || xml.length() == 0) {
+				if (count > 0 || xml == null) {
 					xml = XmlUtil.merger(xml, newXml);
 				}
 				// 处理 Prowlarr 分页异常
@@ -87,23 +102,23 @@ public abstract class IndexerFilter extends BaseFilter {
 					xml = XmlUtil.remove(xml, 99);
 					break;
 				}
-				if (++index >= size) {
-					break;
-				}
 				// 更新参数
 				offset = offset + count;
 				indexerRequest.setOffset(offset);
-				indexerRequest.setLimit(indexerRequest.getLimit() - count);
-				offsetList.set(index - 1, offset);
+				offsetList.set(index, offset);
 				indexerService.updateOffsetList(offsetKey, offsetList);
-			} while (indexerRequest.getLimit() - count > 0);
+				indexerRequest.setLimit(indexerRequest.getLimit() - count);
+			} while (++index < size && indexerRequest.getLimit() > 0);
 		} else {
 			xml = indexerService.executeNewRequest(requestWrapper);
 		}
-		// 处理结果
-		xml = indexerService.executeFormatRule(xml);
+		if (StringUtils.isNotBlank(xml) && xml.contains("<" + ApiField.INDEXER_CHANNEL + ">")) {
+			// 执行格式化规则
+			xml = indexerService.executeFormatRule(xml);
+			// 缓存结果
+			indexerResultCache.asMap().put(cacheKey, xml);
+		}
 		log.debug("\n{}", xml);
-		// 返回
 		writeToResponse(xml, response);
 	}
 

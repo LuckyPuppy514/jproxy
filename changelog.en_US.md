@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.3.9 2023-08-08
+
+1. 🆕 Caching indexer query result
+
 ## v3.3.8 2023-08-06
 
 1. Fix bug of pagination

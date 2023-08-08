@@ -32,6 +32,10 @@ public class SystemCacheServiceImpl implements ISystemCacheService {
 	@Qualifier("syncIntervalCache")
 	private Cache<String, Integer> syncIntervalCache;
 
+	@Autowired
+	@Qualifier("indexerResultCache")
+	private Cache<String, String> indexerResultCache;
+
 	/**
 	 * @return
 	 * @see com.lckp.jproxy.service.ISystemCacheService#clear()
@@ -42,9 +46,8 @@ public class SystemCacheServiceImpl implements ISystemCacheService {
 			cacheManager.getCache(cacheName).clear();
 			log.debug("缓存已删除：{}", cacheName);
 		});
-		syncIntervalCache.asMap().remove(CacheName.SONARR_TITLE_SYNC_INTERVAL);
-		syncIntervalCache.asMap().remove(CacheName.TMDB_TITLE_SYNC_INTERVAL);
-		syncIntervalCache.asMap().remove(CacheName.RADARR_TITLE_SYNC_INTERVAL);
+		syncIntervalCache.asMap().clear();
+		indexerResultCache.asMap().clear();
 		return true;
 	}
 
@@ -62,8 +65,11 @@ public class SystemCacheServiceImpl implements ISystemCacheService {
 		org.springframework.cache.Cache cache = cacheManager.getCache(cacheName);
 		if (cache != null) {
 			cache.clear();
+		} else if (CacheName.INDEXER_RESULT.equals(cacheName)) {
+			indexerResultCache.asMap().clear();
+		} else {
+			syncIntervalCache.asMap().remove(cacheName);
 		}
-		syncIntervalCache.asMap().remove(cacheName);
 		log.debug("缓存已删除：{}", cacheName);
 		return true;
 	}

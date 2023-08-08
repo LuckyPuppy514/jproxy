@@ -56,6 +56,19 @@ public class IndexerServiceImpl implements IIndexerService {
 	/**
 	 * @param requestWrapper
 	 * @return
+	 * @see com.lckp.jproxy.service.IIndexerService#generateCacheKey(com.lckp.jproxy.filter.wrapper.RequestWrapper)
+	 */
+	@Override
+	public String generateCacheKey(RequestWrapper requestWrapper) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(requestWrapper.getServletPath());
+		builder.append("?" + requestWrapper.getQueryString().replaceAll("apikey=\\w+", ""));
+		return builder.toString();
+	}
+
+	/**
+	 * @param requestWrapper
+	 * @return
 	 * @see com.lckp.jproxy.service.IIndexerService#generateOffsetKey(com.lckp.jproxy.filter.wrapper.RequestWrapper)
 	 */
 	@Override

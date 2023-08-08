@@ -33,6 +33,15 @@ public interface IIndexerService {
 
 	/**
 	 * 
+	 * 生成 cache key
+	 *
+	 * @param requestWrapper
+	 * @return String
+	 */
+	public String generateCacheKey(RequestWrapper requestWrapper);
+
+	/**
+	 * 
 	 * 生成 offset key
 	 *
 	 * @param requestWrapper

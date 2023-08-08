@@ -29,11 +29,31 @@ public class CacheConfig {
 	@Value("${time.sync-interval}")
 	private long syncInterval;
 
+	@Value("${time.indexer-result-cache-expires}")
+	private long indexerResultCacheExpires;
+
 	@Bean(name = "syncIntervalCache")
 	Cache<String, Integer> syncIntervalCache() {
 		return Caffeine.newBuilder().expireAfter(new Expiry<String, Object>() {
 			public long expireAfterCreate(String key, Object graph, long currentTime) {
 				return TimeUnit.MINUTES.toNanos(syncInterval);
+			}
+
+			public long expireAfterUpdate(String key, Object graph, long currentTime, long currentDuration) {
+				return currentDuration;
+			}
+
+			public long expireAfterRead(String key, Object graph, long currentTime, long currentDuration) {
+				return currentDuration;
+			}
+		}).initialCapacity(3).maximumSize(10).build();
+	}
+
+	@Bean(name = "indexerResultCache")
+	Cache<String, String> indexerResultCache() {
+		return Caffeine.newBuilder().expireAfter(new Expiry<String, Object>() {
+			public long expireAfterCreate(String key, Object graph, long currentTime) {
+				return TimeUnit.MINUTES.toNanos(indexerResultCacheExpires);
 			}
 
 			public long expireAfterUpdate(String key, Object graph, long currentTime, long currentDuration) {

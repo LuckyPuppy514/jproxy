@@ -173,6 +173,11 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 		return sonarrTitle;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see com.lckp.jproxy.service.impl.IndexerServiceImpl#getMinCount()
+	 */
 	@Override
 	public int getMinCount() {
 		return minCount;

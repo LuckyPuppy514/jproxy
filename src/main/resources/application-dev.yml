@@ -20,6 +20,7 @@ time:
    radarr-rename: 0 0/1 * * * ?
    radarr-rename-fall-back: 6
    downloader-login: 0 */30 * * * ?
+   indexer-result-cache-expires: 1
 
 rename:
    file: true
@@ -58,4 +59,4 @@ knife4j:
       language: zh_cn
       swagger-model-name: 实体类列表
 
-min-count: ${MIN_COUNT:8}
+min-count: 6

@@ -20,6 +20,7 @@ time:
    radarr-rename: 0 0/1 * * * ?
    radarr-rename-fall-back: 30
    downloader-login: 0 */30 * * * ?
+   indexer-result-cache-expires: ${INDEXER_RESULT_CACHE_EXPIRES:15}
 
 rename:
    file: ${RENAME_FILE:true}
@@ -45,4 +46,4 @@ springdoc:
 knife4j:
    production: true
 
-min-count: ${MIN_COUNT:8}
+min-count: ${MIN_COUNT:6}
