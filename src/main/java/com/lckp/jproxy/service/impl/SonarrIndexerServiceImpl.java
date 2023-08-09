@@ -81,7 +81,8 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 		if (Integer.valueOf(0).equals(sonarrTitle.getSno())
 				|| Integer.valueOf(1).equals(sonarrTitle.getSno())) {
 			List<TmdbTitle> tmdbTitleList = tmdbTitleService.query()
-					.eq(TableField.TVDB_ID, sonarrTitle.getTvdbId()).groupBy(TableField.TITLE).list();
+					.eq(TableField.TVDB_ID, sonarrTitle.getTvdbId()).groupBy(TableField.TITLE)
+					.orderByAsc(TableField.ID).list();
 			if (!tmdbTitleList.isEmpty()) {
 				for (TmdbTitle tmdbTitle : tmdbTitleList) {
 					searchTitleList.add(tmdbTitle.getTitle());
