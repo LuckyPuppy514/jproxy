@@ -4,9 +4,10 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://github.com/LuckyPuppy514/jproxy"><img allt="stars" src="https://badgen.net/github/stars/LuckyPuppy514/jproxy"/></a>
-  <a href="https://github.com/LuckyPuppy514/jproxy"><img allt="forks" src="https://badgen.net/github/forks/LuckyPuppy514/jproxy"/></a>
-  <a href="https://github.com/LuckyPuppy514/jproxy/blob/main/LICENSE.txt"><img allt="MIT License" src="https://badgen.net/github/license/LuckyPuppy514/jproxy"/></a>
+  <a href="https://github.com/LuckyPuppy514/jproxy"><img alt="stars" src="https://badgen.net/github/stars/LuckyPuppy514/jproxy"/></a>
+  <a href="https://github.com/LuckyPuppy514/jproxy"><img alt="forks" src="https://badgen.net/github/forks/LuckyPuppy514/jproxy"/></a>
+  <a href="https://hub.docker.com/r/luckypuppy514/jproxy"><img alt="docker pulls" src="https://img.shields.io/docker/pulls/luckypuppy514/jproxy.svg"/></a>
+  <a href="https://github.com/LuckyPuppy514/jproxy/blob/main/LICENSE.txt"><img alt="MIT License" src="https://badgen.net/github/license/LuckyPuppy514/jproxy"/></a>
 </p>
 
 <div align="center">
