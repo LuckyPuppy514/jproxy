@@ -1,0 +1,1 @@
+[{"id":"8BCD7F196A0C4B5AA0E2FB34AA7714A0","token":"episode","priority":1998,"regex":".*(绊之|(?i)Allele).*(第| |-)(1[3-9]|2[0-4])(\\b|$).*","replacement":"E$3","offset":-12,"example":"Kizuna no Allele S02 - 绊之 Allele 第二季 - 13","remark":"绊之 Allele 第二季","author":"grc","validStatus":1,"createTime":"2023-10-12 01:20:02","updateTime":"2023-10-12 01:20:39"}]
