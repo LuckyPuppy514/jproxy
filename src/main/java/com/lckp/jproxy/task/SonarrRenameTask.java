@@ -149,7 +149,9 @@ public class SonarrRenameTask {
 													if (extension.matches(Common.SUBTITLE_EXTENSION_REGEX)) {
 														newFileName = newFileName + "." + subtitleNo++;
 													}
-													newFileName = newFileName + extension;
+													newFileName = newFileName + " "
+															+ sourceTitle.substring(sourceTitle.indexOf("["))
+															+ extension;
 												}
 											}
 											String newFilePath;

@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.4.1 2023-10-13
+
+🚀 Append other info while rename file
+
 ## v3.4.0 2023-08-09
 
 👻 Fix the problem that appending the main language title actually appends the alternate language title
