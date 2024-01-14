@@ -100,7 +100,7 @@ public abstract class IndexerFilter extends BaseFilter {
 				}
 				// 处理 Prowlarr 分页异常
 				if (count > indexerRequest.getLimit()) {
-					xml = XmlUtil.remove(xml, 99);
+					xml = XmlUtil.remove(xml, 100);
 					break;
 				}
 				// 更新参数
