@@ -95,13 +95,13 @@ public abstract class IndexerFilter extends BaseFilter {
 				updateRequestWrapper(indexerRequest, requestWrapper);
 				String newXml = indexerService.executeNewRequest(requestWrapper);
 				count = XmlUtil.count(newXml);
-				if (count > 0 || xml == null) {
-					xml = XmlUtil.merger(xml, newXml);
-				}
 				// 处理 Prowlarr 分页异常
 				if (count > indexerRequest.getLimit()) {
-					xml = XmlUtil.remove(xml, 100);
-					break;
+					count = indexerRequest.getLimit();
+					newXml = XmlUtil.remove(newXml, count);
+				}
+				if (count > 0 || xml == null) {
+					xml = XmlUtil.merger(xml, newXml);
 				}
 				// 更新参数
 				offset = offset + count;
