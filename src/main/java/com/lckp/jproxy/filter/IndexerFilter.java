@@ -99,6 +99,7 @@ public abstract class IndexerFilter extends BaseFilter {
 				if (count > indexerRequest.getLimit()) {
 					count = indexerRequest.getLimit();
 					newXml = XmlUtil.remove(newXml, count);
+					offset = 0 - count;
 				}
 				if (count > 0 || xml == null) {
 					xml = XmlUtil.merger(xml, newXml);
