@@ -143,7 +143,7 @@ public class SonarrRenameTask {
 														.format(newFileName, newFileNameFormat, tokenRuleMap)
 														.trim();
 												if (StringUtils.isBlank(newFileName)
-														|| !newFileName.matches("S\\d+E\\d+") || !newFileName.matches("(\\b|\\s)E\\d+")) {
+														|| !newFileName.matches("(S\\d+|\\b|\\s)E\\d+")) {
 													newFileName = oldFileName;
 												} else {
 													if (extension.matches(Common.SUBTITLE_EXTENSION_REGEX)) {
