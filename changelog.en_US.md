@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.4.2 2024-02-19
+
+👻 Fix bug of rename
+
 ## v3.4.1 2023-10-13
 
 🚀 Append other info while rename file
