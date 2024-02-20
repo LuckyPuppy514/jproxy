@@ -227,6 +227,8 @@ public class RadarrTitleServiceImpl extends ServiceImpl<RadarrTitleMapper, Radar
 									"[a-zA-Z]+" + FormatUtil.PLACEHOLDER + cleanTitle);
 							String suffixRegex = titleRule.getRegex().replace("{" + Token.CLEAN_TITLE + "}",
 									cleanTitle + FormatUtil.PLACEHOLDER + "[a-zA-Z]+");
+							// 排除特殊英文单词
+							cleanText = cleanText.replaceAll("( aka )", FormatUtil.PLACEHOLDER_SEPARATOR);
 							if (cleanText.matches(prefixRegex) || cleanText.matches(suffixRegex)) {
 								log.debug("英文标题前或后有英文单词：{}，不匹配：{}", cleanText, cleanTitle);
 								continue;

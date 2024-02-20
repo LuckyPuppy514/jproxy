@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.4.3 2024-02-20
+
+🚀 Optimize radarr title matching logic
+
 ## v3.4.2 2024-02-19
 
 👻 Fix bug of rename
