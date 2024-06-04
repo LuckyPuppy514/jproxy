@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.4.4 2024-06-04
+
+👻 Fix the issue of nested path while renaming
+
 ## v3.4.3 2024-02-20
 
 🚀 Optimize radarr title matching logic

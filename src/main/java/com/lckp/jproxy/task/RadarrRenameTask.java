@@ -122,8 +122,9 @@ public class RadarrRenameTask {
 												if (extension.matches(Common.SUBTITLE_EXTENSION_REGEX)) {
 													newFileName = newFileName + "." + subtitleNo++;
 												}
-												newFileName = newFileName + " "
-														+ sourceTitle.substring(sourceTitle.indexOf("["))
+												int index = sourceTitle.indexOf(" [");
+												newFileName = newFileName
+														+ (index > -1 ? sourceTitle.substring(index) : "")
 														+ extension;
 											}
 											String newFilePath;
