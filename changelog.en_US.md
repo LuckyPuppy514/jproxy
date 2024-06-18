@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.4.5 2024-06-18
+
+👻 Fix the issue of NullPointerException
+
 ## v3.4.4 2024-06-04
 
 👻 Fix the issue of nested path while renaming

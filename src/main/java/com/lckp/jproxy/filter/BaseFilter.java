@@ -60,6 +60,7 @@ public abstract class BaseFilter implements Filter {
 	 * @throws IOException void
 	 */
 	public void writeToResponse(String content, ServletResponse response) throws IOException {
+		content = content == null ? "" : content;
 		writeToResponse(content.getBytes(StandardCharsets.UTF_8), response);
 	}
 }
