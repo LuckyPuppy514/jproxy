@@ -86,8 +86,6 @@ public abstract class IndexerFilter extends BaseFilter {
 							indexerRequest.setSearchKey(
 									FormatUtil.removeSeasonEpisode(indexerRequest.getSearchKey()));
 						}
-					} else {
-						break;
 					}
 				}
 				// 请求
