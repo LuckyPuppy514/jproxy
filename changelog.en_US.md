@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.4.6 2025-06-24
+
+🆕 Add login toggle
+
 ## v3.4.5 2024-06-18
 
 👻 Fix the issue of NullPointerException

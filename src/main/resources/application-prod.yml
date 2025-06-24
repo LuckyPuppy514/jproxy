@@ -47,3 +47,5 @@ knife4j:
    production: true
 
 min-count: ${MIN_COUNT:6}
+
+login-enabled: ${LOGIN_ENABLED:true}

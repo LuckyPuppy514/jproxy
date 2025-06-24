@@ -66,7 +66,7 @@ services:
 If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/LuckyPuppy514/jproxy/blob/main/docker/docker-run.sh)
 
 |          Parameter           |      Default      |                                                          Description                                                           |
-| :--------------------------: | :---------------: | :----------------------------------------------------------------------------------------------------------------------------: |
+| :--------------------------: | :---------------: |:------------------------------------------------------------------------------------------------------------------------------:|
 |             PUID             |         0         |                                                            User ID                                                             |
 |             PGID             |         0         |                                                            Group ID                                                            |
 |              TZ              |   Asia/Shanghai   |                                                            Timezone                                                            |
@@ -77,6 +77,7 @@ If you want deploy via `docker run` ，see [docker-run.sh](https://github.com/Lu
 |         RENAME_FILE          |       true        |                                                File rename switch (true/false)                                                 |
 |          MIN_COUNT           |         8         | Append title of primary language (without season and episode number) to search while current result count less than this value |
 | INDEXER_RESULT_CACHE_EXPIRES |        15         |                                         Indexer result cache expiration time (minutes)                                         |
+|        LOGIN_ENABLED         |       true        |                                                Login enabled status（true/false）                                                |
 
 If you need to set a proxy, you can append the corresponding proxy parameters in `JAVA_OPTS`
 

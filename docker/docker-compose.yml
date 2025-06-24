@@ -9,6 +9,7 @@ services:
       - PGID=1000
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Xms512m -Xmx512m
+      - LOGIN_ENABLED=true
       ports:
       - 8117:8117
       volumes:

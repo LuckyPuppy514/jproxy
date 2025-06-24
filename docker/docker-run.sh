@@ -5,6 +5,7 @@ docker run --name jproxy \
 -e PGID=1000 \
 -e TZ=Asia/Shanghai \
 -e JAVA_OPTS="-Xms512m -Xmx512m" \
+-e LOGIN_ENABLED=true \
 -p 8117:8117 \
 -v /docker/jproxy/database:/app/database \
 -d luckypuppy514/jproxy:latest

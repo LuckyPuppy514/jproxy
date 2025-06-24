@@ -60,3 +60,5 @@ knife4j:
       swagger-model-name: 实体类列表
 
 min-count: 6
+
+login-enabled: false

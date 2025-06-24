@@ -23,7 +23,7 @@ public class Common {
 	public static final String[] INTERCEPTOR_KNFIE4J_PATHS = { "/doc.html", "/webjars/**",
 			"/v3/api-docs/**" };
 	public static final String[] INTERCEPTOR_OTHER_PATHS = { "/error", "/*.json", "/", "/favicon.ico",
-			"/system/**" };
+			"/system/**", "/api/system/user/isLoginEnabled" };
 
 	// Charon
 	public static final String CHARON_ALL_PATH = "/.*";
