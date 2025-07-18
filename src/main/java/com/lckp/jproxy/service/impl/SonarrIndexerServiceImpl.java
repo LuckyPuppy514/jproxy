@@ -1,13 +1,13 @@
 package com.lckp.jproxy.service.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.lckp.jproxy.constant.*;
+import com.lckp.jproxy.entity.SonarrRule;
+import com.lckp.jproxy.entity.SonarrTitle;
+import com.lckp.jproxy.entity.TmdbTitle;
+import com.lckp.jproxy.service.*;
+import com.lckp.jproxy.util.FormatUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -17,24 +17,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.lckp.jproxy.constant.ApiField;
-import com.lckp.jproxy.constant.CacheName;
-import com.lckp.jproxy.constant.SystemConfigKey;
-import com.lckp.jproxy.constant.TableField;
-import com.lckp.jproxy.constant.Token;
-import com.lckp.jproxy.entity.SonarrRule;
-import com.lckp.jproxy.entity.SonarrTitle;
-import com.lckp.jproxy.entity.TmdbTitle;
-import com.lckp.jproxy.service.ISonarrIndexerService;
-import com.lckp.jproxy.service.ISonarrRuleService;
-import com.lckp.jproxy.service.ISonarrTitleService;
-import com.lckp.jproxy.service.ISystemCacheService;
-import com.lckp.jproxy.service.ISystemConfigService;
-import com.lckp.jproxy.service.ITmdbTitleService;
-import com.lckp.jproxy.util.FormatUtil;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -123,6 +112,8 @@ public class SonarrIndexerServiceImpl extends IndexerServiceImpl implements ISon
 				Element item = items.next();
 				Element titleElement = item.element(ApiField.INDEXER_TITLE);
 				String text = titleElement.getText();
+				// 去除换行
+				text = text.replaceAll("\\r\\n|\\r|\\n", " ");
 				String newText = sonarrTitleService.formatTitle(text, format, cleanTitleRegex,
 						tokenRuleMap.get(Token.TITLE), sonarrTitleList);
 				if (newText.contains("{" + Token.TITLE + "}")) {

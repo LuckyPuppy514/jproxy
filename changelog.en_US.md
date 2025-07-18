@@ -3,6 +3,10 @@
 
 # Change Logs
 
+## v3.4.7 2025-07-18
+
+👻 Fix formatting exception when title contains line breaks
+
 ## v3.4.6 2025-06-24
 
 🆕 Add login toggle
